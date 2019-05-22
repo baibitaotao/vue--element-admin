@@ -1,0 +1,148 @@
+/*table start*/
+#app {
+  .table-P1-view {
+    background-color: #fff;
+    border-top: 1px solid #e9e9e9;
+    border-bottom: 1px solid #e9e9e9;
+    .item_view {
+      display: flex;
+      width: 100%;
+
+      .item {
+        display: flex;
+        height: 46px;
+        line-height: 46px;
+        width: 50%;
+
+        .left {
+          border-right: 1px solid #e9e9e9;
+          width: 167px;
+          color: #666;
+          font-size: 14px;
+          font-family: 微软雅黑;
+          padding-right:21px;
+          box-sizing: border-box;
+          background-color: #f8f8f9;
+          text-align: right;
+        }
+
+        .right {
+          color: #666;
+          font-size: 14px;
+          font-family: 微软雅黑;
+          padding-left: 19px;
+          box-sizing: border-box;
+          width: 64%;
+        }
+      }
+
+      .item+.item {
+        border-left: 1px solid #e9e9e9;
+      }
+    }
+
+    .item_view+.item_view {
+      border-top: 1px solid #e9e9e9;
+    }
+
+    .editItem {
+      width: 100%;
+      border-top: 1px solid #e9e9e9;
+      display: flex;
+      &~.item_view{
+        border-top: 1px solid #e9e9e9;
+      }
+    }
+
+    .editItem .left {
+      width: 167px;
+      background-color: #f8f8f9;
+      border-right: 1px solid #e9e9e9;
+      color: #666;
+      font-size: 14px;
+      font-family: 微软雅黑;
+      padding-right:21px;
+      padding-top: 16px;
+      padding-bottom: 10px;
+      box-sizing: border-box;
+      text-align: right;
+    }
+
+    .editItem .right {
+      width: 82.3%;
+
+      p {
+        padding: 10px;
+        color: #666;
+        font-size: 14px;
+        font-family: 微软雅黑;
+        line-height: 1.4;
+      }
+    }
+  }
+
+  .editItemH {
+    height: 104px;
+  }
+
+  .grid-pagination {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 19px 0 22px;
+    padding-top: 36px;
+
+    .el-pagination {
+      display: flex;
+      align-items: center;
+    }
+
+    .el-pagination button {
+      height: 38px;
+      line-height: 38px;
+      border: 1px solid #d8d8d8;
+      border-radius: 4px;
+      min-width: 35.5px;
+      padding: 0 4px;
+      margin-right: 12px;
+    }
+
+    .el-pager li {
+      height: 38px;
+      line-height: 38px;
+      border-radius: 4px;
+      border: 1px solid #d8d8d8;
+
+      &:first-child {
+        // margin-left: 12px;
+      }
+
+      &:last-child {
+        margin-right: 12px;
+      }
+
+      &+li {
+        margin-left: 12px;
+      }
+    }
+
+    .el-pager li.active {
+      border: 1px solid #b40005;
+      color: #b40005;
+    }
+  }
+
+  .tableCommon {
+    .el-table th {
+      /*表头背景色 */
+      background: #f8f8f9 !important;
+      color: #997528;
+
+      &>.cell {
+        font-size: 14px;
+      }
+    }
+  }
+
+}
+
+
