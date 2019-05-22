@@ -29,9 +29,10 @@ export default {
   width: 100%;
   position: relative;
   overflow: hidden;
-  margin-top: 98px;
-  padding: 0 14px;
+  margin-top: 41px;
+  padding: 7px 14px 0 14px;
   box-sizing: border-box;
+  background-color: #fff;
 }
 
 .fixed-header+.app-main {
