@@ -17,7 +17,9 @@ export const routerMap = {
   page: _import('permission/page'),
   directive: _import('permission/directive'),
   role: _import('permission/role'),
-  Steps: _import('steps/index')
+  Steps: _import('steps/index'),
+  quanyuanxuqiu: _import('quanyuanxuqiu/index'),
+  quanyuangonji: _import('quanyuangonji/index')
 }
 
 /* Router Modules */
@@ -330,14 +332,53 @@ export const asyncRoutes1 = [
         title: 'Directive Permission'
       // if do not set roles, means: this page does not require permission
       }
-    },
-    {
+    }, {
       path: 'role',
       component: 'role',
       name: 'RolePermission',
       meta: {
         title: 'Role Permission',
         roles: ['admin']
+      }
+    }]
+  }, {
+    path: '/quanyuanxuqiu',
+    component: 'Layout',
+    redirect: '/quanyuanxuqiu/index',
+    alwaysShow: false, // will always show the root menu
+    name: 'quanyuanxuqiu',
+    meta: {
+      title: 'quanyuanxuqiu',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [{
+      path: 'index',
+      component: 'quanyuanxuqiu',
+      name: 'quanyuanxuqiu',
+      meta: {
+        title: '券源需求发布审核',
+        roles: ['admin'] // or you can only set roles in sub nav
+      }
+    }]
+  }, {
+    path: '/quanyuangonji',
+    component: 'Layout',
+    redirect: '/quanyuangonji/index',
+    alwaysShow: false, // will always show the root menu
+    name: 'quanyuangonji',
+    meta: {
+      title: 'quanyuangonji',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [{
+      path: 'index',
+      component: 'quanyuangonji',
+      name: 'quanyuangonji',
+      meta: {
+        title: '券源供给发布审核',
+        roles: ['admin'] // or you can only set roles in sub nav
       }
     }]
   },
@@ -357,7 +398,7 @@ export const asyncRoutes1 = [
       component: 'Table',
       name: 'Table',
       meta: {
-        title: 'Table',
+        title: 'Table11',
         roles: ['admin'] // or you can only set roles in sub nav
       }
     }]

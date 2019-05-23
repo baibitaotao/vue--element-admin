@@ -91,49 +91,14 @@ const actions = {
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
       let accessedRoutes
-      // if (roles.includes('admin')) {
-      //   accessedRoutes = asyncRoutes || []
-      // } else {
-      //   accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      // }
-      // console.log('===accessedRoutes123===')
-      // console.log(accessedRoutes)
-      // commit('SET_ROUTES', accessedRoutes)
-      // resolve(accessedRoutes)
-
-      // actions中GenerateRoutes方法合适的地方将后端请求的路由表映射到routerMap,
-      // 并筛选出可访问的路由,serverRouterMap是我定义的从后台请求路由表的方法
-      // serverRouterMap().then(response => {
-      //   const serverRouterMap = response.data
-
-      //   var asyncRouterMap = generateAsyncRouter(routerMap, serverRouterMap)
-
-      //   console.log('==asyncRouterMap-123==')
-      //   console.log(asyncRouterMap)
-      //   if (roles.indexOf('admin') >= 0) {
-      //     accessedRoutes = asyncRouterMap || []
-      //   } else {
-      //     accessedRoutes = filterAsyncRoutes(asyncRouterMap, roles)
-      //   }
-      //   console.log('accessedRoutes-123--')
-      //   console.log(accessedRoutes)
-      //   commit('SET_ROUTES', accessedRoutes)
-      //   resolve(accessedRoutes)
-      // })
-
       setTimeout(() => {
-        console.log('==ayscRouterMap 123==')
-        console.log(asyncRoutes1)
-
         const serverRouterMap = asyncRoutes1
-
         const asyncRouterMap = generateAsyncRouter(routerMap, serverRouterMap)
         if (roles.indexOf('admin') >= 0) {
           accessedRoutes = asyncRouterMap || []
         } else {
           accessedRoutes = filterAsyncRoutes(asyncRouterMap, roles)
         }
-
         commit('SET_ROUTES', asyncRouterMap)
         resolve(asyncRouterMap)
       }, 1000)

@@ -65,31 +65,12 @@ export default {
 
   },
   created() {
-    this.getDetail()
+    // this.getDetail()
   },
   methods: {
     getDetail() {
       alert('123')
-      // projInfoDetailApp().then(response => {
-      //   alert('123')
-      //   const data = response.data
-
-      //   // var asyncRouterMap = generateAsyncRouter(routerMap, serverRouterMap)
-
-      //   // console.log('==asyncRouterMap-123==')
-      //   // console.log(asyncRouterMap)
-      //   // if (roles.indexOf('admin') >= 0) {
-      //   //   accessedRoutes = asyncRouterMap || []
-      //   // } else {
-      //   //   accessedRoutes = filterAsyncRoutes(asyncRouterMap, roles)
-      //   // }
-      //   // console.log('accessedRoutes-123--')
-      //   // console.log(accessedRoutes)
-      //   // commit('SET_ROUTES', accessedRoutes)
-      //   // resolve(accessedRoutes)
-      // })
     }
-
   }
 }
 </script>
