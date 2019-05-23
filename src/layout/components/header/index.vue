@@ -6,7 +6,7 @@
     </div>
     <div class="user-right">
       <img src="@/assets/layout/user-logo.png" alt="" class="user-logo">
-      <span class="user-name">hello世界</span>
+      <span class="user-name">{{$store.state.user.name}}</span>
     </div>
   </div>
 </template>

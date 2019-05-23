@@ -73,7 +73,7 @@
   </div>
 </template>
 
-<script>
+<script>``
 import { validUsername } from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
 
@@ -114,6 +114,7 @@ export default {
   watch: {
     $route: {
       handler: function(route) {
+        console.log(route)
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
@@ -159,8 +160,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm)
-            .then(() => {
+          this.$store.dispatch('user/login', this.loginForm).then(() => {
               this.$router.push({ path: this.redirect || '/' })
               this.loading = false
             })

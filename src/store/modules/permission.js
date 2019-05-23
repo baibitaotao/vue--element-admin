@@ -12,7 +12,7 @@ function generateAsyncRouter(routerMap, serverRouterMap) {
   serverRouterMap.forEach((item, index) => {
     // 这个地方
     item.component = routerMap[item.component]
-    console.log('item.component', item.component)
+    // console.log('item.component', item.component)
     if (item.children && item.children.length > 0) {
       generateAsyncRouter(routerMap, item.children)
     }
@@ -80,8 +80,8 @@ const state = {
 
 const mutations = {
   SET_ROUTES: (state, routes) => {
-    console.log('==routes==')
-    console.log(routes)
+    // console.log('==routes==')
+    // console.log(routes)
     state.addRoutes = routes
     state.routes = constantRoutes.concat(routes)
   }

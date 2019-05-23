@@ -445,6 +445,10 @@ export const asyncRoutes1 = [
   }
 ]
 
+// export const asyncRoutes1 = [
+
+// ]
+
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   base: '/app/',
