@@ -19,8 +19,13 @@ export const routerMap = {
   role: _import('permission/role'),
   Steps: _import('steps/index'),
   quanyuanxuqiu: _import('quanyuanxuqiu/index'),
-  quanyuangonji: _import('quanyuangonji/index')
+  quanyuangonji: _import('quanyuangonji/index'),
+  waitmatching:_import('quanyuanjiaoyi/quanyuanjiaoyi-waiting/index'),
+  matching:_import('quanyuanjiaoyi/quanyuanjiaoyi-matching/index'),
+  matchingFail:_import('quanyuanjiaoyi/quanyuanjiaoyi-matchingFail/index'),
+  matchingSucess:_import('quanyuanjiaoyi/quanyuanjiaoyi-matchingSuccess/index'),
 }
+
 
 /* Router Modules */
 
@@ -304,44 +309,92 @@ export const asyncRoutes = [
 
 // 假设后端
 export const asyncRoutes1 = [
+  // {
+  //   path: '/permission',
+  //   component: 'Layout',
+  //   redirect: '/permission/page',
+  //   alwaysShow: true, // will always show the root menu
+  //   name: 'Permission',
+  //   meta: {
+  //     title: 'Permission',
+  //     icon: 'lock',
+  //     roles: ['admin', 'editor'] // you can set roles in root nav
+  //   },
+  //   children: [{
+  //     path: 'page',
+  //     component: 'page',
+  //     name: 'PagePermission',
+  //     meta: {
+  //       title: 'Page Permission',
+  //       roles: ['admin'] // or you can only set roles in sub nav
+  //     }
+  //   },
+  //   {
+  //     path: 'directive',
+  //     component: 'directive',
+  //     name: 'DirectivePermission',
+  //     meta: {
+  //       title: 'Directive Permission'
+  //     // if do not set roles, means: this page does not require permission
+  //     }
+  //   }, {
+  //     path: 'role',
+  //     component: 'role',
+  //     name: 'RolePermission',
+  //     meta: {
+  //       title: 'Role Permission',
+  //       roles: ['admin']
+  //     }
+  //   }]
+  // }, 
   {
-    path: '/permission',
+    path: '/quanyuanjiaoyiguanli',
     component: 'Layout',
-    redirect: '/permission/page',
-    alwaysShow: true, // will always show the root menu
-    name: 'Permission',
+    redirect: '/quanyuanjiaoyiguanli',
+    alwaysShow: false, // will always show the root menu
+    name: 'quanyuanjiaoyiguanli',
     meta: {
-      title: 'Permission',
+      title: '券源交易管理',
       icon: 'lock',
       roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [{
-      path: 'page',
-      component: 'page',
-      name: 'PagePermission',
+      path: 'wait-matching',
+      component: 'waitmatching',
+      name: 'wait-matching',
       meta: {
-        title: 'Page Permission',
+        title: '交易进度-待撮合',
         roles: ['admin'] // or you can only set roles in sub nav
       }
     },
     {
-      path: 'directive',
-      component: 'directive',
-      name: 'DirectivePermission',
+      path: 'matching',
+      component: 'matching',
+      name: 'matching',
       meta: {
-        title: 'Directive Permission'
+        title: '交易进度-撮合中',
+        roles: ['admin']
       // if do not set roles, means: this page does not require permission
       }
     }, {
-      path: 'role',
-      component: 'role',
-      name: 'RolePermission',
+      path: 'matching-success',
+      component: 'matchingSucess',
+      name: 'matching-success',
       meta: {
-        title: 'Role Permission',
+        title: '交易进度-撮合成功',
         roles: ['admin']
       }
-    }]
-  }, {
+     },{
+      path: 'matching-fail',
+      component: 'matchingFail',
+      name: 'matching-fail',
+      meta: {
+        title: '交易进度-撮合失败',
+        roles: ['admin']
+      }
+     }]
+    },
+  {
     path: '/quanyuanxuqiu',
     component: 'Layout',
     redirect: '/quanyuanxuqiu/index',
@@ -382,67 +435,67 @@ export const asyncRoutes1 = [
       }
     }]
   },
-  {
-    path: '/table1',
-    component: 'Layout',
-    redirect: '/table-card/index',
-    alwaysShow: false, // will always show the root menu
-    name: 'cardTable',
-    meta: {
-      title: 'cardTable',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [{
-      path: 'index',
-      component: 'Table',
-      name: 'Table',
-      meta: {
-        title: 'Table11',
-        roles: ['admin'] // or you can only set roles in sub nav
-      }
-    }]
-  },
-  {
-    path: '/table2',
-    component: 'Layout',
-    alwaysShow: false, // will always show the root menu
-    name: 'cardTable1',
-    meta: {
-      title: 'cardTable1',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [{
-      path: 'index1',
-      component: 'Table1',
-      name: 'Table2',
-      meta: {
-        title: 'Table2',
-        roles: ['admin'] // or you can only set roles in sub nav
-      }
-    }]
-  },
-  {
-    path: '/table3',
-    component: 'Layout',
-    alwaysShow: false, // will always show the root menu
-    name: 'cardTable2',
-    meta: {
-      title: 'cardTable2',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [{
-      path: 'index3',
-      component: 'Table3',
-      name: 'Table3',
-      meta: {
-        title: 'Table3',
-        roles: ['admin'] // or you can only set roles in sub nav
-      }
-    }]
-  }
+  // {
+    //   path: '/table1',
+    //   component: 'Layout',
+    //   redirect: '/table-card/index',
+    //   alwaysShow: false, // will always show the root menu
+    //   name: 'cardTable',
+    //   meta: {
+    //     title: 'cardTable',
+    //     icon: 'lock',
+    //     roles: ['admin', 'editor'] // you can set roles in root nav
+    //   },
+    //   children: [{
+    //     path: 'index',
+    //     component: 'Table',
+    //     name: 'Table',
+    //     meta: {
+    //       title: 'Table11',
+    //       roles: ['admin'] // or you can only set roles in sub nav
+    //     }
+    //   }]
+    // },
+    // {
+    //   path: '/table2',
+    //   component: 'Layout',
+    //   alwaysShow: false, // will always show the root menu
+    //   name: 'cardTable1',
+    //   meta: {
+    //     title: 'cardTable1',
+    //     icon: 'lock',
+    //     roles: ['admin', 'editor'] // you can set roles in root nav
+    //   },
+    //   children: [{
+    //     path: 'index1',
+    //     component: 'Table1',
+    //     name: 'Table2',
+    //     meta: {
+    //       title: 'Table2',
+    //       roles: ['admin'] // or you can only set roles in sub nav
+    //     }
+    //   }]
+    // },
+    // {
+    //   path: '/table3',
+    //   component: 'Layout',
+    //   alwaysShow: false, // will always show the root menu
+    //   name: 'cardTable2',
+    //   meta: {
+    //     title: 'cardTable2',
+    //     icon: 'lock',
+    //     roles: ['admin', 'editor'] // you can set roles in root nav
+    //   },
+    //   children: [{
+    //     path: 'index3',
+    //     component: 'Table3',
+    //     name: 'Table3',
+    //     meta: {
+    //       title: 'Table3',
+    //       roles: ['admin'] // or you can only set roles in sub nav
+    //     }
+    //   }]
+  // }
 ]
 
 // export const asyncRoutes1 = [

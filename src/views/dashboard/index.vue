@@ -2,13 +2,13 @@
   <div class="dashboard-container">
     <div class="search">  
       <el-input v-model="input" placeholder="请输入标题" style="margin-right:5px"></el-input> 
-      <el-button type="danger" icon="el-icon-search"></el-button>    
+      <el-button type="danger" icon="el-icon-search" style="backgroundColor:#B40005;border:0px"></el-button>    
     </div>
     <el-divider></el-divider>
-    <p class="serchCondition"><span @click="isShowCondition">{{showCondition}}&nbsp;<i :class="showConditionIcon"></i></span></p>
+   
     
     <transition name="fade">
-    <div class="condition" v-if='showcondationDh'>
+    <div class="condition" v-if='showcondationDh' style="margin-top:10px"> 
       <el-date-picker
         v-model="value1"
         type="daterange"
@@ -27,6 +27,7 @@
       </div>
     </div>
 </transition>
+ <p class="serchCondition"><span @click="isShowCondition">{{showCondition}}&nbsp;<i :class="showConditionIcon"></i></span></p>
 <el-button style="margin-top:10px">新建</el-button>
 <el-button style="margin-top:10px">删除</el-button>
 <my-table></my-table>
@@ -123,8 +124,9 @@ $main-color : #B40005;
         border-radius: 4px;
       }
       span{
-        background: #409EFF!important;
+        background: $main-color!important;
         color: #fff;
+        box-shadow: 0 0 0 0
       }
     }
     label{

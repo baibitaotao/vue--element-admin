@@ -1,7 +1,8 @@
 <template>
   <div @click="toggleClick">
-    <img v-if="!isActive" src="@/assets/layout/logo-shrink.png" alt="">
-    <img v-if="isActive" src="@/assets/layout/logo-open.png" alt="">
+    <!-- <img v-if="!isActive" src="@/assets/layout/logo-shrink.png" alt="">
+    <img v-if="isActive" src="@/assets/layout/logo-open.png" alt=""> -->
+    <span class="header-title" style="fontFamily:'DFKai-SB'">券源后台管理系统</span>
   </div>
 </template>
 
@@ -32,4 +33,11 @@ export default {
 .hamburger.is-active {
   transform: rotate(180deg);
 }
+
+.header-title{
+    font-size: 22px;
+    color: #000;
+    font-weight: 700;
+  
+  }
 </style>

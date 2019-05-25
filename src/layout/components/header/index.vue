@@ -2,10 +2,10 @@
   <div class="header-contanier">
     <div class="img-left">
       <nav-bar />
-      <span class="header-title">项目管理</span>
+      <!-- <span class="header-title" style="fontFamily:'DFKai-SB'">券源后台管理系统</span> -->
     </div>
     <div class="user-right">
-      <img src="@/assets/layout/user-logo.png" alt="" class="user-logo">
+      <img src="@/assets/layout/user-logo.png" alt="" class="user-logo" style="borderRadius:50%;">
       <span class="user-name">{{$store.state.user.name}}</span>
     </div>
   </div>
@@ -41,7 +41,7 @@ export default {
   }
   .user-name{
     font-size: 14px;
-    color: #fff;
+    color: #000;
     padding-left: 6px;
   }
 }

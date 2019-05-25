@@ -75,6 +75,7 @@ export default {
     position: fixed;
     top: 0;
     z-index: 10;
+    background-color: #F5F5F5;
   }
   .sidebar-container{
     margin-top: 58px;

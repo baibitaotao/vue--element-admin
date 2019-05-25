@@ -1,4 +1,10 @@
 .quanyuanxuqiu{
+    .is-top{
+        ::after{
+            width:130px;
+        }
+    }
+
     .searchInput{
         width: 510px;
     }

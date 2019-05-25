@@ -10,7 +10,7 @@
 
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
-        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
+          <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title"/>    
       </template>
       <sidebar-item
         v-for="child in item.children"
@@ -57,6 +57,9 @@ export default {
     return {}
   },
   methods: {
+    goFn(){
+      console.log('触发')
+    },
     hasOneShowingChild(children = [], parent) {
       const showingChildren = children.filter(item => {
         if (item.hidden) {
