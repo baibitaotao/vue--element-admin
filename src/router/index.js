@@ -24,6 +24,7 @@ export const routerMap = {
   matching:_import('quanyuanjiaoyi/quanyuanjiaoyi-matching/index'),
   matchingFail:_import('quanyuanjiaoyi/quanyuanjiaoyi-matchingFail/index'),
   matchingSucess:_import('quanyuanjiaoyi/quanyuanjiaoyi-matchingSuccess/index'),
+  userAuditManger:_import('userAuditManger/index')
 }
 
 
@@ -346,7 +347,28 @@ export const asyncRoutes1 = [
   //       roles: ['admin']
   //     }
   //   }]
-  // }, 
+  // },
+  {
+    path: '/userAuditManger',
+    component: 'Layout',
+    redirect: '/userAuditManger/index',
+    alwaysShow: false, // will always show the root menu
+    name: 'userAuditManger',
+    meta: {
+      title: '用户审核管理',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [{
+      path: 'index',
+      component: 'userAuditManger',
+      name: 'userAuditManger',
+      meta: {
+        title: '用户审核管理',
+        roles: ['admin'] // or you can only set roles in sub nav
+      }
+    }]
+  }, 
   {
     path: '/quanyuanjiaoyiguanli',
     component: 'Layout',
