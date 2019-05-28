@@ -6,15 +6,15 @@
         <h3 class="title">券源后台管理系统</h3>
       </div>
 
-      <el-form-item prop="username">
+      <el-form-item prop="loginName">
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
         <el-input
-          ref="username"
-          v-model="loginForm.username"
+          ref="loginName"
+          v-model="loginForm.loginName"
           placeholder="Username"
-          name="username"
+          name="loginName"
           type="text"
           tabindex="1"
           auto-complete="on"
@@ -47,20 +47,6 @@
 
       <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
 
-      <!-- <div style="position:relative">
-        <div class="tips">
-          <span>Username : admin</span>
-          <span>Password : any</span>
-        </div>
-        <div class="tips">
-          <span style="margin-right:18px;">Username : editor</span>
-          <span>Password : any</span>
-        </div>
-
-        <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          Or connect with
-        </el-button>
-      </div> -->
     </el-form>
 
     <el-dialog title="Or connect with" :visible.sync="showDialog">
@@ -76,10 +62,15 @@
 <script>``
 import { validUsername } from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
+import {mapGetters} from 'vuex'
+
 
 export default {
   name: 'Login',
   components: { SocialSign },
+  computed:{
+    ...mapGetters(['token'])
+  },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
@@ -97,7 +88,7 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
+        loginName: 'admin',
         password: '111111'
       },
       loginRules: {
@@ -114,7 +105,6 @@ export default {
   watch: {
     $route: {
       handler: function(route) {
-        console.log(route)
         this.redirect = route.query && route.query.redirect
       },
       immediate: true
@@ -160,7 +150,12 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
+          let loginIfo = this.loginForm
           this.$store.dispatch('user/login', this.loginForm).then(() => {
+              this.$store.dispatch('user/getUserPermissions',this.token).then(res => {
+                  console.log(res);
+              })
+              console.log('登录成功')
               this.$router.push({ path: this.redirect || '/' })
               this.loading = false
             })

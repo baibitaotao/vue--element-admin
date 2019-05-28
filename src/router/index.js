@@ -24,7 +24,9 @@ export const routerMap = {
   matching:_import('quanyuanjiaoyi/quanyuanjiaoyi-matching/index'),
   matchingFail:_import('quanyuanjiaoyi/quanyuanjiaoyi-matchingFail/index'),
   matchingSucess:_import('quanyuanjiaoyi/quanyuanjiaoyi-matchingSuccess/index'),
-  userAuditManger:_import('userAuditManger/index')
+  userAuditManger:_import('userAuditManger/index'),
+  userAdmin:_import('userAdmin/index'),
+  quanyuanManger:_import('quanyuanManger/index')
 }
 
 
@@ -94,13 +96,13 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/quanyuanxuqiu/index',
     children: [
       {
-        path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
-        name: 'Dashboard',
-        meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+        path: 'quanyuanxuqiu',
+        component: () => import('@/views/quanyuanxuqiu/index'),
+        name: 'quanyuanxuqiu/index',
+        meta: { title: '券源需求发布审核', icon: 'dashboard', affix: true }
       }
     ]
   },
@@ -351,13 +353,12 @@ export const asyncRoutes1 = [
   {
     path: '/userAuditManger',
     component: 'Layout',
-    redirect: '/userAuditManger/index',
     alwaysShow: false, // will always show the root menu
     name: 'userAuditManger',
     meta: {
       title: '用户审核管理',
       icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+      roles: ['admin'] // you can set roles in root nav
     },
     children: [{
       path: 'index',
@@ -366,6 +367,46 @@ export const asyncRoutes1 = [
       meta: {
         title: '用户审核管理',
         roles: ['admin'] // or you can only set roles in sub nav
+      }
+    }]
+  },{
+    path: '/userAdmin',
+    component: 'Layout',
+    redirect: '/userAdmin/index',
+    alwaysShow: false, // will always show the root menu
+    name: 'userAdmin',
+    meta: {
+      title: 'userAdmin',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [{
+      path: 'index',
+      component: 'userAdmin',
+      name: 'userAdmin',
+      meta: {
+        title: '用户管理',
+      }
+    }]
+  },
+  {
+    path: '/quanyuanManger',
+    component: 'Layout',
+    redirect: '/quanyuanManger/index',
+    alwaysShow: false, // will always show the root menu
+    name: 'quanyuanManger',
+    meta: {
+      title: 'quanyuanManger',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [{
+      path: 'index',
+      component: 'quanyuanManger',
+      name: 'quanyuanManger',
+      meta: {
+        title: '券源管理',
+        roles: ['admin','editor'] // or you can only set roles in sub nav
       }
     }]
   }, 
@@ -419,8 +460,6 @@ export const asyncRoutes1 = [
   {
     path: '/quanyuanxuqiu',
     component: 'Layout',
-    redirect: '/quanyuanxuqiu/index',
-    alwaysShow: false, // will always show the root menu
     name: 'quanyuanxuqiu',
     meta: {
       title: 'quanyuanxuqiu',

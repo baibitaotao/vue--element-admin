@@ -2,11 +2,20 @@ import request from '@/utils/request'
 
 export function login(data) {
   return request({
-    url: '/user/login',
+    url: '/login',
     method: 'post',
     data
   })
 }
+
+export function getUserPermissions(token){
+  return request({
+    url: '/appFuncPermission/getUserPermissions',
+    method: 'post',
+    token
+  })
+}
+
 
 export function getInfo(token) {
   return request({
@@ -22,3 +31,4 @@ export function logout() {
     method: 'post'
   })
 }
+

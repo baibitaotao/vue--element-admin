@@ -87,22 +87,36 @@ const mutations = {
 }
 
 const actions = {
-  generateRoutes({ commit }, roles) {
+  generateRoutes({ commit }) {
     return new Promise(resolve => {
       let accessedRoutes
       setTimeout(() => {
         const serverRouterMap = asyncRoutes1
         const asyncRouterMap = generateAsyncRouter(routerMap, serverRouterMap)
-        if (roles.indexOf('admin') >= 0) {
           accessedRoutes = asyncRouterMap || []
-        } else {
-          accessedRoutes = filterAsyncRoutes(asyncRouterMap, roles)
-        }
         commit('SET_ROUTES', asyncRouterMap)
         resolve(asyncRouterMap)
       }, 1000)
     })
   }
+
+
+  // generateRoutes({ commit }, roles) {
+  //   return new Promise(resolve => {
+  //     let accessedRoutes
+  //     setTimeout(() => {
+  //       const serverRouterMap = asyncRoutes1
+  //       const asyncRouterMap = generateAsyncRouter(routerMap, serverRouterMap)
+  //       if (roles.indexOf('admin') >= 0) {
+  //         accessedRoutes = asyncRouterMap || []
+  //       } else {
+  //         accessedRoutes = filterAsyncRoutes(asyncRouterMap, roles)
+  //       }
+  //       commit('SET_ROUTES', asyncRouterMap)
+  //       resolve(asyncRouterMap)
+  //     }, 1000)
+  //   })
+  // }
 }
 
 export default {
