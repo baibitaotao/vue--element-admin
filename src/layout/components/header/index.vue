@@ -13,11 +13,15 @@
 
 <script>
 import navBar from '../navBar/index'
+import {mapState} from 'vuex'
 export default {
   components: {
     navBar
-  }
+  },
 }
+
+
+
 </script>
 
 <style lang="scss" scoped>

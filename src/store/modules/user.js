@@ -1,10 +1,10 @@
 import { login,getUserPermissions} from '@/api/user'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { getToken, setToken, removeToken ,setName,getName} from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
 const state = {
   token: getToken(),
-  name: '',
+  name: getName(),
   avatar: '',
   introduction: '',
   roles: []
@@ -35,7 +35,9 @@ const actions = {
       login({ loginName: loginName.trim(), password: password }).then(response => {
         const { data } = response
         commit('SET_TOKEN', data.data.AppSSOSessionID)
+        commit('SET_NAME', data.data.user.name)
         setToken(data.data.AppSSOSessionID)
+        setName(data.data.user.name)
         resolve()
       }).catch(error => {
         reject(error)
@@ -48,9 +50,11 @@ const actions = {
     return new Promise((resolve,reject) => {
       getUserPermissions({token:token}).then(res => {
         console.log(res)
+        resolve()
+      }).catch(err => {
+        reject(error)
       })
     })
-
   },
 
   // get user info
