@@ -7,6 +7,7 @@
     <div class="user-right">
       <img src="@/assets/layout/user-logo.png" alt="" class="user-logo" style="borderRadius:50%;">
       <span class="user-name">{{$store.state.user.name}}</span>
+      <a class="loginOut" @click="loginOutFn">登出</a>
     </div>
   </div>
 </template>
@@ -18,6 +19,13 @@ export default {
   components: {
     navBar
   },
+  methods: {
+    loginOutFn(){
+      this.$store.dispatch('user/logout')
+      location.reload() 
+     // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    }
+  }
 }
 
 
@@ -36,6 +44,15 @@ export default {
   .img-left,.user-right{
     display: flex;
     align-items: center;
+    .loginOut{
+      margin-left: 10px;
+      color:#000;
+      font-size: 14px;
+     
+    }
+  }
+  .loginOut:hover{
+    color:red;
   }
   .header-title{
     font-size: 20px;

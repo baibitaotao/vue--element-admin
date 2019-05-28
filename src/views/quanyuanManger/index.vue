@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="quanyuanManger">
         <componet :is = 'isShowAdminOrEditor'></componet>
     </div>
 </template>
@@ -23,8 +23,8 @@ export default {
             if(this.roles[0] === 'admin'){
                 return 'admin'
             }
-            else if(this.roles[0] === 'editor'){
-                return 'editor'
+            else {
+                return 'admin'
             }
         }   
     }

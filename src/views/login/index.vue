@@ -155,7 +155,6 @@ export default {
               this.$store.dispatch('user/getUserPermissions',this.token).then(res => {
                   console.log(res);
               })
-              console.log('登录成功')
               this.$router.push({ path: this.redirect || '/' })
               this.loading = false
             })
