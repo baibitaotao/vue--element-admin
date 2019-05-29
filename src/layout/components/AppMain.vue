@@ -31,7 +31,7 @@ export default {
   margin-top: 41px;
   padding: 7px 14px 0 14px;
   box-sizing: border-box;
-  background-color: #fff;
+  background: url('../../assets/quanyuanImg/backImg.jpg') no-repeat;
 }
 
 .fixed-header+.app-main {

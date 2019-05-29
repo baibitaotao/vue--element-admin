@@ -26,7 +26,9 @@ export const routerMap = {
   matchingSucess:_import('quanyuanjiaoyi/quanyuanjiaoyi-matchingSuccess/index'),
   userAuditManger:_import('userAuditManger/index'),
   userAdmin:_import('userAdmin/index'),
-  quanyuanManger:_import('quanyuanManger/index')
+  quanyuanManger:_import('quanyuanManger/index'),
+  jichushezhi:_import('jichushezhi/index'),
+  cuoheguanli:_import('jichushezhi/index'),
 }
 
 
@@ -493,70 +495,28 @@ export const asyncRoutes1 = [
       meta: {
         title: '券源供给发布审核',
         roles: ['admin'] // or you can only set roles in sub nav
-      }
-    }]
-  },
-  // {
-    //   path: '/table1',
-    //   component: 'Layout',
-    //   redirect: '/table-card/index',
-    //   alwaysShow: false, // will always show the root menu
-    //   name: 'cardTable',
-    //   meta: {
-    //     title: 'cardTable',
-    //     icon: 'lock',
-    //     roles: ['admin', 'editor'] // you can set roles in root nav
-    //   },
-    //   children: [{
-    //     path: 'index',
-    //     component: 'Table',
-    //     name: 'Table',
-    //     meta: {
-    //       title: 'Table11',
-    //       roles: ['admin'] // or you can only set roles in sub nav
-    //     }
-    //   }]
-    // },
-    // {
-    //   path: '/table2',
-    //   component: 'Layout',
-    //   alwaysShow: false, // will always show the root menu
-    //   name: 'cardTable1',
-    //   meta: {
-    //     title: 'cardTable1',
-    //     icon: 'lock',
-    //     roles: ['admin', 'editor'] // you can set roles in root nav
-    //   },
-    //   children: [{
-    //     path: 'index1',
-    //     component: 'Table1',
-    //     name: 'Table2',
-    //     meta: {
-    //       title: 'Table2',
-    //       roles: ['admin'] // or you can only set roles in sub nav
-    //     }
-    //   }]
-    // },
-    // {
-    //   path: '/table3',
-    //   component: 'Layout',
-    //   alwaysShow: false, // will always show the root menu
-    //   name: 'cardTable2',
-    //   meta: {
-    //     title: 'cardTable2',
-    //     icon: 'lock',
-    //     roles: ['admin', 'editor'] // you can set roles in root nav
-    //   },
-    //   children: [{
-    //     path: 'index3',
-    //     component: 'Table3',
-    //     name: 'Table3',
-    //     meta: {
-    //       title: 'Table3',
-    //       roles: ['admin'] // or you can only set roles in sub nav
-    //     }
-    //   }]
-  // }
+        }
+      }]
+    },
+    {
+      path: '/jichushezhi',
+      component: 'Layout',
+      redirect: '/jichushezhi/index',
+      alwaysShow: true, // will always show the root menu
+      meta: {
+        title: '基础设置',
+        icon: 'lock',  
+        },
+      children: [{
+        path: 'index',
+        component: 'jichushezhi',
+        name: 'jichushezhi',
+        meta: {
+          title: '基础设置',
+          }
+        }]
+      },
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
 // export const asyncRoutes1 = [
@@ -565,7 +525,7 @@ export const asyncRoutes1 = [
 
 const createRouter = () => new Router({
   // mode: 'history', // require service support
-  base: '/app/',
+  // base: '/app/',
   scrollBehavior: () => ({
     y: 0
   }),

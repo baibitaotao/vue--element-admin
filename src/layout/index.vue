@@ -75,7 +75,8 @@ export default {
     position: fixed;
     top: 0;
     z-index: 10;
-    background-color: #F5F5F5;
+    background:url('../assets/quanyuanImg/headerImg.png') no-repeat;
+    background-size: contain;
   }
   .sidebar-container{
     margin-top: 58px;

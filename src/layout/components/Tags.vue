@@ -1,19 +1,7 @@
 <template>
   <div v-if="showTags" class="tags">
     <!-- swiper 暂时不做 -->
-    <!-- <swiper :options="swiperOption">
-          <swiper-slide>Slide 1</swiper-slide>
-          <swiper-slide>Slide 2</swiper-slide>
-          <swiper-slide>Slide 3</swiper-slide>
-          <swiper-slide>Slide 4</swiper-slide>
-          <swiper-slide>Slide 5</swiper-slide>
-          <swiper-slide>Slide 6</swiper-slide>
-          <swiper-slide>Slide 7</swiper-slide>
-          <swiper-slide>Slide 8</swiper-slide>
-          <swiper-slide>Slide 9</swiper-slide>
-          <swiper-slide>Slide 10</swiper-slide>
-          <div class="swiper-pagination" slot="pagination"></div>
-        </swiper> -->
+    <div class="toggleClick"><i :class="icon" style="fontSize:38px" @click="toggleSideBar"></i></div>
     <ul>
       <li v-for="(item,index) in tagsList" :key="index" class="tags-li" :class="{'active': isActive(item.path)}">
         <router-link :to="item.path" class="tags-li-title">
@@ -47,6 +35,7 @@ export default {
   },
   data() {
     return {
+      icon:'el-icon-s-unfold',
       tagsList: [],
       swiperOption: {
         direction: 'horizontal',
@@ -71,7 +60,6 @@ export default {
       if (newValue.hash) {
         return
       }
-      console.log('newValue==', newValue)
       this.setTags(newValue)
     }
   },
@@ -96,6 +84,16 @@ export default {
     })
   },
   methods: {
+    toggleSideBar(){
+      if(this.icon === 'el-icon-s-unfold'){
+          this.icon = 'el-icon-s-fold'
+      }
+      else if(this.icon === 'el-icon-s-fold'){
+          this.icon = 'el-icon-s-unfold'
+      }
+
+      this.$store.dispatch('app/toggleSideBar')
+    },
     isActive(path) {
       return path === this.$route.fullPath
     },
@@ -155,6 +153,11 @@ export default {
       background: #fff;
       padding-right: 78px;
       // box-shadow: 0 5px 10px #ddd;
+      .toggleClick{
+        position: absolute;
+        left:0;
+
+      }
       .swiper-container{
         height: 100%;
       }

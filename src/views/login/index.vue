@@ -151,7 +151,7 @@ export default {
         if (valid) {
           this.loading = true
           let loginIfo = this.loginForm
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
+          this.$store.dispatch('user/login', this.loginForm).then((res) => {
               this.$store.dispatch('user/getUserPermissions',this.token).then(res => {
                   console.log(res);
               })

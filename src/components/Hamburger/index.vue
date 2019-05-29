@@ -2,7 +2,8 @@
   <div @click="toggleClick">
     <!-- <img v-if="!isActive" src="@/assets/layout/logo-shrink.png" alt="">
     <img v-if="isActive" src="@/assets/layout/logo-open.png" alt=""> -->
-    <span class="header-title" style="fontFamily:'DFKai-SB'">券源后台管理系统</span>
+    <!-- <span class="header-title" style="fontFamily:'DFKai-SB'">券源后台管理系统</span> -->
+    <img src="../../assets/quanyuanImg/log.png" alt="" style="height:30px;">
   </div>
 </template>
 
@@ -17,7 +18,7 @@ export default {
   },
   methods: {
     toggleClick() {
-      this.$emit('toggleClick')
+      //  this.$emit('toggleClick')
     }
   }
 }

@@ -35,6 +35,11 @@ service.interceptors.request.use(
   }
 )
 
+
+// service.interceptors.response.use(res => {
+//   console.log(res)
+// })
+
 // response interceptor
   // service.interceptors.response.use(
   //   /**

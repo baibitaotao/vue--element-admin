@@ -38,7 +38,7 @@ const actions = {
         commit('SET_NAME', data.data.user.name)
         setToken(data.data.AppSSOSessionID)
         setName(data.data.user.name)
-        resolve()
+        resolve(response.data)
       }).catch(error => {
         reject(error)
       })
@@ -49,8 +49,7 @@ const actions = {
   getUserPermissions({commit},token){
     return new Promise((resolve,reject) => {
       getUserPermissions({token:token}).then(res => {
-        console.log(res)
-        resolve()
+      resolve(res.data)
       }).catch(err => {
         reject(error)
       })
@@ -86,7 +85,8 @@ const actions = {
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
+      logout().then((res) => {
+        console.log(res)
         commit('SET_TOKEN', '')
         commit('SET_NAME', '')
         removeToken()

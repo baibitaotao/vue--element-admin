@@ -21,9 +21,10 @@ export default {
   },
   methods: {
     loginOutFn(){
-      this.$store.dispatch('user/logout')
-      location.reload() 
-     // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      this.$store.dispatch('user/logout').then(() =>{
+         location.reload() 
+      })  
+      // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }
 }
@@ -36,7 +37,6 @@ export default {
 .header-contanier{
   width: 100%;
   height: 58px;
-  // line-height: 58px;
   background-color: #b40005;
   padding: 0 25px;
   display: flex;
