@@ -1,0 +1,15 @@
+.chujie{
+    font-size: 12px;
+    margin:10px 0;
+    >div{
+        display: flex;
+        align-items: center;
+        >span{
+            margin: 0 10px;
+        }
+        >textarea{
+            resize:none;
+        }
+    }
+
+}
