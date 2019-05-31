@@ -32,6 +32,8 @@ export const routerMap = {
   bannerguanli:_import('bannerguanli/index'),
   anyue:_import('cuoheguanli/anyue'),
   peidui:_import('cuoheguanli/peidui'),
+  wanzhenweidu:_import('baobiaoguanli/index'),
+  quanyuanweidu:_import('baobiaoguanli/index'),
 }
 
 
@@ -530,7 +532,7 @@ export const asyncRoutes1 = [
     alwaysShow: false, // will always show the root menu
     name: 'cuoheguanli',
     meta: {
-      title: 'userAdmin',
+      title: '撮合管理',
       icon: 'lock',
     },
     children: [{
@@ -550,6 +552,34 @@ export const asyncRoutes1 = [
       }
     }]
   },
+  {
+    path: '/baobiaoguanli',
+    component: 'Layout',
+    redirect: '/baobiaoguanli/wanzhenweidu',
+    alwaysShow: false, // will always show the root menu
+    name: 'baobiaoguanli',
+    meta: {
+      title: '报表管理',
+      icon: 'lock',
+    },
+    children: [{
+      path: 'wanzhenweidu',
+      component: 'wanzhenweidu',
+      name: 'wanzhenweidu',
+      meta: {
+        title: '完整维度',
+      }
+    },
+    {
+      path: 'quanyuanweidu',
+      component: 'quanyuanweidu',
+      name: 'quanyuanweidu',
+      meta: {
+        title: '具体券源维度',
+      }
+    }]
+  },
+
   { path: '*', redirect: '/404', hidden: true }
 ]
 
