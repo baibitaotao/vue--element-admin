@@ -318,270 +318,271 @@ export const asyncRoutes = [
 ]
 
 // 假设后端
-// export const asyncRoutes1 = [
+export const asyncRoutes1 = [
+  {
+    path: '/userAuditManger',
+    component: 'Layout',
+    alwaysShow: false, // will always show the root menu
+    redirect:'/userAuditMange/index',
+    name: 'userAuditManger',
+    meta: {
+      title: '用户审核管理',
+      icon: 'lock',
+      roles: ['admin'] // you can set roles in root nav
+    },
+    children: [{
+      path: 'index',
+      component: 'userAuditManger',
+      name: 'userAuditManger',
+      meta: {
+        title: '用户审核管理',
+        roles: ['admin'] // or you can only set roles in sub nav
+      }
+    }]
+  },{
+    path: '/userAdmin',
+    component: 'Layout',
+    redirect: '/userAdmin/index',
+    alwaysShow: false, // will always show the root menu
+    name: 'userAdmin',
+    meta: {
+      title: 'userAdmin',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [{
+      path: 'index',
+      component: 'userAdmin',
+      name: 'userAdmin',
+      meta: {
+        title: '用户管理',
+      }
+    }]
+  },
+  {
+    path: '/quanyuanManger',
+    component: 'Layout',
+    redirect: '/quanyuanManger/index',
+    alwaysShow: false, // will always show the root menu
+    name: 'quanyuanManger',
+    meta: {
+      title: 'quanyuanManger',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [{
+      path: 'index',
+      component: 'quanyuanManger',
+      name: 'quanyuanManger',
+      meta: {
+        title: '券源管理',
+        roles: ['admin','editor'] // or you can only set roles in sub nav
+      }
+    }]
+  }, 
+  {
+    path: '/quanyuanjiaoyiguanli',
+    component: 'Layout',
+    redirect: '/quanyuanjiaoyiguanli',
+    alwaysShow: false, // will always show the root menu
+    name: 'quanyuanjiaoyiguanli',
+    meta: {
+      title: '券源交易管理',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [{
+      path: 'wait-matching',
+      component: 'waitmatching',
+      name: 'wait-matching',
+      meta: {
+        title: '交易进度-待撮合',
+        roles: ['admin'] // or you can only set roles in sub nav
+      }
+    },
+    {
+      path: 'matching',
+      component: 'matching',
+      name: 'matching',
+      meta: {
+        title: '交易进度-撮合中',
+        roles: ['admin']
+      // if do not set roles, means: this page does not require permission
+      }
+    }, {
+      path: 'matching-success',
+      component: 'matchingSucess',
+      name: 'matching-success',
+      meta: {
+        title: '交易进度-撮合成功',
+        roles: ['admin']
+      }
+     },{
+      path: 'matching-fail',
+      component: 'matchingFail',
+      name: 'matching-fail',
+      meta: {
+        title: '交易进度-撮合失败',
+        roles: ['admin']
+      }
+     }]
+    },
+  {
+    path: '/quanyuanxuqiu',
+    component: 'Layout',
+    name: 'quanyuanxuqiu',
+    meta: {
+      title: 'quanyuanxuqiu',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [{
+      path: 'index',
+      component: 'quanyuanxuqiu',
+      name: 'quanyuanxuqiu',
+      meta: {
+        title: '券源需求发布审核',
+        roles: ['admin'] // or you can only set roles in sub nav
+      }
+    }]
+  }, {
+    path: '/quanyuangonji',
+    component: 'Layout',
+    redirect: '/quanyuangonji/index',
+    alwaysShow: false, // will always show the root menu
+    name: 'quanyuangonji',
+    meta: {
+      title: 'quanyuangonji',
+      icon: 'lock',
+      roles: ['admin', 'editor'] // you can set roles in root nav
+    },
+    children: [{
+      path: 'index',
+      component: 'quanyuangonji',
+      name: 'quanyuangonji',
+      meta: {
+        title: '券源供给发布审核',
+        roles: ['admin'] // or you can only set roles in sub nav
+        }
+      }]
+    },
+    {
+      path: '/jichushezhi',
+      component: 'Layout',
+      redirect: '/jichushezhi/index',
+      alwaysShow: true, // will always show the root menu
+      meta: {
+        title: '基础设置',
+        icon: 'lock',  
+        },
+      children: [{
+        path: 'index',
+        component: 'jichushezhi',
+        name: 'jichushezhi',
+        meta: {
+          title: '基础设置',
+          }
+        }]
+      },
+      {
+        path: '/gangweiguanli',
+        component: 'Layout',
+        redirect: '/gangweiguanli/index',
+        alwaysShow: true, // will always show the root menu
+        meta: {
+          title: '岗位管理',
+          icon: 'lock',  
+          },
+        children: [{
+          path: 'index',
+          component: 'gangweiguanli',
+          name: 'gangweiguanli',
+          meta: {
+            title: '岗位管理',
+            }
+          }]
+        },{
+        path: '/bannerguanli',
+        component: 'Layout',
+        redirect: '/bannerguanli/index',
+        alwaysShow: true, // will always show the root menu
+        meta: {
+          title: 'banner图管理',
+          icon: 'lock',  
+          },
+        children: [{
+          path: 'index',
+          component: 'bannerguanli',
+          name: 'bannerguanli',
+          meta: {
+            title: 'banner图管理',
+            }
+          }]
+
+        },
+
+  { path: '*', redirect: '/404', hidden: true }
+]
+
+
+// export const asyncRoutes1 = [ 
 //   {
-//     path: '/userAuditManger',
+//     path: '/cuoheguanli',
 //     component: 'Layout',
+//     redirect: '/cuoheguanli/anyue',
 //     alwaysShow: false, // will always show the root menu
-//     name: 'userAuditManger',
+//     name: 'cuoheguanli',
 //     meta: {
-//       title: '用户审核管理',
+//       title: '撮合管理',
 //       icon: 'lock',
-//       roles: ['admin'] // you can set roles in root nav
 //     },
 //     children: [{
-//       path: 'index',
-//       component: 'userAuditManger',
-//       name: 'userAuditManger',
+//       path: 'anyue',
+//       component: 'anyue',
+//       name: 'anyue',
 //       meta: {
-//         title: '用户审核管理',
-//         roles: ['admin'] // or you can only set roles in sub nav
+//         title: '券源按约分配管理',
 //       }
-//     }]
-//   },{
-//     path: '/userAdmin',
-//     component: 'Layout',
-//     redirect: '/userAdmin/index',
-//     alwaysShow: false, // will always show the root menu
-//     name: 'userAdmin',
-//     meta: {
-//       title: 'userAdmin',
-//       icon: 'lock',
-//       roles: ['admin', 'editor'] // you can set roles in root nav
 //     },
-//     children: [{
-//       path: 'index',
-//       component: 'userAdmin',
+//     {
+//       path: 'abc',
+//       component: 'anyue',
 //       name: 'userAdmin',
 //       meta: {
-//         title: '用户管理',
+//         title: '券源配对管理',
 //       }
 //     }]
 //   },
 //   {
-//     path: '/quanyuanManger',
+//     path: '/baobiaoguanli',
 //     component: 'Layout',
-//     redirect: '/quanyuanManger/index',
+//     redirect: '/baobiaoguanli/wanzhenweidu',
 //     alwaysShow: false, // will always show the root menu
-//     name: 'quanyuanManger',
+//     name: 'baobiaoguanli',
 //     meta: {
-//       title: 'quanyuanManger',
+//       title: '报表管理',
 //       icon: 'lock',
-//       roles: ['admin', 'editor'] // you can set roles in root nav
 //     },
 //     children: [{
-//       path: 'index',
-//       component: 'quanyuanManger',
-//       name: 'quanyuanManger',
+//       path: 'wanzhenweidu',
+//       component: 'wanzhenweidu',
+//       name: 'wanzhenweidu',
 //       meta: {
-//         title: '券源管理',
-//         roles: ['admin','editor'] // or you can only set roles in sub nav
-//       }
-//     }]
-//   }, 
-//   {
-//     path: '/quanyuanjiaoyiguanli',
-//     component: 'Layout',
-//     redirect: '/quanyuanjiaoyiguanli',
-//     alwaysShow: false, // will always show the root menu
-//     name: 'quanyuanjiaoyiguanli',
-//     meta: {
-//       title: '券源交易管理',
-//       icon: 'lock',
-//       roles: ['admin', 'editor'] // you can set roles in root nav
-//     },
-//     children: [{
-//       path: 'wait-matching',
-//       component: 'waitmatching',
-//       name: 'wait-matching',
-//       meta: {
-//         title: '交易进度-待撮合',
-//         roles: ['admin'] // or you can only set roles in sub nav
+//         title: '完整维度',
 //       }
 //     },
 //     {
-//       path: 'matching',
-//       component: 'matching',
-//       name: 'matching',
+//       path: 'quanyuanweidu',
+//       component: 'quanyuanweidu',
+//       name: 'quanyuanweidu',
 //       meta: {
-//         title: '交易进度-撮合中',
-//         roles: ['admin']
-//       // if do not set roles, means: this page does not require permission
-//       }
-//     }, {
-//       path: 'matching-success',
-//       component: 'matchingSucess',
-//       name: 'matching-success',
-//       meta: {
-//         title: '交易进度-撮合成功',
-//         roles: ['admin']
-//       }
-//      },{
-//       path: 'matching-fail',
-//       component: 'matchingFail',
-//       name: 'matching-fail',
-//       meta: {
-//         title: '交易进度-撮合失败',
-//         roles: ['admin']
-//       }
-//      }]
-//     },
-//   {
-//     path: '/quanyuanxuqiu',
-//     component: 'Layout',
-//     name: 'quanyuanxuqiu',
-//     meta: {
-//       title: 'quanyuanxuqiu',
-//       icon: 'lock',
-//       roles: ['admin', 'editor'] // you can set roles in root nav
-//     },
-//     children: [{
-//       path: 'index',
-//       component: 'quanyuanxuqiu',
-//       name: 'quanyuanxuqiu',
-//       meta: {
-//         title: '券源需求发布审核',
-//         roles: ['admin'] // or you can only set roles in sub nav
+//         title: '具体券源维度',
 //       }
 //     }]
-//   }, {
-//     path: '/quanyuangonji',
-//     component: 'Layout',
-//     redirect: '/quanyuangonji/index',
-//     alwaysShow: false, // will always show the root menu
-//     name: 'quanyuangonji',
-//     meta: {
-//       title: 'quanyuangonji',
-//       icon: 'lock',
-//       roles: ['admin', 'editor'] // you can set roles in root nav
-//     },
-//     children: [{
-//       path: 'index',
-//       component: 'quanyuangonji',
-//       name: 'quanyuangonji',
-//       meta: {
-//         title: '券源供给发布审核',
-//         roles: ['admin'] // or you can only set roles in sub nav
-//         }
-//       }]
-//     },
-//     {
-//       path: '/jichushezhi',
-//       component: 'Layout',
-//       redirect: '/jichushezhi/index',
-//       alwaysShow: true, // will always show the root menu
-//       meta: {
-//         title: '基础设置',
-//         icon: 'lock',  
-//         },
-//       children: [{
-//         path: 'index',
-//         component: 'jichushezhi',
-//         name: 'jichushezhi',
-//         meta: {
-//           title: '基础设置',
-//           }
-//         }]
-//       },
-//       {
-//         path: '/gangweiguanli',
-//         component: 'Layout',
-//         redirect: '/gangweiguanli/index',
-//         alwaysShow: true, // will always show the root menu
-//         meta: {
-//           title: '岗位管理',
-//           icon: 'lock',  
-//           },
-//         children: [{
-//           path: 'index',
-//           component: 'gangweiguanli',
-//           name: 'gangweiguanli',
-//           meta: {
-//             title: '岗位管理',
-//             }
-//           }]
-//         },{
-//         path: '/bannerguanli',
-//         component: 'Layout',
-//         redirect: '/bannerguanli/index',
-//         alwaysShow: true, // will always show the root menu
-//         meta: {
-//           title: 'banner图管理',
-//           icon: 'lock',  
-//           },
-//         children: [{
-//           path: 'index',
-//           component: 'bannerguanli',
-//           name: 'bannerguanli',
-//           meta: {
-//             title: 'banner图管理',
-//             }
-//           }]
-
-//         },
+//   },
 
 //   { path: '*', redirect: '/404', hidden: true }
 // ]
-
-
-export const asyncRoutes1 = [ 
-  {
-    path: '/cuoheguanli',
-    component: 'Layout',
-    redirect: '/cuoheguanli/anyue',
-    alwaysShow: false, // will always show the root menu
-    name: 'cuoheguanli',
-    meta: {
-      title: '撮合管理',
-      icon: 'lock',
-    },
-    children: [{
-      path: 'anyue',
-      component: 'anyue',
-      name: 'anyue',
-      meta: {
-        title: '券源按约分配管理',
-      }
-    },
-    {
-      path: 'abc',
-      component: 'anyue',
-      name: 'userAdmin',
-      meta: {
-        title: '券源配对管理',
-      }
-    }]
-  },
-  {
-    path: '/baobiaoguanli',
-    component: 'Layout',
-    redirect: '/baobiaoguanli/wanzhenweidu',
-    alwaysShow: false, // will always show the root menu
-    name: 'baobiaoguanli',
-    meta: {
-      title: '报表管理',
-      icon: 'lock',
-    },
-    children: [{
-      path: 'wanzhenweidu',
-      component: 'wanzhenweidu',
-      name: 'wanzhenweidu',
-      meta: {
-        title: '完整维度',
-      }
-    },
-    {
-      path: 'quanyuanweidu',
-      component: 'quanyuanweidu',
-      name: 'quanyuanweidu',
-      meta: {
-        title: '具体券源维度',
-      }
-    }]
-  },
-
-  { path: '*', redirect: '/404', hidden: true }
-]
 
 
 

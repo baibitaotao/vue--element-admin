@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+
 import {
   MessageBox,
   Message
@@ -24,7 +25,9 @@ service.interceptors.request.use(
     // Do something before request is sent
     if (store.getters.token) {
       // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-      config.headers['X-Token'] = getToken()
+      // config.headers['X-Token'] = getToken()
+      config.headers['AppSSOSessionID'] = getToken()
+      
     }
     return config
   },
@@ -34,6 +37,17 @@ service.interceptors.request.use(
     return Promise.reject(error)
   }
 )
+
+service.interceptors.response.use(res => {
+  console.log(res.status)
+      if(res.status !== 200){
+        Message({
+           message: res.status || 'error',
+           type: 'error',
+           duration: 3 * 1000
+         })
+      }
+})
 
 
 // service.interceptors.response.use(res => {

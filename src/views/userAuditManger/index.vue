@@ -14,7 +14,21 @@ export default {
        admin,
        editor 
     },
-
+    mounted () {
+        let data = {
+             "accountFlag": 1,
+             "approveStatus": "01",
+             "createDtBegin": "2019-05-10",
+             "createDtEnd": "2019-05-20",
+             "currPage": 1,
+             "keyWord": 17712678377,
+             "order": 1,
+             "pageSize": 10,
+             "registerType": "01",
+             "sort": 1
+            }
+    this.$store.dispatch('userAuditManger/userApproval',data)     
+    },
     computed:{
         ...mapGetters([
             'roles'

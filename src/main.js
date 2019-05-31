@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import Vue from 'vue'
+import axios from 'axios'
 
 import Cookies from 'js-cookie'
 
@@ -38,6 +39,10 @@ Vue.use(BootstrapVue)
 Vue.use(Element, {
   size: Cookies.get('size') || 'medium' // set element-ui default size
 })
+
+
+
+
 
 // register global utility filters
 Object.keys(filters).forEach(key => {
