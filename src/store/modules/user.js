@@ -34,6 +34,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ loginName: loginName.trim(), password: password }).then(response => {
         const { data } = response
+        console.log('okoko')
         commit('SET_TOKEN', data.data.AppSSOSessionID)
         commit('SET_NAME', data.data.user.name)
         setToken(data.data.AppSSOSessionID)

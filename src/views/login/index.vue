@@ -152,11 +152,13 @@ export default {
           this.loading = true
           let loginIfo = this.loginForm
           this.$store.dispatch('user/login', this.loginForm).then((res) => {
+            
+              this.$router.push({ path: this.redirect || '/' })
+              this.loading = false
               this.$store.dispatch('user/getUserPermissions',this.token).then(res => {
                   // console.log(res);
               })
-              this.$router.push({ path: this.redirect || '/' })
-              this.loading = false
+            
             })
             .catch(() => {
               this.loading = false

@@ -22,6 +22,9 @@ import userComponent from './guanliyuanComponent/index'
 import {mapGetters} from 'vuex'
 
   export default {
+    mounted () {
+      console.log(this.$route.matched)
+    },
     components:{
         daiShenhe,
         yiShenhe,

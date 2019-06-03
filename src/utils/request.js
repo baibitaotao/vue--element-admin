@@ -33,13 +33,12 @@ service.interceptors.request.use(
   },
   error => {
     // Do something with request error
-    console.log(error) // for debug
+    // console.log(error) // for debug
     return Promise.reject(error)
   }
 )
 
 service.interceptors.response.use(res => {
-  console.log(res.status)
       if(res.status !== 200){
         Message({
            message: res.status || 'error',
@@ -47,6 +46,7 @@ service.interceptors.response.use(res => {
            duration: 3 * 1000
          })
       }
+      return res
 })
 
 

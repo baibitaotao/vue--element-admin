@@ -80,6 +80,7 @@ export default {
   }
   .sidebar-container{
     margin-top: 58px;
+    padding-bottom: 58px;
   }
 
   .drawer-bg {
