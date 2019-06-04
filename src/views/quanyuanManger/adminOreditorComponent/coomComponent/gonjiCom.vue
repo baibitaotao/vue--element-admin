@@ -18,7 +18,7 @@
                  </el-date-picker>
                 </div>
 
-                <div style="marginTop:10px;width:400px" class="accountManager">
+                <div style="marginTop:10px;width:400px" class="accountManager" v-if="!isAdminOrManger">
                  <span style="fontSize:12px;width: 100px;">所属客户经理</span>
                     <el-select v-model="value" filterable placeholder="请选择">
                     <el-option
@@ -51,7 +51,8 @@
         
              </div>
          </transition>
-     <el-divider><a style="color:#B40005" @click="conditionsOn">{{showCondition}}&nbsp;&nbsp;<i :class="showConditionIcon"></i></a></el-divider>   
+          <el-divider><a style="color:#B40005" @click="conditionsOn">{{showCondition}}&nbsp;&nbsp;<i :class="showConditionIcon"></i></a></el-divider>   
+          <div><el-button v-if="isAdminOrManger" >发布券源供给</el-button></div>
           <my-table></my-table>      
     </div>
 </template>
@@ -59,6 +60,7 @@
 
 <script>
 import myTable from '../../../table/index'
+import {mapGetters} from 'vuex'
 
 export default {
     components:{
@@ -68,6 +70,17 @@ export default {
         whitchActive:String,
     },
     computed:{
+        isAdminOrManger(){
+          if(this.roles[0] === 'admin'){
+            return true
+          }
+          else if(this.roles[0] === 'manger'){
+            return false
+          } 
+        },
+        ...mapGetters([
+            'roles'
+        ]),
         isShowUsertype(){
             if(this.whitchActive == 'first'){
                 return false

@@ -34,14 +34,15 @@ export default {
             'roles'
         ]),
         isShowAdminOrEditor(){
-            if(this.roles[0] === 'admin'){
+            if(this.roles[0]){
                 return 'admin'
             }
             else {
                 return 'admin'
             }
         }   
-    }
+    },
+  
 }
 </script>
 

@@ -17,58 +17,30 @@ router.beforeEach(async(to, from, next) => {
   NProgress.start()
   // set page title
   document.title = getPageTitle(to.meta.title)
-
   // determine whether the user has logged in
   const hasToken = getToken()
 
   if (hasToken) {
+
+
+    if(to.meta.roles){
+      store.dispatch('user/setRoles', to.meta.roles)
+    }else{
+      console.log('检查角色')
+    }
+    
+
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
-      next({ path: '/' })
+      next()
       NProgress.done()
     } else {
-      // determine whether the user has obtained his permission roles through getInfo
+              // determine whether the user has obtained his permission roles through getInfo
               //  const hasRoles = store.getters.roles && store.getters.roles.length > 0
              next()
              const accessRoutes = await store.dispatch('permission/generateRoutes')
              router.addRoutes(accessRoutes)
              NProgress.done()
-
-        // if (hasRoles) {
-        //   next()
-        // } else {
-        //   try {
-        //     // get user info
-        //     // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-        //     // 获取roles 角色权限
-
-        //     const { roles } = await store.dispatch('user/getInfo')
-            
-        //     // console.log('==roles==')
-        //     // console.log(roles)
-
-        //     // generate accessible routes map based on roles
-        //     // 基于角色生成可访问的路由映射
-        //     // Action 通过 store.dispatch 方法触发
-
-        //     const accessRoutes = await store.dispatch('permission/generateRoutes', roles)
-        //     // console.log('==accessRoutes==')
-        //     // console.log(accessRoutes)
-
-        //     // dynamically add accessible routes
-        //     router.addRoutes(accessRoutes)
-
-        //     // hack method to ensure that addRoutes is complete
-        //     // set the replace: true, so the navigation will not leave a history record
-        //     next({ ...to, replace: true })
-        //   } catch (error) {
-        //     // remove token and go to login page to re-login
-        //     await store.dispatch('user/resetToken')
-        //     Message.error(error || 'Has Error')
-        //     next(`/login?redirect=${to.path}`)
-        //     NProgress.done()
-        //   }
-        // }
     }
   } else {
     /* has no token*/

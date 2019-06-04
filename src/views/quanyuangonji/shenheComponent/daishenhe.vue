@@ -18,7 +18,15 @@
             </el-date-picker>
       </div>
       <div style="margin-top:10px">
-        <el-button type="primary" plain>审核通过</el-button>
+       <div style="margin-top: 10px">
+         <span style="margin-right:16px;font-size:14px">用户类型</span>
+            <el-radio-group v-model="radio3" size="medium">
+              <el-radio-button label="全部"></el-radio-button>
+              <el-radio-button label="融入方"></el-radio-button>
+              <el-radio-button label="融出方"></el-radio-button>
+            </el-radio-group>
+       </div>
+       <div><el-button @click = auditApprove>审核通过</el-button></div>
       </div>
       <div style="margin-top:10px">
           <el-table
@@ -73,6 +81,9 @@ export default {
     }
   },
   methods: {
+    auditApprove(){
+      
+    },  
     selectCondation(){
       console.log('okoko')
     }

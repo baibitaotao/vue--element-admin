@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     goFn(){
-      console.log('触发')
+     
     },
     hasOneShowingChild(children = [], parent) {
       const showingChildren = children.filter(item => {

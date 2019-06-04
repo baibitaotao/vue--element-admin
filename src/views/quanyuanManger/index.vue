@@ -1,33 +1,32 @@
 <template>
     <div class="quanyuanManger">
-        <componet :is = 'isShowAdminOrEditor'></componet>
+        <quanyuan-manger></quanyuan-manger>
     </div>
 </template>
 
 
 <script>
+
+import quanyuanManger from './adminOreditorComponent/quanyuanManger'
 import {mapGetters} from 'vuex'
-import admin from './adminOreditorComponent/admin'
-import editor from './adminOreditorComponent/editor'
 export default {
     components:{
-       admin,
-       editor 
+       quanyuanManger
     },
-
-    computed:{
+    computed:{  
         ...mapGetters([
             'roles'
         ]),
-        isShowAdminOrEditor(){
+        isShowAdminOrManger(){
             if(this.roles[0] === 'admin'){
                 return 'admin'
             }
-            else {
-                return 'admin'
+            else if(this.roles[0] === 'manger'){
+                return 'manger'
             }
         }   
-    }
+    },
+ 
 }
 </script>
 

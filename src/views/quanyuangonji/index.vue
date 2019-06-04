@@ -1,7 +1,7 @@
 <template>
-<div class="quanyuangonji">
-    <h4>券源供给发布审核</h4>
-    <el-tabs v-model="activeName" @tab-click="handleClick" v-if="isShowshenhe">
+<div class="qaunyuangonji">
+    <h4>{{roles|quanyuanTitle}}</h4>
+    <el-tabs v-model="activeName" @tab-click="handleClick" v-if = '!isShowshenhe'>
     <el-tab-pane label="待审核" name="first">
             <dai-shenhe></dai-shenhe>
     </el-tab-pane>
@@ -9,41 +9,35 @@
             <yi-shenhe></yi-shenhe>
     </el-tab-pane>
   </el-tabs>
-
-   <div class="userComponent" v-if = '!isShowshenhe' style="margin-top:10px">
+  
+  <div v-if = 'isShowshenhe' style="margin-top:10px">
       <user-component></user-component>
   </div>
-
 </div>
  
 </template>
 <script>
 import daiShenhe from './shenheComponent/daishenhe'
 import yiShenhe from './shenheComponent/yishenhe'
-import userComponent from './userComponent/index'
+import userComponent from './guanliyuanComponent/index'
 import {mapGetters} from 'vuex'
 
   export default {
+  
     components:{
         daiShenhe,
         yiShenhe,
         userComponent
     },
-    computed:{
-     ...mapGetters([
-     'roles'
-       ]),
-     isShowshenhe(){
-      if(this.roles[0] === 'admin'){
-        return false
-      }
-      else if(this.roles[0] === '业务管理员'){
-        return true
-       }
-      }
-    },
     filters: {
-      
+      quanyuanTitle(val){
+        if(val[0] === 'admin'){
+          return '券源供给发布审核'
+        }
+        else if(val[0] === '业务管理员'){
+          return '券源供给审核'
+        }
+      } 
     },
     data() {
       return {
@@ -52,8 +46,20 @@ import {mapGetters} from 'vuex'
     },
     methods: {
       handleClick(tab, event) {
-        console.log(tab, event);
+      },
+    }, 
+  computed: {
+    ...mapGetters([
+      'roles'
+    ]),
+    isShowshenhe(){
+      if(this.roles[0] === 'admin'){
+        return true
       }
-    }
-  }
+      else if(this.roles[0] === 'manger'){
+        return false
+      }
+    }  
+  },
+  };
 </script>

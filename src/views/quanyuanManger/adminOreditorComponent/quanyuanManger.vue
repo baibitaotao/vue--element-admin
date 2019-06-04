@@ -2,21 +2,25 @@
     <div class="quanyuanMangerAdmin">
           <el-tabs v-model="activeName" @tab-click="handleClick">
               <el-tab-pane label="券源供给" name="first">
-                 <coom-component :whitchActive = 'activeName'></coom-component> 
+                 <gonji-com></gonji-com>
               </el-tab-pane>
               <el-tab-pane label="券源需求" name="second">
-                  <coom-component :whitchActive = 'activeName'></coom-component>
+                  <xuqiu-com></xuqiu-com>
               </el-tab-pane>
          </el-tabs>
     </div>
 </template>
 
 <script>
- import coomComponent from './coomComponent/index'
+ import gonjiCom from './coomComponent/gonjiCom'
+ import xuqiuCom from './coomComponent/xuqiuCom'
+
 export default {
     components:{
-        coomComponent,
+        gonjiCom,
+        xuqiuCom
     },
+
     data () {
         return {
            activeName:'first' 

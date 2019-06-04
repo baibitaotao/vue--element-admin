@@ -35,6 +35,7 @@ export const routerMap = {
   peidui:_import('cuoheguanli/peidui'),
   wanzhenweidu:_import('baobiaoguanli/index'),
   quanyuanweidu:_import('baobiaoguanli/index'),
+  accountManagerManagement:_import('accountManagerManagement/index')
 }
 
 
@@ -101,44 +102,20 @@ export const constantRoutes = [
     component: () => import('@/views/error-page/401'),
     hidden: true
   },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/quanyuanxuqiu/index',
-    children: [
-      {
-        path: 'quanyuanxuqiu',
-        component: () => import('@/views/quanyuanxuqiu/index'),
-        name: 'quanyuanxuqiu/index',
-        meta: { title: '券源需求发布审核', icon: 'dashboard', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/documentation',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/documentation/index'),
-        name: 'Documentation',
-        meta: { title: 'Documentation', icon: 'documentation', affix: true }
-      }
-    ]
-  },
-  {
-    path: '/guide',
-    component: Layout,
-    redirect: '/guide/index',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/guide/index'),
-        name: 'Guide',
-        meta: { title: 'Guide', icon: 'guide', noCache: true }
-      }
-    ]
-  }
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/quanyuanxuqiu/index',
+  //   children: [
+  //     {
+  //       path: 'quanyuanxuqiu',
+  //       component: () => import('@/views/quanyuanxuqiu/index'),
+  //       name: 'quanyuanxuqiu/index',
+  //       meta: { title: '券源需求发布审核', icon: 'dashboard', affix: true }
+  //     }
+  //   ]
+  // },
+
 ]
 
 /**
@@ -146,177 +123,177 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  * 需要根据用户角色动态加载的路由
  */
-export const asyncRoutes = [
-  {
-    path: '/permission',
-    component: Layout,
-    redirect: '/permission/page',
-    alwaysShow: true, // will always show the root menu
-    name: 'Permission',
-    meta: {
-      title: 'Permission',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [
-      {
-        path: 'page',
-        component: () => import('@/views/permission/page'),
-        name: 'PagePermission',
-        meta: {
-          title: 'Page Permission',
-          roles: ['admin'] // or you can only set roles in sub nav
-        }
-      },
-      {
-        path: 'directive',
-        component: () => import('@/views/permission/directive'),
-        name: 'DirectivePermission',
-        meta: {
-          title: 'Directive Permission'
-          // if do not set roles, means: this page does not require permission
-        }
-      },
-      {
-        path: 'role',
-        component: () => import('@/views/permission/role'),
-        name: 'RolePermission',
-        meta: {
-          title: 'Role Permission',
-          roles: ['admin']
-        }
-      }
-    ]
-  },
+// export const asyncRoutes = [
+//   {
+//     path: '/permission',
+//     component: Layout,
+//     redirect: '/permission/page',
+//     alwaysShow: true, // will always show the root menu
+//     name: 'Permission',
+//     meta: {
+//       title: 'Permission',
+//       icon: 'lock',
+//       roles: ['admin', 'editor'] // you can set roles in root nav
+//     },
+//     children: [
+//       {
+//         path: 'page',
+//         component: () => import('@/views/permission/page'),
+//         name: 'PagePermission',
+//         meta: {
+//           title: 'Page Permission',
+//           roles: ['admin'] // or you can only set roles in sub nav
+//         }
+//       },
+//       {
+//         path: 'directive',
+//         component: () => import('@/views/permission/directive'),
+//         name: 'DirectivePermission',
+//         meta: {
+//           title: 'Directive Permission'
+//           // if do not set roles, means: this page does not require permission
+//         }
+//       },
+//       {
+//         path: 'role',
+//         component: () => import('@/views/permission/role'),
+//         name: 'RolePermission',
+//         meta: {
+//           title: 'Role Permission',
+//           roles: ['admin']
+//         }
+//       }
+//     ]
+//   },
 
-  {
-    path: '/icon',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/icons/index'),
-        name: 'Icons',
-        meta: { title: 'Icons', icon: 'icon', noCache: true }
-      }
-    ]
-  },
+//   {
+//     path: '/icon',
+//     component: Layout,
+//     children: [
+//       {
+//         path: 'index',
+//         component: () => import('@/views/icons/index'),
+//         name: 'Icons',
+//         meta: { title: 'Icons', icon: 'icon', noCache: true }
+//       }
+//     ]
+//   },
 
-  /** when your routing map is too long, you can split it into small modules **/
+//   /** when your routing map is too long, you can split it into small modules **/
 
-  chartsRouter,
-  nestedRouter,
+//   chartsRouter,
+//   nestedRouter,
 
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/list',
-    name: 'Example',
-    meta: {
-      title: 'Example',
-      icon: 'example'
-    },
-    children: [
-      {
-        path: 'create',
-        component: () => import('@/views/example/create'),
-        name: 'CreateArticle',
-        meta: { title: 'Create Article', icon: 'edit' }
-      },
-      {
-        path: 'edit/:id(\\d+)',
-        component: () => import('@/views/example/edit'),
-        name: 'EditArticle',
-        meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
-        hidden: true
-      },
-      {
-        path: 'list',
-        component: () => import('@/views/example/list'),
-        name: 'ArticleList',
-        meta: { title: 'Article List', icon: 'list' }
-      }
-    ]
-  },
+//   {
+//     path: '/example',
+//     component: Layout,
+//     redirect: '/example/list',
+//     name: 'Example',
+//     meta: {
+//       title: 'Example',
+//       icon: 'example'
+//     },
+//     children: [
+//       {
+//         path: 'create',
+//         component: () => import('@/views/example/create'),
+//         name: 'CreateArticle',
+//         meta: { title: 'Create Article', icon: 'edit' }
+//       },
+//       {
+//         path: 'edit/:id(\\d+)',
+//         component: () => import('@/views/example/edit'),
+//         name: 'EditArticle',
+//         meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
+//         hidden: true
+//       },
+//       {
+//         path: 'list',
+//         component: () => import('@/views/example/list'),
+//         name: 'ArticleList',
+//         meta: { title: 'Article List', icon: 'list' }
+//       }
+//     ]
+//   },
 
-  {
-    path: '/tab',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/tab/index'),
-        name: 'Tab',
-        meta: { title: 'Tab', icon: 'tab' }
-      }
-    ]
-  },
+//   {
+//     path: '/tab',
+//     component: Layout,
+//     children: [
+//       {
+//         path: 'index',
+//         component: () => import('@/views/tab/index'),
+//         name: 'Tab',
+//         meta: { title: 'Tab', icon: 'tab' }
+//       }
+//     ]
+//   },
 
-  {
-    path: '/error',
-    component: Layout,
-    redirect: 'noRedirect',
-    name: 'ErrorPages',
-    meta: {
-      title: 'Error Pages',
-      icon: '404'
-    },
-    children: [
-      {
-        path: '401',
-        component: () => import('@/views/error-page/401'),
-        name: 'Page401',
-        meta: { title: '401', noCache: true }
-      },
-      {
-        path: '404',
-        component: () => import('@/views/error-page/404'),
-        name: 'Page404',
-        meta: { title: '404', noCache: true }
-      }
-    ]
-  },
+//   {
+//     path: '/error',
+//     component: Layout,
+//     redirect: 'noRedirect',
+//     name: 'ErrorPages',
+//     meta: {
+//       title: 'Error Pages',
+//       icon: '404'
+//     },
+//     children: [
+//       {
+//         path: '401',
+//         component: () => import('@/views/error-page/401'),
+//         name: 'Page401',
+//         meta: { title: '401', noCache: true }
+//       },
+//       {
+//         path: '404',
+//         component: () => import('@/views/error-page/404'),
+//         name: 'Page404',
+//         meta: { title: '404', noCache: true }
+//       }
+//     ]
+//   },
 
-  {
-    path: '/error-log',
-    component: Layout,
-    children: [
-      {
-        path: 'log',
-        component: () => import('@/views/error-log/index'),
-        name: 'ErrorLog',
-        meta: { title: 'Error Log', icon: 'bug' }
-      }
-    ]
-  },
+//   {
+//     path: '/error-log',
+//     component: Layout,
+//     children: [
+//       {
+//         path: 'log',
+//         component: () => import('@/views/error-log/index'),
+//         name: 'ErrorLog',
+//         meta: { title: 'Error Log', icon: 'bug' }
+//       }
+//     ]
+//   },
 
-  {
-    path: '/clipboard',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/clipboard/index'),
-        name: 'ClipboardDemo',
-        meta: { title: 'Clipboard', icon: 'clipboard' }
-      }
-    ]
-  },
+//   {
+//     path: '/clipboard',
+//     component: Layout,
+//     children: [
+//       {
+//         path: 'index',
+//         component: () => import('@/views/clipboard/index'),
+//         name: 'ClipboardDemo',
+//         meta: { title: 'Clipboard', icon: 'clipboard' }
+//       }
+//     ]
+//   },
 
-  {
-    path: 'external-link',
-    component: Layout,
-    children: [
-      {
-        path: 'https://github.com/PanJiaChen/vue-element-admin',
-        meta: { title: 'External Link', icon: 'link' }
-      }
-    ]
-  },
+//   {
+//     path: 'external-link',
+//     component: Layout,
+//     children: [
+//       {
+//         path: 'https://github.com/PanJiaChen/vue-element-admin',
+//         meta: { title: 'External Link', icon: 'link' }
+//       }
+//     ]
+//   },
 
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
-]
+//   // 404 page must be placed at the end !!!
+//   { path: '*', redirect: '/404', hidden: true }
+// ]
 
 // 假设后端
 export const asyncRoutes1 = [
@@ -325,19 +302,16 @@ export const asyncRoutes1 = [
     component: 'Layout',
     alwaysShow: false, // will always show the root menu
     redirect:'/userAuditMange/index',
-    name: 'userAuditManger',
     meta: {
       title: '用户审核管理',
       icon: 'lock',
-      roles: ['admin'] // you can set roles in root nav
     },
     children: [{
       path: 'index',
       component: 'userAuditManger',
-      name: 'userAuditManger',
       meta: {
         title: '用户审核管理',
-        roles: ['admin'] // or you can only set roles in sub nav
+        roles: ['admin','manger'] // or you can only set roles in sub nav
       }
     }]
   },{
@@ -345,7 +319,6 @@ export const asyncRoutes1 = [
     component: 'Layout',
     redirect: '/userAdmin/index',
     alwaysShow: false, // will always show the root menu
-    name: 'userAdmin',
     meta: {
       title: 'userAdmin',
       icon: 'lock',
@@ -354,7 +327,6 @@ export const asyncRoutes1 = [
     children: [{
       path: 'index',
       component: 'userAdmin',
-      name: 'userAdmin',
       meta: {
         title: '用户管理',
       }
@@ -365,19 +337,16 @@ export const asyncRoutes1 = [
     component: 'Layout',
     redirect: '/quanyuanManger/index',
     alwaysShow: false, // will always show the root menu
-    name: 'quanyuanManger',
     meta: {
       title: 'quanyuanManger',
       icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [{
       path: 'index',
       component: 'quanyuanManger',
-      name: 'quanyuanManger',
       meta: {
         title: '券源管理',
-        roles: ['admin','editor'] // or you can only set roles in sub nav
+        roles: ['admin'] // or you can only set roles in sub nav
       }
     }]
   }, 
@@ -386,7 +355,6 @@ export const asyncRoutes1 = [
     component: 'Layout',
     redirect: '/quanyuanjiaoyiguanli',
     alwaysShow: false, // will always show the root menu
-    name: 'quanyuanjiaoyiguanli',
     meta: {
       title: '券源交易管理',
       icon: 'lock',
@@ -395,7 +363,6 @@ export const asyncRoutes1 = [
     children: [{
       path: 'wait-matching',
       component: 'waitmatching',
-      name: 'wait-matching',
       meta: {
         title: '交易进度-待撮合',
         roles: ['admin'] // or you can only set roles in sub nav
@@ -404,7 +371,6 @@ export const asyncRoutes1 = [
     {
       path: 'matching',
       component: 'matching',
-      name: 'matching',
       meta: {
         title: '交易进度-撮合中',
         roles: ['admin']
@@ -413,7 +379,6 @@ export const asyncRoutes1 = [
     }, {
       path: 'matching-success',
       component: 'matchingSucess',
-      name: 'matching-success',
       meta: {
         title: '交易进度-撮合成功',
         roles: ['admin']
@@ -421,7 +386,6 @@ export const asyncRoutes1 = [
      },{
       path: 'matching-fail',
       component: 'matchingFail',
-      name: 'matching-fail',
       meta: {
         title: '交易进度-撮合失败',
         roles: ['admin']
@@ -431,16 +395,13 @@ export const asyncRoutes1 = [
   {
     path: '/quanyuanxuqiu',
     component: 'Layout',
-    name: 'quanyuanxuqiu',
     meta: {
       title: 'quanyuanxuqiu',
       icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
     },
     children: [{
       path: 'index',
       component: 'quanyuanxuqiu',
-      name: 'quanyuanxuqiu',
       meta: {
         title: '券源需求发布审核',
         roles: ['admin'] // or you can only set roles in sub nav
@@ -451,7 +412,7 @@ export const asyncRoutes1 = [
     component: 'Layout',
     redirect: '/quanyuangonji/index',
     alwaysShow: false, // will always show the root menu
-    name: 'quanyuangonji',
+    
     meta: {
       title: 'quanyuangonji',
       icon: 'lock',
@@ -460,7 +421,6 @@ export const asyncRoutes1 = [
     children: [{
       path: 'index',
       component: 'quanyuangonji',
-      name: 'quanyuangonji',
       meta: {
         title: '券源供给发布审核',
         roles: ['admin'] // or you can only set roles in sub nav
@@ -479,7 +439,6 @@ export const asyncRoutes1 = [
       children: [{
         path: 'index',
         component: 'jichushezhi',
-        name: 'jichushezhi',
         meta: {
           title: '基础设置',
           }
@@ -497,7 +456,6 @@ export const asyncRoutes1 = [
         children: [{
           path: 'index',
           component: 'gangweiguanli',
-          name: 'gangweiguanli',
           meta: {
             title: '岗位管理',
             }
@@ -514,12 +472,28 @@ export const asyncRoutes1 = [
         children: [{
           path: 'index',
           component: 'bannerguanli',
-          name: 'bannerguanli',
           meta: {
             title: 'banner图管理',
             }
           }]
 
+        },{
+          path:'/accountManagerManagement',
+          component:'Layout',
+          redirect:'/accountManagerManagement/index',
+          alwaysShow:true,
+          meta: {
+            title: '客户经理管理',
+            icon: 'lock',  
+            },
+            children:[{
+              path:'index',
+              component:'accountManagerManagement',
+              meta:{
+                title:'客户经理管理',
+                roles: ['admin']
+              }
+            }]
         },
 
   { path: '*', redirect: '/404', hidden: true }

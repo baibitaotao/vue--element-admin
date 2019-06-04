@@ -1,7 +1,7 @@
 <template>
 <div class="quanyuanxuqiu">
     <h4>{{roles|quanyuanTitle}}</h4>
-    <el-tabs v-model="activeName" @tab-click="handleClick" v-if = 'isShowshenhe'>
+    <el-tabs v-model="activeName" @tab-click="handleClick" v-if = '!isShowshenhe'>
     <el-tab-pane label="待审核" name="first">
             <dai-shenhe></dai-shenhe>
     </el-tab-pane>
@@ -9,7 +9,8 @@
             <yi-shenhe></yi-shenhe>
     </el-tab-pane>
   </el-tabs>
-  <div v-if = '!isShowshenhe' style="margin-top:10px">
+  
+  <div v-if = 'isShowshenhe' style="margin-top:10px">
       <user-component></user-component>
   </div>
 </div>
@@ -22,9 +23,6 @@ import userComponent from './guanliyuanComponent/index'
 import {mapGetters} from 'vuex'
 
   export default {
-    mounted () {
-      console.log(this.$route.matched)
-    },
     components:{
         daiShenhe,
         yiShenhe,
@@ -48,7 +46,7 @@ import {mapGetters} from 'vuex'
     methods: {
       handleClick(tab, event) {
         
-      }
+      },
     }, 
   computed: {
     ...mapGetters([
@@ -58,7 +56,7 @@ import {mapGetters} from 'vuex'
       if(this.roles[0] === 'admin'){
         return true
       }
-      else if(this.roles[0] === '业务管理员'){
+      else if(this.roles[0] === 'manger'){
         return false
       }
     }  

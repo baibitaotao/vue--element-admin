@@ -39,6 +39,7 @@ import adminComponent from './admin/index'
 import editorComponent from './editor/index'
 
 export default {
+  
     components:{
         editorComponent,
         adminComponent

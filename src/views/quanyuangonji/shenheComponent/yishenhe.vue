@@ -19,13 +19,23 @@
       </div>
         <div style="margin-top: 10px">
           <div>
-            <span style="margin-right:16px;font-size:14px">审核状态</span>
+            <span style="margin-right:16px;font-size:14px">用户类型</span>
            <el-radio-group v-model="radio2" size="medium" @click.native="selectCondation">
               <el-radio-button label="全部" ></el-radio-button>
-              <el-radio-button label="待审核"></el-radio-button>
-              <el-radio-button label="已审核"></el-radio-button>
+              <el-radio-button label="融入方"></el-radio-button>
+              <el-radio-button label="融出方"></el-radio-button>
            </el-radio-group>
           </div>
+           <div>
+            <span style="margin-right:16px;font-size:14px">审核状态</span>
+           <el-radio-group v-model="radio3" size="medium" @click.native="selectCondation">
+              <el-radio-button label="全部" ></el-radio-button>
+              <el-radio-button label="审核通过"></el-radio-button>
+              <el-radio-button label="审核不通过"></el-radio-button>
+           </el-radio-group>
+          </div>
+       
+       
        </div>
       <div style="margin-top:10px">
           <el-table

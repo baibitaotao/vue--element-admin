@@ -26,6 +26,7 @@
               <el-radio-button label="融出方"></el-radio-button>
             </el-radio-group>
        </div>
+       <div><el-button @click = auditApprove>审核通过</el-button></div>
       </div>
       <div style="margin-top:10px">
           <el-table
@@ -80,6 +81,9 @@ export default {
     }
   },
   methods: {
+    auditApprove(){
+      
+    },  
     selectCondation(){
       console.log('okoko')
     }

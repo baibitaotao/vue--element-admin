@@ -1,4 +1,10 @@
-.quanyuangonji{
+.qaunyuangonji{
+    .is-top{
+        ::after{
+            width:130px;
+        }
+    }
+
     .searchInput{
         width: 510px;
     }
@@ -78,16 +84,8 @@
             }
         }
     }
- .userComponent{
-     .userSonComponent{
-         
-        .el-input__inner{
-            width: 100%;
-        }
-     }
-   
 
- }
+ 
 }
 
 

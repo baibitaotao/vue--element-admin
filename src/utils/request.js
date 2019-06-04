@@ -11,7 +11,7 @@ import { getToken } from '@/utils/auth'
 // create an axios instance
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
-  baseURL: 'http://172.29.201.112:8077/smt-admin',
+  baseURL: 'http://172.29.201.86:8077/smt-admin',
   // baseURL: process.env.VUE_APP_BASE_API,
   withCredentials: true, // 跨域请求时发送 cookies
   timeout: 5000 // request timeout

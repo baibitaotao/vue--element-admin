@@ -8,7 +8,7 @@
          <transition name="el-zoom-in-top">
              <div v-show="isShowCondition" class="nini">
                 <div class="releaseTime" style="width:400px">
-                    <span>注册时间</span>
+                    <span>发布时间</span>
                     <el-date-picker
                      v-model="value1"
                      type="daterange"
@@ -18,8 +18,8 @@
                  </el-date-picker>
                 </div>
 
-                <!-- <div style="marginTop:10px;width:400px" class="accountManager">
-                 <span style="fontSize:12px;width: 100px;">所属客户经理</span>
+                <div style="marginTop:10px;width:400px" class="accountManager" v-if="isShowAccountManager">
+                 <span style="fontSize:12px;width: 100px;" >所属客户经理</span>
                     <el-select v-model="value" filterable placeholder="请选择">
                     <el-option
                       v-for="item in options"
@@ -28,30 +28,30 @@
                       :value="item.value">
                     </el-option>
                   </el-select>
-                </div> -->
-
+                </div>
                 <div style="width:400px" class="userType" v-if="isShowUsertype">
-                    <span style="fontSize:12px;width: 100px;marginRight:29px;">注册类型</span>
+                    <span style="fontSize:12px;width: 100px;marginRight:29px;">用户类型</span>
                     <el-radio-group v-model="radio2" size="mini">
                       <el-radio-button label="全部" ></el-radio-button>
-                      <el-radio-button label="个人"></el-radio-button>
-                      <el-radio-button label="企业"></el-radio-button>
+                      <el-radio-button label="融入方"></el-radio-button>
+                      <el-radio-button label="融出方"></el-radio-button>
                     </el-radio-group>
                 </div>
 
                  <div class="status">
-                    <span style="fontSize:12px;width: 100px;marginRight:53px;">用户类型</span>
+                    <span style="fontSize:12px;width: 100px;marginRight:53px;">状态</span>
                     <el-radio-group v-model="radio3" size="mini">
                      <el-radio-button label="全部" ></el-radio-button>
-                     <el-radio-button label="融入方"></el-radio-button>
-                     <el-radio-button label="融出方"></el-radio-button>
+                     <el-radio-button label="待预约"></el-radio-button>
+                     <el-radio-button label="预约未成功"></el-radio-button>
+                     <el-radio-button label="部分预约成功"></el-radio-button>
+                     <el-radio-button label="全部预约成功"></el-radio-button>
                    </el-radio-group>
                  </div>
         
              </div>
          </transition>
           <el-divider><a style="color:#B40005" @click="conditionsOn">{{showCondition}}&nbsp;&nbsp;<i :class="showConditionIcon"></i></a></el-divider>   
-          <div> <el-button class="auditBtn" @click="auditThorugh">审核通过</el-button></div> 
           <my-table></my-table>      
     </div>
 </template>
@@ -59,9 +59,13 @@
 
 <script>
 import myTable from '../../../table/index'
-import { constants } from 'crypto';
+import {mapGetters} from 'vuex'
+import { fail } from 'assert';
 
 export default {
+  mounted () {
+    console.log(this.isShowAccountManager)
+  },
     components:{
        myTable,
     },
@@ -69,6 +73,17 @@ export default {
         whitchActive:String,
     },
     computed:{
+        isShowAccountManager(){
+            if(this.roles[0] === 'admin'){
+            return false
+          }
+          else if(this.roles[0] === 'manger'){
+            return true
+          } 
+        },
+        ...mapGetters([
+            'roles'
+        ]),
         isShowUsertype(){
             if(this.whitchActive == 'first'){
                 return false
@@ -78,23 +93,6 @@ export default {
         }
     },
     methods:{
-      auditThorugh(){
-          this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.$message({
-            type: 'success',
-            message: '删除成功!'
-          });
-        }).catch(() => {
-          this.$message({
-            type: 'info',
-            message: '已取消删除'
-          });          
-        });
-      },
         conditionsOn(){
             if(this.showConditionIcon === 'el-icon-arrow-up'){
                 this.showConditionIcon = 'el-icon-arrow-down'
