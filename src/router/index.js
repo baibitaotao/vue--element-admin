@@ -36,8 +36,8 @@ export const routerMap = {
   accountManagerManagement:_import('accountManagerManagement/index'),
   gonjiAuditManger:_import('quanyuanAuditManger/quanyuangonji/index'),
   xuqiuAuditManger:_import('quanyuanAuditManger/quanyuanxuqiu/index'),
-  appointmentPairing:_import('quanyuanPairingManger/appointmentPairing/appointmentPairing'),
-  aKeyPairing:_import('quanyuanPairingManger/aKeyPairing/aKeyPairing')
+  appointmentPairing:_import('quanyuanPairingManger/appointmentPairing/index'),
+  aKeyPairing:_import('quanyuanPairingManger/aKeyPairing/index')
 }
 
 
