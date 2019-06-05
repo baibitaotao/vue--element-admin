@@ -19,8 +19,6 @@ export const routerMap = {
   directive: _import('permission/directive'),
   role: _import('permission/role'),
   Steps: _import('steps/index'),
-  quanyuanxuqiu: _import('quanyuanxuqiu/index'),
-  quanyuangonji: _import('quanyuangonji/index'),
   waitmatching:_import('quanyuanjiaoyi/quanyuanjiaoyi-waiting/index'),
   matching:_import('quanyuanjiaoyi/quanyuanjiaoyi-matching/index'),
   matchingFail:_import('quanyuanjiaoyi/quanyuanjiaoyi-matchingFail/index'),
@@ -35,7 +33,11 @@ export const routerMap = {
   peidui:_import('cuoheguanli/peidui'),
   wanzhenweidu:_import('baobiaoguanli/index'),
   quanyuanweidu:_import('baobiaoguanli/index'),
-  accountManagerManagement:_import('accountManagerManagement/index')
+  accountManagerManagement:_import('accountManagerManagement/index'),
+  gonjiAuditManger:_import('quanyuanAuditManger/quanyuangonji/index'),
+  xuqiuAuditManger:_import('quanyuanAuditManger/quanyuanxuqiu/index'),
+  appointmentPairing:_import('quanyuanPairingManger/appointmentPairing/appointmentPairing'),
+  aKeyPairing:_import('quanyuanPairingManger/aKeyPairing/aKeyPairing')
 }
 
 
@@ -44,26 +46,26 @@ export const routerMap = {
 import chartsRouter from './modules/charts'
 import nestedRouter from './modules/nested'
 
-/**
- * Note: sub-menu only appear when route children.length >= 1
- * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
- *
- * hidden: true                   if set true, item will not show in the sidebar(default is false)
- * alwaysShow: true               if set true, will always show the root menu
- *                                if not set alwaysShow, when item has more than one children route,
- *                                it will becomes nested mode, otherwise not show the root menu
- * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
- * name:'router-name'             the name is used by <keep-alive> (must set!!!)
- * meta : {
-    roles: ['admin','editor']    control the page roles (you can set multiple roles)
-    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
-    icon: 'svg-name'             the icon show in the sidebar
-    noCache: true                if set true, the page will no be cached(default is false)
-    affix: true                  if set true, the tag will affix in the tags-view
-    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
-    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
-  }
- */
+  /**
+       * Note: sub-menu only appear when route children.length >= 1
+       * Detail see: https://panjiachen.github.io/vue-element-admin-site/guide/essentials/router-and-nav.html
+       *
+       * hidden: true                   if set true, item will not show in the sidebar(default is false)
+       * alwaysShow: true               if set true, will always show the root menu
+       *                                if not set alwaysShow, when item has more than one children route,
+       *                                it will becomes nested mode, otherwise not show the root menu
+       * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
+       * name:'router-name'             the name is used by <keep-alive> (must set!!!)
+       * meta : {
+          roles: ['admin','editor']    control the page roles (you can set multiple roles)
+          title: 'title'               the name show in sidebar and breadcrumb (recommend set)
+          icon: 'svg-name'             the icon show in the sidebar
+          noCache: true                if set true, the page will no be cached(default is false)
+          affix: true                  if set true, the tag will affix in the tags-view
+          breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
+          activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
+        }
+ *  /
 
 /**
  * constantRoutes
@@ -102,198 +104,25 @@ export const constantRoutes = [
     component: () => import('@/views/error-page/401'),
     hidden: true
   },
-  // {
-  //   path: '/',
-  //   component: Layout,
-  //   redirect: '/quanyuanxuqiu/index',
-  //   children: [
-  //     {
-  //       path: 'quanyuanxuqiu',
-  //       component: () => import('@/views/quanyuanxuqiu/index'),
-  //       name: 'quanyuanxuqiu/index',
-  //       meta: { title: '券源需求发布审核', icon: 'dashboard', affix: true }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/userAuditMange/index',
+    hidden: true
+    // children: [
+    //   {
+    //     path: 'quanyuanxuqiu',
+    //     component: () => import('@/views/quanyuanxuqiu/index'),
+    //     name: 'quanyuanfabushenhe',
+    //     meta: { title: '券源需求发布审核', icon: 'dashboard', affix: true }
+    //   }
+    // ]
+  },
 
 ]
 
-/**
- * asyncRoutes
- * the routes that need to be dynamically loaded based on user roles
- * 需要根据用户角色动态加载的路由
- */
-// export const asyncRoutes = [
-//   {
-//     path: '/permission',
-//     component: Layout,
-//     redirect: '/permission/page',
-//     alwaysShow: true, // will always show the root menu
-//     name: 'Permission',
-//     meta: {
-//       title: 'Permission',
-//       icon: 'lock',
-//       roles: ['admin', 'editor'] // you can set roles in root nav
-//     },
-//     children: [
-//       {
-//         path: 'page',
-//         component: () => import('@/views/permission/page'),
-//         name: 'PagePermission',
-//         meta: {
-//           title: 'Page Permission',
-//           roles: ['admin'] // or you can only set roles in sub nav
-//         }
-//       },
-//       {
-//         path: 'directive',
-//         component: () => import('@/views/permission/directive'),
-//         name: 'DirectivePermission',
-//         meta: {
-//           title: 'Directive Permission'
-//           // if do not set roles, means: this page does not require permission
-//         }
-//       },
-//       {
-//         path: 'role',
-//         component: () => import('@/views/permission/role'),
-//         name: 'RolePermission',
-//         meta: {
-//           title: 'Role Permission',
-//           roles: ['admin']
-//         }
-//       }
-//     ]
-//   },
 
-//   {
-//     path: '/icon',
-//     component: Layout,
-//     children: [
-//       {
-//         path: 'index',
-//         component: () => import('@/views/icons/index'),
-//         name: 'Icons',
-//         meta: { title: 'Icons', icon: 'icon', noCache: true }
-//       }
-//     ]
-//   },
 
-//   /** when your routing map is too long, you can split it into small modules **/
-
-//   chartsRouter,
-//   nestedRouter,
-
-//   {
-//     path: '/example',
-//     component: Layout,
-//     redirect: '/example/list',
-//     name: 'Example',
-//     meta: {
-//       title: 'Example',
-//       icon: 'example'
-//     },
-//     children: [
-//       {
-//         path: 'create',
-//         component: () => import('@/views/example/create'),
-//         name: 'CreateArticle',
-//         meta: { title: 'Create Article', icon: 'edit' }
-//       },
-//       {
-//         path: 'edit/:id(\\d+)',
-//         component: () => import('@/views/example/edit'),
-//         name: 'EditArticle',
-//         meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
-//         hidden: true
-//       },
-//       {
-//         path: 'list',
-//         component: () => import('@/views/example/list'),
-//         name: 'ArticleList',
-//         meta: { title: 'Article List', icon: 'list' }
-//       }
-//     ]
-//   },
-
-//   {
-//     path: '/tab',
-//     component: Layout,
-//     children: [
-//       {
-//         path: 'index',
-//         component: () => import('@/views/tab/index'),
-//         name: 'Tab',
-//         meta: { title: 'Tab', icon: 'tab' }
-//       }
-//     ]
-//   },
-
-//   {
-//     path: '/error',
-//     component: Layout,
-//     redirect: 'noRedirect',
-//     name: 'ErrorPages',
-//     meta: {
-//       title: 'Error Pages',
-//       icon: '404'
-//     },
-//     children: [
-//       {
-//         path: '401',
-//         component: () => import('@/views/error-page/401'),
-//         name: 'Page401',
-//         meta: { title: '401', noCache: true }
-//       },
-//       {
-//         path: '404',
-//         component: () => import('@/views/error-page/404'),
-//         name: 'Page404',
-//         meta: { title: '404', noCache: true }
-//       }
-//     ]
-//   },
-
-//   {
-//     path: '/error-log',
-//     component: Layout,
-//     children: [
-//       {
-//         path: 'log',
-//         component: () => import('@/views/error-log/index'),
-//         name: 'ErrorLog',
-//         meta: { title: 'Error Log', icon: 'bug' }
-//       }
-//     ]
-//   },
-
-//   {
-//     path: '/clipboard',
-//     component: Layout,
-//     children: [
-//       {
-//         path: 'index',
-//         component: () => import('@/views/clipboard/index'),
-//         name: 'ClipboardDemo',
-//         meta: { title: 'Clipboard', icon: 'clipboard' }
-//       }
-//     ]
-//   },
-
-//   {
-//     path: 'external-link',
-//     component: Layout,
-//     children: [
-//       {
-//         path: 'https://github.com/PanJiaChen/vue-element-admin',
-//         meta: { title: 'External Link', icon: 'link' }
-//       }
-//     ]
-//   },
-
-//   // 404 page must be placed at the end !!!
-//   { path: '*', redirect: '/404', hidden: true }
-// ]
 
 // 假设后端
 export const asyncRoutes1 = [
@@ -314,23 +143,6 @@ export const asyncRoutes1 = [
         roles: ['admin','manger'] // or you can only set roles in sub nav
       }
     }]
-  },{
-    path: '/userAdmin',
-    component: 'Layout',
-    redirect: '/userAdmin/index',
-    alwaysShow: false, // will always show the root menu
-    meta: {
-      title: 'userAdmin',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [{
-      path: 'index',
-      component: 'userAdmin',
-      meta: {
-        title: '用户管理',
-      }
-    }]
   },
   {
     path: '/quanyuanManger',
@@ -349,6 +161,56 @@ export const asyncRoutes1 = [
         roles: ['admin'] // or you can only set roles in sub nav
       }
     }]
+  },
+  {
+    path: '/quanyuanAuditManger',
+     component: 'Layout',
+     meta: {
+       title: '券源审核管理',
+       icon: 'lock',
+     },
+     children: [{
+       path: 'xuqiuAuditManger',
+       component: 'xuqiuAuditManger',
+       meta: {
+         title: '券源需求审核管理',
+         roles: ['admin','manger'] // or you can only set roles in sub nav
+       }
+     },{
+       path:'gonjiAuditManger',
+       component:'gonjiAuditManger',
+       meta:{
+         title:'券源供给审核管理',
+         roles:['admin','manger']
+       }
+     }]
+  },
+  {
+    path: '/quanyuanPairingManger',
+    component: 'Layout',
+    redirect: '/quanyuanPairingManger/appointmentPairing',
+    alwaysShow: false, 
+    meta: {
+      title: '券源撮合管理',
+      icon: 'lock',
+    },
+    children: [{
+      path: 'appointmentPairing',
+      component: 'appointmentPairing',
+      meta: {
+        title: '预约撮合管理',
+        roles: ['admin'] // or you can only set roles in sub nav
+      }
+    },
+    {
+      path: 'aKeyPairing',
+      component: 'aKeyPairing',
+      meta: {
+        title: '中介撮合一键配对',
+        roles: ['admin'] // or you can only set roles in sub nav
+      }
+    }  
+  ]
   }, 
   {
     path: '/quanyuanjiaoyiguanli',
@@ -391,41 +253,6 @@ export const asyncRoutes1 = [
         roles: ['admin']
       }
      }]
-    },
-  {
-    path: '/quanyuanxuqiu',
-    component: 'Layout',
-    meta: {
-      title: 'quanyuanxuqiu',
-      icon: 'lock',
-    },
-    children: [{
-      path: 'index',
-      component: 'quanyuanxuqiu',
-      meta: {
-        title: '券源需求发布审核',
-        roles: ['admin'] // or you can only set roles in sub nav
-      }
-    }]
-  }, {
-    path: '/quanyuangonji',
-    component: 'Layout',
-    redirect: '/quanyuangonji/index',
-    alwaysShow: false, // will always show the root menu
-    
-    meta: {
-      title: 'quanyuangonji',
-      icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
-    },
-    children: [{
-      path: 'index',
-      component: 'quanyuangonji',
-      meta: {
-        title: '券源供给发布审核',
-        roles: ['admin'] // or you can only set roles in sub nav
-        }
-      }]
     },
     {
       path: '/jichushezhi',
@@ -579,3 +406,203 @@ export function resetRouter() {
 }
 
 export default router
+
+
+
+
+/**
+ * asyncRoutes
+ * the routes that need to be dynamically loaded based on user roles
+ * 需要根据用户角色动态加载的路由
+ */
+// export const asyncRoutes = [
+  //   {
+  //     path: '/permission',
+  //     component: Layout,
+  //     redirect: '/permission/page',
+  //     alwaysShow: true, // will always show the root menu
+  //     name: 'Permission',
+  //     meta: {
+  //       title: 'Permission',
+  //       icon: 'lock',
+  //       roles: ['admin', 'editor'] // you can set roles in root nav
+  //     },
+  //     children: [
+  //       {
+  //         path: 'page',
+  //         component: () => import('@/views/permission/page'),
+  //         name: 'PagePermission',
+  //         meta: {
+  //           title: 'Page Permission',
+  //           roles: ['admin'] // or you can only set roles in sub nav
+  //         }
+  //       },
+  //       {
+  //         path: 'directive',
+  //         component: () => import('@/views/permission/directive'),
+  //         name: 'DirectivePermission',
+  //         meta: {
+  //           title: 'Directive Permission'
+  //           // if do not set roles, means: this page does not require permission
+  //         }
+  //       },
+  //       {
+  //         path: 'role',
+  //         component: () => import('@/views/permission/role'),
+  //         name: 'RolePermission',
+  //         meta: {
+  //           title: 'Role Permission',
+  //           roles: ['admin']
+  //         }
+  //       }
+  //     ]
+  //   },
+
+  //   {
+  //     path: '/icon',
+  //     component: Layout,
+  //     children: [
+  //       {
+  //         path: 'index',
+  //         component: () => import('@/views/icons/index'),
+  //         name: 'Icons',
+  //         meta: { title: 'Icons', icon: 'icon', noCache: true }
+  //       }
+  //     ]
+  //   },
+
+  //   /** when your routing map is too long, you can split it into small modules **/
+
+  //   chartsRouter,
+  //   nestedRouter,
+
+  //   {
+  //     path: '/example',
+  //     component: Layout,
+  //     redirect: '/example/list',
+  //     name: 'Example',
+  //     meta: {
+  //       title: 'Example',
+  //       icon: 'example'
+  //     },
+  //     children: [
+  //       {
+  //         path: 'create',
+  //         component: () => import('@/views/example/create'),
+  //         name: 'CreateArticle',
+  //         meta: { title: 'Create Article', icon: 'edit' }
+  //       },
+  //       {
+  //         path: 'edit/:id(\\d+)',
+  //         component: () => import('@/views/example/edit'),
+  //         name: 'EditArticle',
+  //         meta: { title: 'Edit Article', noCache: true, activeMenu: '/example/list' },
+  //         hidden: true
+  //       },
+  //       {
+  //         path: 'list',
+  //         component: () => import('@/views/example/list'),
+  //         name: 'ArticleList',
+  //         meta: { title: 'Article List', icon: 'list' }
+  //       }
+  //     ]
+  //   },
+
+  //   {
+  //     path: '/tab',
+  //     component: Layout,
+  //     children: [
+  //       {
+  //         path: 'index',
+  //         component: () => import('@/views/tab/index'),
+  //         name: 'Tab',
+  //         meta: { title: 'Tab', icon: 'tab' }
+  //       }
+  //     ]
+  //   },
+
+  //   {
+  //     path: '/error',
+  //     component: Layout,
+  //     redirect: 'noRedirect',
+  //     name: 'ErrorPages',
+  //     meta: {
+  //       title: 'Error Pages',
+  //       icon: '404'
+  //     },
+  //     children: [
+  //       {
+  //         path: '401',
+  //         component: () => import('@/views/error-page/401'),
+  //         name: 'Page401',
+  //         meta: { title: '401', noCache: true }
+  //       },
+  //       {
+  //         path: '404',
+  //         component: () => import('@/views/error-page/404'),
+  //         name: 'Page404',
+  //         meta: { title: '404', noCache: true }
+  //       }
+  //     ]
+  //   },
+
+  //   {
+  //     path: '/error-log',
+  //     component: Layout,
+  //     children: [
+  //       {
+  //         path: 'log',
+  //         component: () => import('@/views/error-log/index'),
+  //         name: 'ErrorLog',
+  //         meta: { title: 'Error Log', icon: 'bug' }
+  //       }
+  //     ]
+//   },
+
+//   {
+//     path: '/clipboard',
+//     component: Layout,
+//     children: [
+//       {
+//         path: 'index',
+//         component: () => import('@/views/clipboard/index'),
+//         name: 'ClipboardDemo',
+//         meta: { title: 'Clipboard', icon: 'clipboard' }
+//       }
+//     ]
+//   },
+
+//   {
+//     path: 'external-link',
+//     component: Layout,
+//     children: [
+//       {
+//         path: 'https://github.com/PanJiaChen/vue-element-admin',
+//         meta: { title: 'External Link', icon: 'link' }
+//       }
+//     ]
+//   },
+
+//   // 404 page must be placed at the end !!!
+//   { path: '*', redirect: '/404', hidden: true }
+// ]
+
+
+// {
+//   path: '/userAdmin',
+//   component: 'Layout',
+//   redirect: '/userAdmin/index',
+//   alwaysShow: false, // will always show the root menu
+//   meta: {
+//     title: 'userAdmin',
+//     icon: 'lock',
+//   },
+//   children: [{
+//     path: 'index',
+//     component: 'userAdmin',
+//     meta: {
+//       title: '用户管理',
+//       roles: ['admin', 'editor']
+//     }
+//   }]
+// },

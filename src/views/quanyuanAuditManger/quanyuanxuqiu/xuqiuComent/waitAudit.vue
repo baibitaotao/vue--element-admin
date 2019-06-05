@@ -1,12 +1,11 @@
 <template>
-    <div class="daishenhe">
-      <div class="searchInput">
-        <el-input
-           placeholder="请输入用户编号/用户昵称/券源供给编号/证券代码/证券名称"
-           prefix-icon="el-icon-search"
-           v-model="input2">
-         </el-input>
-      </div>
+    <div class="waitAudit">
+         <div class="searchInput">
+            <el-input placeholder="请输入内容" v-model="input2" class="input-with-select">
+                <el-button slot="append" icon="el-icon-search"></el-button>
+            </el-input>
+        </div>
+      
       <div class="timeselect">
         <span>审核时间</span>
            <el-date-picker
@@ -17,17 +16,35 @@
               end-placeholder="结束日期">
             </el-date-picker>
       </div>
+
       <div style="margin-top:10px">
-       <div style="margin-top: 10px">
-         <span style="margin-right:16px;font-size:14px">用户类型</span>
+       <div style="margin-top: 10px" class="status">
+         <span style="margin-right:32px">用户类型</span>
             <el-radio-group v-model="radio3" size="medium">
               <el-radio-button label="全部"></el-radio-button>
               <el-radio-button label="融入方"></el-radio-button>
               <el-radio-button label="融出方"></el-radio-button>
             </el-radio-group>
        </div>
-       <div><el-button @click = auditApprove>审核通过</el-button></div>
+        <div v-if="!isAdminOrManger"><el-button @click = auditApprove>审核通过</el-button></div>
+        <div v-if="isAdminOrManger">
+            <div>
+            <span style="marginRight:55px">状态</span>
+            <el-radio-group v-model="tabPosition">
+                <el-radio-button label="mangerAudit">客户经理待审核</el-radio-button>
+                <el-radio-button label="nowAudit">本级待审核</el-radio-button>
+                <el-radio-button label="alreadyAudit">已审核</el-radio-button>
+            </el-radio-group> 
+            </div>
+            <div class="userStausSon">
+                <keep-alive>  
+                 <component :is="tabPosition"></component>         
+                </keep-alive>
+            </div>
+        </div>
+      
       </div>
+
       <div style="margin-top:10px">
           <el-table
          :data="tableData"
@@ -48,15 +65,45 @@
            label="地址">
          </el-table-column>
        </el-table>
-      </div>
-     
+      </div>  
+
     </div>
 </template>
 
 <script>
+import { constants } from 'crypto'
+import {mapGetters} from 'vuex'
+import  nowAudit from '../userStatusComponents/correspondingAudit'
+import alreadyAudit from '../userStatusComponents/alreadyAudit'
+import mangerAudit from '../userStatusComponents/mangerAudit'
+
+
+
 export default {
+  components:{
+      nowAudit,
+      alreadyAudit,
+      mangerAudit
+  },  
+  mounted () {
+    console.log(this.isAdminOrManger)  
+  },
+  computed:{
+      ...mapGetters([
+          'roles'
+      ]),
+      isAdminOrManger(){
+          if(this.roles[0] === 'admin'){
+              return true
+          }
+          else if(this.roles[0] === 'manger'){
+              return false
+          }
+      }
+  },
   data () {
     return {
+      tabPosition:'',
       input2:'',
       value1:'',
       radio2:'全部',
@@ -85,7 +132,7 @@ export default {
       
     },  
     selectCondation(){
-      console.log('okoko')
+     
     }
   }
 }

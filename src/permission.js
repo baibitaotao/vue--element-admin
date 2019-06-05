@@ -22,14 +22,6 @@ router.beforeEach(async(to, from, next) => {
 
   if (hasToken) {
 
-
-    if(to.meta.roles){
-      store.dispatch('user/setRoles', to.meta.roles)
-    }else{
-      console.log('检查角色')
-    }
-    
-
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next()
@@ -37,10 +29,16 @@ router.beforeEach(async(to, from, next) => {
     } else {
               // determine whether the user has obtained his permission roles through getInfo
               //  const hasRoles = store.getters.roles && store.getters.roles.length > 0
-             next()
-             const accessRoutes = await store.dispatch('permission/generateRoutes')
-             router.addRoutes(accessRoutes)
-             NProgress.done()
+              if(to.meta.roles){
+                store.dispatch('user/setRoles', to.meta.roles)
+              }else{
+                console.log('检查拦截器角色')
+              }
+
+              next()
+              const accessRoutes = await store.dispatch('permission/generateRoutes')
+              router.addRoutes(accessRoutes)
+              NProgress.done() 
     }
   } else {
     /* has no token*/

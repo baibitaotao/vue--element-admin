@@ -34,7 +34,6 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ loginName: loginName.trim(), password: password }).then(response => {
         const { data } = response
-        console.log('okoko')
         commit('SET_TOKEN', data.data.AppSSOSessionID)
         commit('SET_NAME', data.data.user.name)
         setToken(data.data.AppSSOSessionID)
@@ -58,7 +57,6 @@ const actions = {
   },
 
   setRoles({commit},role){
-    console.log(role)
     return new Promise((resolve,reject) => {
       commit('SET_ROLES',role)
       resolve()
@@ -69,7 +67,6 @@ const actions = {
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
       logout().then((res) => {
-        console.log(res)
         commit('SET_TOKEN', '')
         commit('SET_NAME', '')
         removeToken()
