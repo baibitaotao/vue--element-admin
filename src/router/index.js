@@ -22,7 +22,7 @@ export const routerMap = {
   matching:_import('quanyuanjiaoyi/quanyuanjiaoyi-matching/index'),
   userAuditManger:_import('userAuditManger/index'),
   userAdmin:_import('userAdmin/index'),
-  quanyuanManger:_import('quanyuanManger/index'),
+  quanyuangonjiManger:_import('quanyuangonjiManger/index'),
   jichushezhi:_import('jichushezhi/index'),
   gangweiguanli:_import('gangweiguanli/index'),
   bannerguanli:_import('bannerguanli/index'),
@@ -34,7 +34,8 @@ export const routerMap = {
   gonjiAuditManger:_import('quanyuanAuditManger/quanyuangonji/index'),
   xuqiuAuditManger:_import('quanyuanAuditManger/quanyuanxuqiu/index'),
   appointmentPairing:_import('quanyuanPairingManger/appointmentPairing/index'),
-  aKeyPairing:_import('quanyuanPairingManger/aKeyPairing/index')
+  aKeyPairing:_import('quanyuanPairingManger/aKeyPairing/index'),
+  systemLog:_import('systemLog/index'),
 }
 
 
@@ -152,10 +153,10 @@ export const asyncRoutes1 = [
     },
     children: [{
       path: 'index',
-      component: 'quanyuanManger',
+      component: 'quanyuangonjiManger',
       meta: {
-        title: '券源管理',
-        roles: ['admin'] // or you can only set roles in sub nav
+        title: '券源供给管理',
+        roles: ['admin','ronchu'] // or you can only set roles in sub nav
       }
     }]
   },
@@ -286,15 +287,15 @@ export const asyncRoutes1 = [
           redirect:'/accountManagerManagement/index',
           alwaysShow:true,
           meta: {
-            title: '客户经理管理',
+            title: '系统日志',
             icon: 'lock',  
             },
             children:[{
               path:'index',
-              component:'accountManagerManagement',
+              component:'systemLog',
               meta:{
-                title:'客户经理管理',
-                roles: ['admin']
+                title:'系统日志',
+                roles: ['admin','superAdmin']
               }
             }]
         },

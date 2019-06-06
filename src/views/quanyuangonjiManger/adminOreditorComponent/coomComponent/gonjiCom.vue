@@ -18,8 +18,8 @@
                  </el-date-picker>
                 </div>
 
-                <div style="marginTop:10px;width:400px" class="accountManager" v-if="isShowAccountManager">
-                 <span style="fontSize:12px;width: 100px;" >所属客户经理</span>
+                <div style="marginTop:10px;width:400px" class="accountManager" v-if="!isAdminAndronru">
+                 <span style="fontSize:12px;width: 100px;">所属客户经理</span>
                     <el-select v-model="value" filterable placeholder="请选择">
                     <el-option
                       v-for="item in options"
@@ -52,6 +52,7 @@
              </div>
          </transition>
           <el-divider><a style="color:#B40005" @click="conditionsOn">{{showCondition}}&nbsp;&nbsp;<i :class="showConditionIcon"></i></a></el-divider>   
+          <div style='marginBottom:20px'><el-button type="primary" >发布券源供给</el-button></div>
           <my-table></my-table>      
     </div>
 </template>
@@ -60,26 +61,25 @@
 <script>
 import myTable from '../../../table/index'
 import {mapGetters} from 'vuex'
-import { fail } from 'assert';
 
 export default {
-  mounted () {
-    console.log(this.isShowAccountManager)
-  },
     components:{
        myTable,
     },
     props:{
         whitchActive:String,
     },
+    mounted () {
+
+    },
     computed:{
-        isShowAccountManager(){
-            if(this.roles[0] === 'admin'){
-            return false
-          }
-          else if(this.roles[0] === 'manger'){
-            return true
-          } 
+        isAdminAndronru(){
+          if(this.roles.length === 2 && this.roles[0] === 'admin' && this.roles[1] === 'ronchu'){
+               return true
+             }
+             else if(this.roles[0] === 'admin' && this.roles.length === 1){
+                return false 
+             } 
         },
         ...mapGetters([
             'roles'

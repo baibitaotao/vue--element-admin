@@ -25,8 +25,8 @@
         <div class="cuoheStep">
             <component :is="accordingRoleShow"></component>
             <div style="margin-top:10px;">
-                <el-button>撮合成功</el-button>
-                <el-button>撮合失败</el-button>
+                <el-button type="primary">撮合成功</el-button>
+                <el-button type="primary">撮合失败</el-button>
             </div>
         </div>
 
