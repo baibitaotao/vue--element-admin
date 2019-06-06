@@ -1,10 +1,86 @@
 <template>
-    <div class="adminStep">
-        <el-steps direction="vertical" :active="2" finish-status="success">
-               <el-step title="撮合进度1" description="这是一段很长很长很长的描述性文字"></el-step>
-               <el-step title="撮合进度3"></el-step>
-               <el-step title="撮合进度2" description="这段就没那么长了"></el-step>
-        </el-steps>
+    <div class="editorStep">
+        <div class="contain">
+            <div>
+                <el-timeline>
+                      <el-timeline-item timestamp="2018/4/12" placement="top">
+                        <el-card>
+                          <h4>更新 Github 模板</h4>
+                          <p>王小虎 提交于 2018/4/12 20:46</p>
+                        </el-card>
+                      </el-timeline-item>
+                      <el-timeline-item timestamp="2018/4/3" placement="top">
+                        <el-card>
+                          <h4>更新 Github 模板</h4>
+                          <p>王小虎 提交于 2018/4/3 20:46</p>
+                        </el-card>
+                      </el-timeline-item>
+                      <el-timeline-item timestamp="2018/4/2" placement="top">
+                        <el-card>
+                          <h4>更新 Github 模板</h4>
+                          <p>王小虎 提交于 2018/4/2 20:46</p>
+                        </el-card>
+                     </el-timeline-item>
+                </el-timeline>
+            </div>
+            <div>
+                  <el-timeline>
+                      <el-timeline-item timestamp="2018/4/12" placement="top">
+                        <el-card>
+                          <h4>更新 Github 模板</h4>
+                          <p>王小虎 提交于 2018/4/12 20:46</p>
+                        </el-card>
+                      </el-timeline-item>
+                      <el-timeline-item timestamp="2018/4/3" placement="top">
+                        <el-card>
+                          <h4>更新 Github 模板</h4>
+                          <p>王小虎 提交于 2018/4/3 20:46</p>
+                        </el-card>
+                      </el-timeline-item>
+                      <el-timeline-item timestamp="2018/4/2" placement="top">
+                        <el-card>
+                          <h4>更新 Github 模板</h4>
+                          <p>王小虎 提交于 2018/4/2 20:46</p>
+                        </el-card>
+                     </el-timeline-item>
+                </el-timeline>
+            </div>
+        </div>
+        
+        <div style="margin-top:20px;">
+            <el-button>撮合成功</el-button>
+            <el-button>撮合失败</el-button>
+        </div>
     </div>
 </template>
+
+<script>
+export default {
+    data () {
+        return {
+             activeName: 'first',
+        }
+    },
+    methods: {
+        handleClick(){
+
+        }
+    }
+
+}
+</script>
+
+<style lang="scss" scoped>
+    .editorStep{
+        .contain{
+            display: flex;
+            >div{
+                :first-child{
+                    margin-right: 10px;
+                }
+                flex:1
+            }
+        }
+    }
+</style>
 

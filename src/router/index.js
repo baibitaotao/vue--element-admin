@@ -19,10 +19,7 @@ export const routerMap = {
   directive: _import('permission/directive'),
   role: _import('permission/role'),
   Steps: _import('steps/index'),
-  waitmatching:_import('quanyuanjiaoyi/quanyuanjiaoyi-waiting/index'),
   matching:_import('quanyuanjiaoyi/quanyuanjiaoyi-matching/index'),
-  matchingFail:_import('quanyuanjiaoyi/quanyuanjiaoyi-matchingFail/index'),
-  matchingSucess:_import('quanyuanjiaoyi/quanyuanjiaoyi-matchingSuccess/index'),
   userAuditManger:_import('userAuditManger/index'),
   userAdmin:_import('userAdmin/index'),
   quanyuanManger:_import('quanyuanManger/index'),
@@ -107,8 +104,8 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/userAuditMange/index',
-    hidden: true
+    redirect: '/userAuditManger/index',
+    hidden: true,
     // children: [
     //   {
     //     path: 'quanyuanxuqiu',
@@ -215,44 +212,23 @@ export const asyncRoutes1 = [
   {
     path: '/quanyuanjiaoyiguanli',
     component: 'Layout',
-    redirect: '/quanyuanjiaoyiguanli',
-    alwaysShow: false, // will always show the root menu
+    redirect: '/quanyuanjiaoyiguanli/matching',
+    alwaysShow: true, // will always show the root menu
     meta: {
       title: '券源交易管理',
       icon: 'lock',
-      roles: ['admin', 'editor'] // you can set roles in root nav
+           // you can set roles in root nav
     },
-    children: [{
-      path: 'wait-matching',
-      component: 'waitmatching',
-      meta: {
-        title: '交易进度-待撮合',
-        roles: ['admin'] // or you can only set roles in sub nav
-      }
-    },
+    children: [
     {
       path: 'matching',
       component: 'matching',
       meta: {
-        title: '交易进度-撮合中',
+        title: '券源交易管理',
         roles: ['admin']
       // if do not set roles, means: this page does not require permission
       }
-    }, {
-      path: 'matching-success',
-      component: 'matchingSucess',
-      meta: {
-        title: '交易进度-撮合成功',
-        roles: ['admin']
-      }
-     },{
-      path: 'matching-fail',
-      component: 'matchingFail',
-      meta: {
-        title: '交易进度-撮合失败',
-        roles: ['admin']
-      }
-     }]
+    }]
     },
     {
       path: '/jichushezhi',

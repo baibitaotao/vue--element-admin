@@ -24,10 +24,6 @@
         
         <div class="cuoheStep">
             <component :is="accordingRoleShow"></component>
-            <div style="margin-top:10px;">
-                <el-button>撮合成功</el-button>
-                <el-button>撮合失败</el-button>
-            </div>
         </div>
 
     </div>
@@ -35,18 +31,35 @@
 
 <script>
 
+import mangerComponent from './manger/index'
 import adminComponent from './admin/index'
-import editorComponent from './editor/index'
+import {mapGetters} from 'vuex'
 
 export default {
-  
+    mounted () {
+      this.showAdminOrManger()
+    },  
+    computed:{
+      ...mapGetters([
+        'roles'
+      ]),
+      isAdminOrManger(){
+        if(this.roles[0] === 'admin'){
+          return true
+        }
+        else if (this.roles[0] === 'manger'){
+          this.accordingRoleShow = 'adminComponent'
+          return false
+        }
+      }
+    },
     components:{
-        editorComponent,
+        mangerComponent,
         adminComponent
     },
     data () {
         return {
-            accordingRoleShow:'editorComponent',
+            accordingRoleShow:'',
             tableData: [{
                  date: '2016-05-02',
                  name: '王小虎',
@@ -67,6 +80,15 @@ export default {
         }
     },
     methods: {
+   showAdminOrManger(){
+        if(this.roles[0] === 'admin'){
+          this.accordingRoleShow = 'adminComponent'
+         
+        }
+        else if(this.roles[0] === 'manger'){
+          this.accordingRoleShow = 'mangerComponent'
+        }
+      },
     tableRowClassName({row, rowIndex}) {
         if (rowIndex === 1) {
           return 'warning-row';
