@@ -19,6 +19,11 @@ $main-color:rgb(180, 0, 5);
 @import './quanyuanAuditManger/xuqiu.scss';
 @import './quanyuanPairingManger/quanyuanPairingManger.scss';
 @import './systemLog/systemLog.scss';
+@import './gangweiManegr/gangweiManegr.scss';
+@import './gangweiManegr/mangerManger.scss';
+@import './systemManger/permissionsManger.scss';
+@import './systemManger/rolesManger.scss';
+@import './systemManger/userManger.scss';
 
 body {
   height: 100%;

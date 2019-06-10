@@ -1,24 +1,25 @@
 <template>
+<div class="gangweiManger">
     <div class="coomComponent">
-    <div style="width:410px">
-         <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
-            <el-button slot="append" icon="el-icon-search"></el-button>
-         </el-input>
-    </div>     
+        <div style="width:410px">
+             <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
+                <el-button slot="append" icon="el-icon-search"></el-button>
+             </el-input>
+        </div>     
          <transition name="el-zoom-in-top">
              <div v-show="isShowCondition" class="nini">
                 <div class="releaseTime" style="width:400px">
-                    <span>注册时间</span>
+                    <span>发布时间</span>
                     <el-date-picker
                      v-model="value1"
                      type="daterange"
-                     range-separator="至"
+                     range-separator="至"   
                      start-placeholder="开始日期"
                      end-placeholder="结束日期">
                  </el-date-picker>
                 </div>
 
-                <!-- <div style="marginTop:10px;width:400px" class="accountManager">
+                <div style="marginTop:10px;width:400px" class="accountManager">
                  <span style="fontSize:12px;width: 100px;">所属客户经理</span>
                     <el-select v-model="value" filterable placeholder="请选择">
                     <el-option
@@ -28,36 +29,42 @@
                       :value="item.value">
                     </el-option>
                   </el-select>
-                </div> -->
-
-                <div style="width:400px" class="userType">
+                </div>
+                <div style="width:400px" class="userType" v-if="isShowUsertype">
                     <span style="fontSize:12px;width: 100px;marginRight:29px;">用户类型</span>
                     <el-radio-group v-model="radio2" size="mini">
                       <el-radio-button label="全部" ></el-radio-button>
-                      <el-radio-button label="个人"></el-radio-button>
-                      <el-radio-button label="企业"></el-radio-button>
+                      <el-radio-button label="融入方"></el-radio-button>
+                      <el-radio-button label="融出方"></el-radio-button>
                     </el-radio-group>
                 </div>
 
                  <div class="status">
-                    <span style="fontSize:12px;width: 100px;marginRight:53px;">用户状态</span>
+                    <span style="fontSize:12px;width: 100px;marginRight:53px;">状态</span>
                     <el-radio-group v-model="radio3" size="mini">
                      <el-radio-button label="全部" ></el-radio-button>
-                     <el-radio-button label="融入方"></el-radio-button>
-                     <el-radio-button label="融出方"></el-radio-button>
+                     <el-radio-button label="待预约"></el-radio-button>
+                     <el-radio-button label="预约未成功"></el-radio-button>
+                     <el-radio-button label="部分预约成功"></el-radio-button>
+                     <el-radio-button label="全部预约成功"></el-radio-button>
                    </el-radio-group>
                  </div>
         
              </div>
          </transition>
-     <el-divider><a style="color:#B40005" @click="conditionsOn">{{showCondition}}&nbsp;&nbsp;<i :class="showConditionIcon"></i></a></el-divider>   
-          <my-table></my-table>      
+     <el-divider><a style="color:#B40005" @click="conditionsOn">{{showCondition}}&nbsp;&nbsp;<i :class="showConditionIcon"></i></a></el-divider>    
+     <my-table></my-table>   
+     <transition name="el-zoom-in-center">   
+     </transition> 
     </div>
+</div>
+    
 </template>
 
 
 <script>
-import myTable from '../../../table/index'
+import myTable from '../table/index'
+
 
 export default {
     components:{
@@ -76,6 +83,9 @@ export default {
         }
     },
     methods:{
+      modifyBannerStatus(){
+          this.isShowNewBaner = !this.isShowNewBaner
+      },
         conditionsOn(){
             if(this.showConditionIcon === 'el-icon-arrow-up'){
                 this.showConditionIcon = 'el-icon-arrow-down'
@@ -92,6 +102,7 @@ export default {
     },
     data () {
         return {
+            isShowNewBaner:false,
             input3:'',
             value1:'',
             value:'',

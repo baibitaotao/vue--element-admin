@@ -34,10 +34,11 @@ const actions = {
     return new Promise((resolve, reject) => {
       login({ loginName: loginName.trim(), password: password }).then(response => {
         const { data } = response
+        console.log(data.data)
         commit('SET_TOKEN', data.data.AppSSOSessionID)
-        commit('SET_NAME', data.data.user.name)
+        commit('SET_NAME', data.data.user.userName)
         setToken(data.data.AppSSOSessionID)
-        setName(data.data.user.name)
+        setName(data.data.user.userName)
         resolve(response.data)
       }).catch(error => {
         reject(error)

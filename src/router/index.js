@@ -21,10 +21,15 @@ export const routerMap = {
   Steps: _import('steps/index'),
   matching:_import('quanyuanjiaoyi/quanyuanjiaoyi-matching/index'),
   userAuditManger:_import('userAuditManger/index'),
-  userAdmin:_import('userAdmin/index'),
+
+  permissionsManger:_import('systemManger/permissionsManger'),
+  rolesManger:_import('systemManger/rolesManger'),
+  userManger:_import('systemManger/userManger'),
+
   quanyuangonjiManger:_import('quanyuangonjiManger/index'),
   jichushezhi:_import('jichushezhi/index'),
-  gangweiguanli:_import('gangweiguanli/index'),
+  adminManger:_import('gangweiguanli/adminManger'),
+  mangerManger:_import('gangweiguanli/mangerManger'),
   bannerguanli:_import('bannerguanli/index'),
   accountManagerManagement:_import('accountManagerManagement/index'),
   gonjiAuditManger:_import('quanyuanAuditManger/quanyuangonji/index'),
@@ -254,19 +259,27 @@ export const asyncRoutes1 = [
       {
         path: '/gangweiguanli',
         component: 'Layout',
-        redirect: '/gangweiguanli/index',
+        redirect: '/gangweiguanli/adminManger',
         alwaysShow: true, // will always show the root menu
         meta: {
           title: '岗位管理',
           icon: 'lock',  
           },
         children: [{
-          path: 'index',
-          component: 'gangweiguanli',
+          path: 'adminManger',
+          component: 'adminManger',
           meta: {
-            title: '岗位管理',
+            title: '业务管理员管理',
+            roles: ['admin','manger']
             }
-          }]
+          },{
+            path: 'mangerManger',
+            component: 'mangerManger',
+            meta: {
+              title: '客户经理管理',
+              roles: ['admin','manger']
+              }
+            }]
         },{
         path: '/bannerguanli',
         component: 'Layout',
@@ -358,6 +371,37 @@ export const asyncRoutes1 = [
               component:'mangerQuery',
               meta:{
                 title:'券源预约查询统计',
+                roles: ['admin','superAdmin']
+              }
+            }]
+        },{
+          path:'/systemManger',
+          component:'Layout',
+          redirect:'/systemManger/permissionsManger',
+          alwaysShow:true,
+          meta: {
+            title: '系统管理',
+            icon: 'lock',  
+            },
+            children:[{
+              path:'permissionsManger',
+              component:'permissionsManger',
+              meta:{
+                title:'权限管理',
+                roles: ['admin','superAdmin']
+              }
+            },{
+              path:'rolesManger',
+              component:'rolesManger',
+              meta:{
+                title:'角色管理',
+                roles: ['admin','superAdmin']
+              }
+            },{
+              path:'userManger',
+              component:'userManger',
+              meta:{
+                title:'用户管理',
                 roles: ['admin','superAdmin']
               }
             }]
