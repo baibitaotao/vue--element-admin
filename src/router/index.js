@@ -26,16 +26,19 @@ export const routerMap = {
   jichushezhi:_import('jichushezhi/index'),
   gangweiguanli:_import('gangweiguanli/index'),
   bannerguanli:_import('bannerguanli/index'),
-  anyue:_import('cuoheguanli/anyue'),
-  peidui:_import('cuoheguanli/peidui'),
-  wanzhenweidu:_import('baobiaoguanli/index'),
-  quanyuanweidu:_import('baobiaoguanli/index'),
   accountManagerManagement:_import('accountManagerManagement/index'),
   gonjiAuditManger:_import('quanyuanAuditManger/quanyuangonji/index'),
   xuqiuAuditManger:_import('quanyuanAuditManger/quanyuanxuqiu/index'),
   appointmentPairing:_import('quanyuanPairingManger/appointmentPairing/index'),
   aKeyPairing:_import('quanyuanPairingManger/aKeyPairing/index'),
   systemLog:_import('systemLog/index'),
+  quanyuanDelQuery:_import('reportManger/quanyuanDealQuery'),
+  quanyuanGonjiQuery:_import('reportManger/quanyuanGonjiQuery'),
+  quanyuanXuqiuQuery:_import('reportManger/quanyuanXuqiuQuery'),
+  ronruQuery:_import('reportManger/ronruQuery'),
+  ronchuQuery:_import('reportManger/ronchuQuery'),
+  quanyuanAppointmentQuery:_import('reportManger/quanyuanAppointmentQuery'),
+  mangerQuery:_import('reportManger/mangerQuery'),
 }
 
 
@@ -295,6 +298,66 @@ export const asyncRoutes1 = [
               component:'systemLog',
               meta:{
                 title:'系统日志',
+                roles: ['admin','superAdmin']
+              }
+            }]
+        },
+        {
+          path:'/reportManger',
+          component:'Layout',
+          redirect:'/reportManger/quanyuanDelQuery',
+          alwaysShow:true,
+          meta: {
+            title: '报表管理',
+            icon: 'lock',  
+            },
+            children:[{
+              path:'quanyuanDelQuery',
+              component:'quanyuanDelQuery',
+              meta:{
+                title:'券源成交查询统计',
+                roles: ['admin','superAdmin']
+              }
+            },{
+              path:'quanyuanGonjiQuery',
+              component:'quanyuanGonjiQuery',
+              meta:{
+                title:'券源供给查询统计',
+                roles: ['admin','superAdmin']
+              }
+            },{
+              path:'quanyuanXuqiuQuery',
+              component:'quanyuanXuqiuQuery',
+              meta:{
+                title:'券源需求查询统计',
+                roles: ['admin','superAdmin']
+              }
+            },{
+              path:'ronchuQuery',
+              component:'ronchuQuery',
+              meta:{
+                title:'融出方查询统计',
+                roles: ['admin','superAdmin']
+              }
+            },{
+              path:'ronruQuery',
+              component:'ronruQuery',
+              meta:{
+                title:'融入方查询统计',
+                roles: ['admin','superAdmin']
+              }
+            },{
+              path:'quanyuanAppointmentQuery',
+              component:'quanyuanAppointmentQuery',
+              meta:{
+                title:'券源预约查询统计',
+                roles: ['admin','superAdmin']
+              }
+            },{
+              path:'mangerQuery',
+              component:'mangerQuery',
+              meta:{
+                title:'券源预约查询统计',
                 roles: ['admin','superAdmin']
               }
             }]
