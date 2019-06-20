@@ -93,7 +93,7 @@ const actions = {
       setTimeout(() => {
         const serverRouterMap = asyncRoutes1
         const asyncRouterMap = generateAsyncRouter(routerMap, serverRouterMap)
-          accessedRoutes = asyncRouterMap || []
+        accessedRoutes = asyncRouterMap || []
         commit('SET_ROUTES', asyncRouterMap)
         resolve(asyncRouterMap)
       }, 1000)

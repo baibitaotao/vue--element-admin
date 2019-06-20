@@ -4,13 +4,30 @@
                width:160px;
        }
    .coomComponent{
+       .setInputWidth{
+           .el-date-editor{
+               width:100%;
+           }
+       }
+       .el-dialog__body{
+        padding-bottom: 10px;
+       }
+       .el-form-item__content{
+           width:auto;
+           .el-select{
+               width: 100%;
+           }
+       }
+         .el-dialog{
+             width: 40%;
+         } 
          .releaseTime{
             display: flex;
             align-items: center;
             margin-top: 10px;
             span{
+                // 券源供给改过span
                 font-size:12px;
-                width: 100px;
             }
             .el-input__inner{
                 width:100%;

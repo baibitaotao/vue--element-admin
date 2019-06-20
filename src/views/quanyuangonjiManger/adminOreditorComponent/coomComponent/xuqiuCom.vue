@@ -53,24 +53,23 @@
          </transition>
           <el-divider><a style="color:#B40005" @click="conditionsOn">{{showCondition}}&nbsp;&nbsp;<i :class="showConditionIcon"></i></a></el-divider>   
            <div style='marginBottom:20px'><el-button type="primary" >发布券源需求</el-button></div>
-          <my-table></my-table>      
+          <xuqiu-table></xuqiu-table>      
     </div>
 </template>
 
 
 <script>
-import myTable from '../../../table/index'
+import xuqiuTable from './xuqiuTable'
 import {mapGetters} from 'vuex'
 import { fail } from 'assert';
 
 export default {
   mounted () {
     // console.log(this.isShowAccountManager)
-        console.log(this.isShowAccountManager)
-        console.log(this.roles)
+     
   },
     components:{
-       myTable,
+       xuqiuTable,
     },
     props:{
         whitchActive:String,

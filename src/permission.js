@@ -5,7 +5,7 @@ import store from './store'
 import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
-import { getToken } from '@/utils/auth' // get token from cookie
+import { getUserId } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
@@ -18,10 +18,8 @@ router.beforeEach(async(to, from, next) => {
   // set page title
   document.title = getPageTitle(to.meta.title)
   // determine whether the user has logged in
-  const hasToken = getToken()
-
-  if (hasToken) {
-
+ const userId = getUserId()
+  if (userId) {
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next()
@@ -29,16 +27,16 @@ router.beforeEach(async(to, from, next) => {
     } else {
               // determine whether the user has obtained his permission roles through getInfo
               //  const hasRoles = store.getters.roles && store.getters.roles.length > 0
+              next()
               if(to.meta.roles){
                 store.dispatch('user/setRoles', to.meta.roles)
               }else{
                 console.log('检查拦截器角色')
               }
-
-              next()
               const accessRoutes = await store.dispatch('permission/generateRoutes')
               router.addRoutes(accessRoutes)
-              NProgress.done() 
+              NProgress.done()
+
     }
   } else {
     /* has no token*/

@@ -29,9 +29,10 @@ export default {
   width: 100%;
   position: relative;
   margin-top: 41px;
-  padding: 7px 14px 0 14px;
+  padding: 7px 14px 30px 14px;
   box-sizing: border-box;
   background: url('../../assets/quanyuanImg/backImg.jpg') no-repeat;
+  background-size: cover;
 }
 
 .fixed-header+.app-main {
@@ -39,10 +40,10 @@ export default {
 }
 
 .hasTagsView {
-  .app-main {
-    /* 84 = navbar + tags-view = 50 + 34 */
-    // min-height: calc(100vh - 84px);
-  }
+  // .app-main {
+  //   /* 84 = navbar + tags-view = 50 + 34 */
+  //   // min-height: calc(100vh - 84px);
+  // }
 
   .fixed-header+.app-main {
     padding-top:54px;

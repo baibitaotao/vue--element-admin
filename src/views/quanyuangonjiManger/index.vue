@@ -1,6 +1,6 @@
 <template>
     <div class="quanyuanManger">
-        <quanyuan-manger></quanyuan-manger>
+        <quanyuan-manger></quanyuan-manger> 
     </div>
 </template>
 

@@ -6,7 +6,7 @@ import {
   Message
 } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import { Loading } from 'element-ui';
 
 // create an axios instance
 const service = axios.create({
@@ -20,14 +20,18 @@ const service = axios.create({
 
 
 // request interceptor
+var loadingInstance 
 service.interceptors.request.use(
   config => {
     // Do something before request is sent
-    if (store.getters.token) {
-      // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-      // config.headers['X-Token'] = getToken()
-      config.headers['AppSSOSessionID'] = getToken()
-      
+    if (store.getters.USER_ID) {
+      // loadingInstance = Loading.service({
+      //   fullscreen: true,
+      //   lock:true,
+      //   text: 'Loading',
+      //   spinner: 'el-icon-loading',
+      //   background: 'rgba(0, 0, 0, 0.7)'
+      // });
     }
     return config
   },
@@ -39,6 +43,8 @@ service.interceptors.request.use(
 )
 
 service.interceptors.response.use(res => {
+  console.log('接口返回的状态码',res.status)
+  // loadingInstance.close();
       if(res.status !== 200){
         Message({
            message: res.status || 'error',

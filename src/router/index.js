@@ -115,14 +115,6 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/userAuditManger/index',
     hidden: true,
-    // children: [
-    //   {
-    //     path: 'quanyuanxuqiu',
-    //     component: () => import('@/views/quanyuanxuqiu/index'),
-    //     name: 'quanyuanfabushenhe',
-    //     meta: { title: '券源需求发布审核', icon: 'dashboard', affix: true }
-    //   }
-    // ]
   },
 
 ]

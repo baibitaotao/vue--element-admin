@@ -63,6 +63,7 @@
 import { validUsername } from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
 import {mapGetters} from 'vuex'
+import { constants } from 'crypto';
 
 
 export default {
@@ -88,8 +89,8 @@ export default {
     }
     return {
       loginForm: {
-        loginName: 'admin',
-        password: '111111'
+        loginName: 'chenl',
+        password: '888888'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -152,12 +153,11 @@ export default {
           this.loading = true
           let loginIfo = this.loginForm
           this.$store.dispatch('user/login', this.loginForm).then((res) => {
-
               this.$router.push({ path: this.redirect || '/' })
-              
               this.loading = false
+            
               this.$store.dispatch('user/getUserPermissions',this.token).then(res => {
-                  // console.log(res);
+                  //  console.log(res);
               })
             
             })
