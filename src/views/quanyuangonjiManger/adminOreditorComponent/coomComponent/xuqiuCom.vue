@@ -18,7 +18,7 @@
                  </el-date-picker>
                 </div>
 
-                <div style="marginTop:10px;width:400px" class="accountManager" v-if="isShowAccountManager">
+                <div style="marginTop:10px;width:400px" class="accountManager">
                  <span style="fontSize:12px;width: 100px;" >所属客户经理</span>
                     <el-select v-model="value" filterable placeholder="请选择">
                     <el-option
@@ -29,7 +29,7 @@
                     </el-option>
                   </el-select>
                 </div>
-                <div style="width:400px" class="userType" v-if="isShowUsertype">
+                <div style="width:400px" class="userType">
                     <span style="fontSize:12px;width: 100px;marginRight:29px;">用户类型</span>
                     <el-radio-group v-model="radio2" size="mini">
                       <el-radio-button label="全部" ></el-radio-button>
@@ -37,8 +37,7 @@
                       <el-radio-button label="融出方"></el-radio-button>
                     </el-radio-group>
                 </div>
-
-                 <div class="status">
+                <div class="status">
                     <span style="fontSize:12px;width: 100px;marginRight:53px;">状态</span>
                     <el-radio-group v-model="radio3" size="mini">
                      <el-radio-button label="全部" ></el-radio-button>
@@ -47,7 +46,7 @@
                      <el-radio-button label="部分预约成功"></el-radio-button>
                      <el-radio-button label="全部预约成功"></el-radio-button>
                    </el-radio-group>
-                 </div>
+                </div>
         
              </div>
          </transition>
@@ -65,7 +64,6 @@ import { fail } from 'assert';
 
 export default {
   mounted () {
-    // console.log(this.isShowAccountManager)
      
   },
     components:{

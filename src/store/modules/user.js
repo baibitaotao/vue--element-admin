@@ -32,13 +32,13 @@ const actions = {
   login({ commit }, userInfo) {
     const { loginName, password } = userInfo
     return new Promise((resolve, reject) => {
-      login({ loginName: loginName.trim(), password: password }).then(response => {
+      login({ loginName: loginName.trim(), password: password}).then(response => {
         const { data } = response
         commit('USER_ID', data.data.user.userId)
         commit('SET_NAME', data.data.user.userName)
         setUserId(data.data.user.userId)
         setName(data.data.user.userName)
-        resolve(data)
+        resolve(data.data)
       }).catch(error => {
         reject(error)
       })

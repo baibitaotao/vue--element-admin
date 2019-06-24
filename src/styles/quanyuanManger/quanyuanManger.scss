@@ -18,9 +18,16 @@
                width: 100%;
            }
        }
+       .detail_dialog{
+        .el-dialog{
+            width: 70%;
+        } 
+       }
          .el-dialog{
              width: 40%;
          } 
+
+
          .releaseTime{
             display: flex;
             align-items: center;

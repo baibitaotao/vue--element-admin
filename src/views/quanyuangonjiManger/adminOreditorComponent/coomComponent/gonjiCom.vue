@@ -66,51 +66,9 @@
              </div>
          </transition>
           <el-divider><a style="color:#B40005" @click="conditionsOn">{{showCondition}}&nbsp;&nbsp;<i :class="showConditionIcon"></i></a></el-divider>   
-          <div style='marginBottom:20px'><el-button type="primary" @click="dialogFormVisible = true">发布券源供给</el-button></div>
-          <gonji-table :conditionOfTransmission = 'conditionOfTransmission'></gonji-table>
-
-          <el-dialog title="发布券源供给" :visible.sync="dialogFormVisible">
-               <el-form :model="form" :rules="rules">
-                 <el-form-item label="证券名称" prop="stockCode" :label-width="formLabelWidth">
-                   <!-- <el-input v-model="" autocomplete="off"></el-input> -->
-                    <el-select v-model="form.stockCode" filterable placeholder="请选择">
-                       <el-option
-                         v-for="item in options"
-                         :key="item.value"
-                         :label="item.label"
-                         :value="item.value">
-                       </el-option>
-                   </el-select>
-                 </el-form-item>
-                  <el-form-item label="出借数量" prop="lendQuantity" :label-width="formLabelWidth">
-                   <el-input v-model="form.lendQuantity" autocomplete="off"></el-input>
-                 </el-form-item>
-                  <el-form-item label="出借利率（%）" prop="lendRate" :label-width="formLabelWidth">
-                   <el-input v-model="form.lendRate" autocomplete="off"></el-input>
-                 </el-form-item>
-                  <el-form-item label="出借天数" prop="lendDays" :label-width="formLabelWidth">
-                   <el-input v-model="form.lendDays" autocomplete="off"></el-input>
-                 </el-form-item>
-                  <el-form-item label="预约截止日期" prop="reserveExpireDate" :label-width="formLabelWidth">
-                   <!-- <el-input v-model="form.reserveExpireDate" autocomplete="off"></el-input> -->
-                  <div class="setInputWidth">
-                       <el-date-picker
-                         v-model="form.reserveExpireDate"
-                         align="right"
-                         type="date"
-                         placeholder="选择截止预约日期">
-                       </el-date-picker>
-                  </div> 
-                 </el-form-item>
-                 <el-form-item label="备注" :label-width="formLabelWidth">
-                   <el-input v-model="form.remark" autocomplete="off"></el-input>
-                 </el-form-item>
-               </el-form>
-               <div slot="footer" class="dialog-footer">
-                 <el-button @click="dialogCancel">取 消</el-button>
-                 <el-button type="primary" @click="dialogConfirm">确 定</el-button>
-               </div>
-          </el-dialog>      
+          <div style='marginBottom:20px'><el-button type="primary" @click="stockSupply">发布券源供给</el-button></div>
+          <gonji-table ref = 'table' :conditionOfTransmission = 'conditionOfTransmission' @showStockSupplyDialog = 'showStockSupplyDialog' :refresh = 'refresh'></gonji-table>
+          <gonji-dialog :whichClick = 'whichClick' ref="Dialog"></gonji-dialog>
     </div>
 </template>
 
@@ -120,11 +78,12 @@
 import {mapGetters} from 'vuex'
 import gonjiTable from './gonjiTable'
 import { constants } from 'crypto';
+import gonjiDialog from './gonjiDialog'
 
 export default {
     watch: {
         date:{
-           handler: function (val, oldVal) {
+        handler: function (val, oldVal) {
               this.conditionOfTransmission.publishTimeBegin = val[0]
               this.conditionOfTransmission.publishTimeEnd = val[1]
          },
@@ -167,6 +126,7 @@ export default {
     },
     components:{
        gonjiTable,
+       gonjiDialog,
     },
     props:{
         whitchActive:String,
@@ -192,6 +152,35 @@ export default {
         }
     },
     methods:{
+      refresh(){
+        this.$refs.table.getStockSupplyList()
+      },
+      dealStockList(res){
+           let stocklist = []
+           res.data.list.forEach(element => {
+           let  obj = {}
+           obj.value = element.stockCode
+           obj.label = element.stockName + '/' + element.stockCode
+           stocklist.push(obj)
+        });
+        return new Promise((resolve, reject) => {
+          resolve(stocklist)
+        })
+      },
+      stockSupply(){
+        this.whichClick.name = 'stockSupply'
+        this.$store.dispatch('quanyuangonjiManger/stockSelectByKeyWord',{keyWord:''}).then(res => {
+          this.dealStockList(res).then(res =>　{
+             this.$refs.Dialog.showDialog(res)
+          })
+        }).catch(err => {
+          console.log(err)
+        })
+      },
+      showStockSupplyDialog(changeItem){
+        this.whichClick.name = 'stockChange'
+        this.$refs.Dialog.showDialog(changeItem)
+      },
       search(){
         this.conditionOfTransmission.keyWord = this.keyWord     
       },
@@ -209,10 +198,14 @@ export default {
                 this.showCondition = '条件收起'
                 this.isShowCondition = true
             }
-        }
+      }
     },
     data () {
         return {
+          whichClick:{
+            name:'stockSupply',
+            supplyId:'',
+          },
           date:'',
           conditionOfTransmission:{
                 keyWord:'',
@@ -223,38 +216,7 @@ export default {
                 pageSize:5,
                 currPage:1,  
           },
-          options: [],
-           form: {
-             stockCode: '',
-             lendQuantity: '',
-             lendRate:'',
-             lendDays:'',
-             reserveExpireDate:'',
-             remark:''
-             },
-              rules: {
-                stockCode: [
-                    { required: true, message: '请输入证券名称', trigger: 'blur' },
-                    { min: 3, max: 10, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-                  ],
-                lendQuantity: [
-                    { required: true, message: '请输入出借数量', trigger: 'blur' },
-                    { min: 1, max: 10, message: '长度在 1 到 10 个字符', trigger: 'blur' }
-                  ],
-                lendRate: [
-                    { required: true, message: '请输入出借利率', trigger: 'blur' },
-                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
-                  ],
-                lendDays: [
-                    { required: true, message: '请输入出借天数', trigger: 'blur' },
-                    { min: 1, max: 10, message: '长度在 1 到 10 个字符', trigger: 'blur' }
-                  ],
-                reserveExpireDate: [
-                    { required: true, message: '请输入预约截止日期', trigger: 'blur' },
-                  ],  
-            },
-            formLabelWidth: '120px',
-            dialogFormVisible:false,
+            
             tableData:{},
             keyWord:'',
             value:'',

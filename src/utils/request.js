@@ -9,6 +9,8 @@ import store from '@/store'
 import { Loading } from 'element-ui';
 
 // create an axios instance
+// baseURL: 'http://172.29.201.86:8077/smt-admin',陈
+// baseURL: 'http://172.29.201.112:8080/smt-admin'于,
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
   baseURL: 'http://172.29.201.86:8077/smt-admin',
@@ -43,11 +45,17 @@ service.interceptors.request.use(
 )
 
 service.interceptors.response.use(res => {
-  console.log('接口返回的状态码',res.status)
-  // loadingInstance.close();
-      if(res.status !== 200){
+  if(res.status !== 200){
+    console.log(res)
+    Message({
+      message:'error:' + res.status,
+      type: 'error',
+      duration: 3 * 1000
+    })
+  }
+  if(res.data.status !== '0'){
         Message({
-           message: res.status || 'error',
+           message: res.data.msg || 'error',
            type: 'error',
            duration: 3 * 1000
          })
