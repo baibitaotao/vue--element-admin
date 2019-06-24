@@ -195,25 +195,10 @@ export default {
       search(){
         this.conditionOfTransmission.keyWord = this.keyWord     
       },
-      dialogCancel(){
-        this.dialogFormVisible = false
-         this.$message({
-          showClose: true,
-          message: '已取消',
-          type: 'warning'
-        });
+      delFn(item){
+        console.log(item)
       },
-      dialogConfirm(){
-         this.dialogFormVisible = false  
-      
-      },
-        delFn(item){
-          console.log(item)
-        },
-        stockSupply(){
-          console.log('发布')
-        },
-        conditionsOn(){
+      conditionsOn(){
             if(this.showConditionIcon === 'el-icon-arrow-up'){
                 this.showConditionIcon = 'el-icon-arrow-down'
                 this.showCondition = '条件展开'
