@@ -67,8 +67,8 @@
          </transition>
           <el-divider><a style="color:#B40005" @click="conditionsOn">{{showCondition}}&nbsp;&nbsp;<i :class="showConditionIcon"></i></a></el-divider>   
           <div style='marginBottom:20px'><el-button type="primary" @click="stockSupply">发布券源供给</el-button></div>
-          <gonji-table ref = 'table' :conditionOfTransmission = 'conditionOfTransmission' @showStockSupplyDialog = 'showStockSupplyDialog' :refresh = 'refresh'></gonji-table>
-          <gonji-dialog :whichClick = 'whichClick' ref="Dialog"></gonji-dialog>
+    <gonji-table ref = 'table' :conditionOfTransmission = 'conditionOfTransmission' @showStockSupplyDialog = 'showStockSupplyDialog' :refresh = 'refresh' :whitchActive = 'whitchActive'></gonji-table>
+    <gonji-dialog :whichClick = 'whichClick' ref="Dialog"></gonji-dialog>
     </div>
 </template>
 
@@ -81,6 +81,9 @@ import { constants } from 'crypto';
 import gonjiDialog from './gonjiDialog'
 
 export default {
+    mounted () {
+      this.refresh()
+    },
     watch: {
         date:{
         handler: function (val, oldVal) {
@@ -129,7 +132,10 @@ export default {
        gonjiDialog,
     },
     props:{
-        whitchActive:String,
+         whitchActive:{
+            type:String,
+            require:true,
+        },
     },
     computed:{
         isAdminAndronru(){
@@ -153,6 +159,13 @@ export default {
     },
     methods:{
       refresh(){
+        this.conditionOfTransmission.keyWord = ''
+        this.conditionOfTransmission.publishTimeBegin = ''
+        this.conditionOfTransmission.publishTimeEnd = ''
+        this.conditionOfTransmission.approveStatus = ''
+        this.conditionOfTransmission.matchStatus = ''
+        this.conditionOfTransmission.pageSize = 5
+        this.conditionOfTransmission.currPage = 1
         this.$refs.table.getStockSupplyList()
       },
       dealStockList(res){
@@ -171,6 +184,7 @@ export default {
         this.whichClick.name = 'stockSupply'
         this.$store.dispatch('quanyuangonjiManger/stockSelectByKeyWord',{keyWord:''}).then(res => {
           this.dealStockList(res).then(res =>　{
+             res.name = 'stockSupply'
              this.$refs.Dialog.showDialog(res)
           })
         }).catch(err => {
@@ -203,7 +217,7 @@ export default {
     data () {
         return {
           whichClick:{
-            name:'stockSupply',
+            name:'',
             supplyId:'',
           },
           date:'',
@@ -216,7 +230,6 @@ export default {
                 pageSize:5,
                 currPage:1,  
           },
-            
             tableData:{},
             keyWord:'',
             value:'',

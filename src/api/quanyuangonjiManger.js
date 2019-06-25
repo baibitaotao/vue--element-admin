@@ -8,13 +8,27 @@ export function getStockSupplyList(params) {
     })
   }
 
-  export function getStockDetails(params) {
-    console.log(params)
+  export function getStockDemandList(params) {
+    return request({
+      url: `/stockDemand/list`,
+      method: 'get',
+      params
+    })
+  }   
+
+  export function stockSupplyInfo(params) {
     return request({
       url: `/stockSupply/info/${params}`,
       method: 'get',
     })
-  } 
+  }
+  export function stockDemandInfo(params) {
+    return request({
+      url: `/stockDemand/info/${params}`,
+      method: 'get',
+    })
+  }
+
 
   export function stockSelectByKeyWord(params) {
     return request({
@@ -41,3 +55,13 @@ export function getStockSupplyList(params) {
       data
     })
   } 
+
+  export function stockDemandUpdate(demandId,data) {
+    return request({
+      url: `/stockDemand/update/${demandId}`,
+      method: 'put',
+      data
+    })
+  } 
+
+

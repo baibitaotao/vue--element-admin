@@ -1,25 +1,26 @@
 <template>
     <div class="coomComponent">
     <div style="width:410px">
-         <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
-            <el-button slot="append" icon="el-icon-search"></el-button>
+         <el-input placeholder="请输入内容" v-model="keyWord" class="input-with-select">
+            <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
          </el-input>
     </div>     
          <transition name="el-zoom-in-top">
              <div v-show="isShowCondition" class="nini">
-                <div class="releaseTime" style="width:400px">
-                    <span>发布时间</span>
-                    <el-date-picker
-                     v-model="value1"
-                     type="daterange"
-                     range-separator="至"
-                     start-placeholder="开始日期"
-                     end-placeholder="结束日期">
-                 </el-date-picker>
+                <div class="releaseTime" style="width:410px">
+                  <span style="width:100px;">发布时间</span>
+                   <el-date-picker
+                      v-model="date"
+                      type="daterange"
+                      range-separator="至"
+                      value-format='yyyy-MM-dd'
+                      start-placeholder="开始日期"
+                      end-placeholder="结束日期">
+                   </el-date-picker>
                 </div>
 
-                <div style="marginTop:10px;width:400px" class="accountManager">
-                 <span style="fontSize:12px;width: 100px;" >所属客户经理</span>
+                <div style="marginTop:10px;width:400px" class="accountManager" v-if="!isAdminAndronru">
+                 <span style="fontSize:12px;width: 100px;">所属客户经理</span>
                     <el-select v-model="value" filterable placeholder="请选择">
                     <el-option
                       v-for="item in options"
@@ -29,7 +30,8 @@
                     </el-option>
                   </el-select>
                 </div>
-                <div style="width:400px" class="userType">
+
+                <div style="width:400px" class="userType" v-if="isShowUsertype">
                     <span style="fontSize:12px;width: 100px;marginRight:29px;">用户类型</span>
                     <el-radio-group v-model="radio2" size="mini">
                       <el-radio-button label="全部" ></el-radio-button>
@@ -37,49 +39,109 @@
                       <el-radio-button label="融出方"></el-radio-button>
                     </el-radio-group>
                 </div>
-                <div class="status">
-                    <span style="fontSize:12px;width: 100px;marginRight:53px;">状态</span>
+
+                 <div class="status">
+                    <span style="fontSize:12px;width: 100px;marginRight:28px;">审核状态</span>
                     <el-radio-group v-model="radio3" size="mini">
                      <el-radio-button label="全部" ></el-radio-button>
-                     <el-radio-button label="待预约"></el-radio-button>
-                     <el-radio-button label="预约未成功"></el-radio-button>
-                     <el-radio-button label="部分预约成功"></el-radio-button>
-                     <el-radio-button label="全部预约成功"></el-radio-button>
+                     <el-radio-button label="待提交"></el-radio-button>
+                     <el-radio-button label="待审核"></el-radio-button>
+                     <el-radio-button label="待复核"></el-radio-button>
+                     <el-radio-button label="复核通过"></el-radio-button>
                    </el-radio-group>
-                </div>
+                 </div>
+
+                   <div class="status">
+                    <span style="fontSize:12px;width: 100px;marginRight:28px;">撮合状态</span>
+                    <el-radio-group v-model="radio4" size="mini">
+                     <el-radio-button label="全部" ></el-radio-button>
+                     <el-radio-button label="待撮合"></el-radio-button>
+                     <el-radio-button label="撮合中"></el-radio-button>
+                     <el-radio-button label="部分撮合成功"></el-radio-button>
+                     <el-radio-button label="全部撮合成功"></el-radio-button>
+                   </el-radio-group>
+                 </div> 
+
         
              </div>
          </transition>
           <el-divider><a style="color:#B40005" @click="conditionsOn">{{showCondition}}&nbsp;&nbsp;<i :class="showConditionIcon"></i></a></el-divider>   
-           <div style='marginBottom:20px'><el-button type="primary" >发布券源需求</el-button></div>
-          <xuqiu-table></xuqiu-table>      
+          <!-- <div style='marginBottom:20px'><el-button type="primary" @click="stockDemand">发布券源需求</el-button></div> -->
+          <gonji-table ref = 'table' :demandConditionOfTransmission = 'demandConditionOfTransmission' @showStockSupplyDialog = 'showStockSupplyDialog' :refresh = 'refresh' :whitchActive = 'whitchActive'></gonji-table>
+          <gonji-dialog :whichClick = 'whichClick' ref="Dialog"></gonji-dialog>
     </div>
 </template>
 
 
 <script>
-import xuqiuTable from './xuqiuTable'
+
 import {mapGetters} from 'vuex'
-import { fail } from 'assert';
+import gonjiTable from './gonjiTable'
+import { constants } from 'crypto';
+import gonjiDialog from './gonjiDialog'
 
 export default {
-  mounted () {
-     
-  },
+    watch: {
+        date:{
+        handler: function (val, oldVal) {
+              this.demandConditionOfTransmission.publishTimeBegin = val[0]
+              this.demandConditionOfTransmission.publishTimeEnd = val[1]
+         },
+         deep: true
+        },
+        radio3(val, oldVal){
+            if(val == '全部'){
+                this.demandConditionOfTransmission.approveStatus = ''
+            }
+            if(val == '待提交'){
+              this.demandConditionOfTransmission.approveStatus = '01'
+            }
+            if(val == '待审核'){
+              this.demandConditionOfTransmission.approveStatus = '02'
+            }
+            if(val == '待复核'){
+              this.demandConditionOfTransmission.approveStatus = '03'
+            }
+            if(val == '复核通过'){
+              this.demandConditionOfTransmission.approveStatus = '04'
+            }
+        },
+        radio4(val, oldVal){
+            if(val == '全部'){
+                this.demandConditionOfTransmission.matchStatus = ''
+            }
+            if(val == '待撮合'){
+              this.demandConditionOfTransmission.matchStatus = '01'
+            }
+            if(val == '撮合中'){
+              this.demandConditionOfTransmission.matchStatus = '02'
+            }
+            if(val == '部分撮合成功'){
+              this.demandConditionOfTransmission.matchStatus = '03'
+            }
+            if(val == '全部撮合成功'){
+              this.demandConditionOfTransmission.matchStatus = '04'
+            }
+        }
+    },
     components:{
-       xuqiuTable,
+       gonjiTable,
+       gonjiDialog,
     },
     props:{
-        whitchActive:String,
+        whitchActive:{
+            type:String,
+            require:true,
+        },
     },
     computed:{
-        isShowAccountManager(){
-            if(this.roles.length === 2 && this.roles[0] === 'admin' && this.roles[1] === 'ronchu'){
-              return true
-            }
-            else if(this.roles[0] === 'admin'){
-               return false 
-            }
+        isAdminAndronru(){
+          if(this.roles.length === 2 && this.roles[0] === 'admin' && this.roles[1] === 'ronchu'){
+               return true
+             }
+             else if(this.roles[0] === 'admin' && this.roles.length === 1){
+                return false 
+             } 
         },
         ...mapGetters([
             'roles'
@@ -93,7 +155,50 @@ export default {
         }
     },
     methods:{
-        conditionsOn(){
+      refresh(){
+        this.demandConditionOfTransmission.keyWord = ''
+        this.demandConditionOfTransmission.publishTimeBegin = ''
+        this.demandConditionOfTransmission.publishTimeEnd = ''
+        this.demandConditionOfTransmission.approveStatus = ''
+        this.demandConditionOfTransmission.matchStatus = ''
+        this.demandConditionOfTransmission.pageSize = 5
+        this.demandConditionOfTransmission.currPage = 1
+        this.$refs.table.getStockDemandList()
+      },
+      dealStockList(res){
+           let stocklist = []
+           res.data.list.forEach(element => {
+           let  obj = {}
+           obj.value = element.stockCode
+           obj.label = element.stockName + '/' + element.stockCode
+           stocklist.push(obj)
+        });
+        return new Promise((resolve, reject) => {
+          resolve(stocklist)
+        })
+      },
+      stockDemand(){
+        this.whichClick.name = 'stockDemand'
+        this.$store.dispatch('quanyuangonjiManger/stockSelectByKeyWord',{keyWord:''}).then(res => {
+          this.dealStockList(res).then(res =>　{
+             res.name = 'stockDemand'
+             this.$refs.Dialog.showDialog(res)
+          })
+        }).catch(err => {
+          console.log(err)
+        })
+      },
+      showStockSupplyDialog(changeItem){
+        this.whichClick.name = 'stockDemandChange'
+        this.$refs.Dialog.showDialog(changeItem)
+      },
+      search(){
+        this.demandConditionOfTransmission.keyWord = this.keyWord     
+      },
+      delFn(item){
+        console.log(item)
+      },
+      conditionsOn(){
             if(this.showConditionIcon === 'el-icon-arrow-up'){
                 this.showConditionIcon = 'el-icon-arrow-down'
                 this.showCondition = '条件展开'
@@ -103,36 +208,35 @@ export default {
                 this.showConditionIcon = 'el-icon-arrow-up'
                 this.showCondition = '条件收起'
                 this.isShowCondition = true
-               
             }
-        }
+      }
+
     },
     data () {
         return {
-            input3:'',
-            value1:'',
+          whichClick:{
+            name:'',
+            demandId:'',
+          },
+          date:'',
+          demandConditionOfTransmission:{
+                keyWord:'',
+                publishTimeBegin:'',
+                publishTimeEnd:'',
+                approveStatus:'',
+                matchStatus:'',
+                pageSize:5,
+                currPage:1,  
+          },
+            keyWord:'',
             value:'',
             radio2:'全部',
             radio3:'全部',
+            radio4:'全部',
             showConditionIcon:'el-icon-arrow-up',
             showCondition:'条件收起',
             isShowCondition:true,
-              options: [{
-                value: '选项1',
-                label: '黄金糕'
-              }, {
-                value: '选项2',
-                label: '双皮奶'
-              }, {
-                value: '选项3',
-                label: '蚵仔煎'
-              }, {
-                value: '选项4',
-                label: '龙须面'
-              }, {
-                value: '选项5',
-                label: '北京烤鸭'
-              }]
+            options: []
         }
     }
 }

@@ -1,5 +1,5 @@
-import {getStockSupplyList,getStockDetails,stockSelectByKeyWord,stockSupplyAdd,stockSupplyUpdate} from '../../api/quanyuangonjiManger'
-
+import {getStockSupplyList,stockSupplyInfo,stockSelectByKeyWord,stockSupplyAdd,stockSupplyUpdate} from '../../api/quanyuangonjiManger'
+import {getStockDemandList,stockDemandInfo,stockDemandUpdate} from '../../api/quanyuangonjiManger'
 
 const state = {
    
@@ -13,16 +13,35 @@ const state = {
     getStockSupplyList({commit},params){
              return new Promise((resolve, reject) => {
                 getStockSupplyList(params).then(response => {
-                  let {data} = response
+                let {data} = response
                 resolve(data)
                 }).catch(error => {
                   reject(error)
                 })
               }) 
     },
-    getStockDetails({commit},supplyId){
+    getStockDemandList({commit},params){
+           return new Promise((resolve, reject) => {
+            getStockDemandList(params).then(response => {
+               let {data} = response
+             resolve(data)
+             }).catch(error => {
+               reject(error)
+             })
+           })
+    },
+    stockSupplyInfo({commit},supplyId){
       return new Promise((resolve, reject) => {
-        getStockDetails(supplyId).then(response => {
+        stockSupplyInfo(supplyId).then(response => {
+          resolve(response.data)
+        }).catch(err => {
+          reject('获取详情接口' + err)
+        })
+      })
+    },
+    stockDemandInfo({commit},demandId){
+      return new Promise((resolve, reject) => {
+        stockDemandInfo(demandId).then(response => {
           resolve(response.data)
         }).catch(err => {
           reject('获取详情接口' + err)
@@ -51,6 +70,15 @@ const state = {
     stockSupplyUpdate({commit},payload){
       return new Promise((resolve, reject) => {
         stockSupplyUpdate(payload.supplyId,payload.dto).then(response => {
+          resolve(response.data)
+        }).catch(err => {
+          reject('获取详情接口' + err)
+        })
+      })
+    },
+    stockDemandUpdate({commit},payload){
+      return new Promise((resolve, reject) => {
+        stockDemandUpdate(payload.supplyId,payload.dto).then(response => {
           resolve(response.data)
         }).catch(err => {
           reject('获取详情接口' + err)
