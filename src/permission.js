@@ -36,7 +36,6 @@ router.beforeEach(async(to, from, next) => {
               const accessRoutes = await store.dispatch('permission/generateRoutes')
               router.addRoutes(accessRoutes)
               NProgress.done()
-
     }
   } else {
     /* has no token*/

@@ -1,16 +1,16 @@
 <template>
     <div class="appointmentPairing">
-        <appointment-pairing-component></appointment-pairing-component>
+        <gonji-pairing></gonji-pairing>
     </div>
 </template>
 
 
 <script>
-import appointmentPairingComponent from './appointmentPairingComponent/index'
+import gonjiPairing from './appointmentPairingComponent/gonjiPairing'
 
 export default {
     components:{
-        appointmentPairingComponent,
+        gonjiPairing,
     }
 
 

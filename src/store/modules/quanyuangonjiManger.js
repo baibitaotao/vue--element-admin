@@ -1,15 +1,10 @@
 import {getStockSupplyList,stockSupplyInfo,stockSelectByKeyWord,stockSupplyAdd,stockSupplyUpdate} from '../../api/quanyuangonjiManger'
 import {getStockDemandList,stockDemandInfo,stockDemandUpdate} from '../../api/quanyuangonjiManger'
 
-const state = {
-   
-  }
+const state = {}
+const mutations = {}
   
-  const mutations = {
-    
-  }
-  
-  const actions = {
+const actions = {
     getStockSupplyList({commit},params){
              return new Promise((resolve, reject) => {
                 getStockSupplyList(params).then(response => {
@@ -78,7 +73,7 @@ const state = {
     },
     stockDemandUpdate({commit},payload){
       return new Promise((resolve, reject) => {
-        stockDemandUpdate(payload.supplyId,payload.dto).then(response => {
+        stockDemandUpdate(payload.demandId,payload.dto).then(response => {
           resolve(response.data)
         }).catch(err => {
           reject('获取详情接口' + err)

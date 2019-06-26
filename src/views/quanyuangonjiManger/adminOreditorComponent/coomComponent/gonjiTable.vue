@@ -160,13 +160,12 @@
           </el-table-column>
         </el-table>  
 
-
           <div style="marginBottom:30px;marginTop:20px;">
              <el-pagination
                  style="float:right;"
                  @size-change="handleSizeChange"
                  @current-change="handleCurrentChange"
-                 :current-page="isShowSupplyOrDemand?this.conditionOfTransmission.currPage:this.demandConditionOfTransmission.currPage"
+                 :current-page="1"
                  :page-sizes="[5, 10, 20]"
                  :page-size="5"
                  layout="total, sizes, prev, pager, next, jumper"
@@ -174,8 +173,6 @@
               </el-pagination>
           </div>
 
-        
-        
         <div class="detail_dialog">
           <el-dialog :title="isShowSupplyOrDemand?'已发布券源供给信息':'已发布券源需求信息'" :visible.sync="dialogFormVisible">
             <h6 style="paddingBottom:20px;">基本信息</h6>
