@@ -67,7 +67,6 @@ export default {
                     reserveRateBegin: '',
                     reserveRateEnd: '',
                     reserveTypes: '1',
-                    reserveTypesList: null,
                     sort: 1
                 }, 
             },
@@ -93,7 +92,6 @@ export default {
           this.needdata.conditionOfTransmission.reserveQuantityEnd = this.$refs.chjie.queryData.reserveQuantityEnd
           this.needdata.conditionOfTransmission.reserveRateBegin = this.$refs.chjie.queryData.reserveRateBegin
           this.needdata.conditionOfTransmission.reserveRateEnd = this.$refs.chjie.queryData.reserveRateEnd
-            console.log(this.needdata.conditionOfTransmission)
           this.$refs.pairingTable.getTableList() 
       }
     }
@@ -104,8 +102,8 @@ export default {
 <style lang="scss" scoped>
 
 h6{
-    padding: 10px 0;
-    transform: translateY()
+   padding: 10px 0;
+   transform: translateY()
 }
 
 

@@ -52,6 +52,7 @@ service.interceptors.response.use(res => {
       type: 'error',
       duration: 3 * 1000
     })
+    return
   }
   if(res.data.status !== '0'){
         Message({
@@ -60,6 +61,7 @@ service.interceptors.response.use(res => {
            duration: 3 * 1000
          })
       }
+
       return res
 })
 

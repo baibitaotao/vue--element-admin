@@ -1,4 +1,4 @@
-import {stockReserveListStockReserve} from '../../api/quanyuanPairingManger'
+import {stockReserveListStockReserve,stockMatchTradeAdd} from '../../api/quanyuanPairingManger'
 
 
 
@@ -6,16 +6,28 @@ const state = {}
 const mutations = {}
   
 const actions = {
-    stockReserveListStockReserve({commit},params){
-        return new Promise((resolve, reject) => {
-           stockReserveListStockReserve(params).then(response => {
-           let {data} = response
-           resolve(data)
-           }).catch(error => {
-             reject(error)
-           })
-         }) 
+stockReserveListStockReserve({commit},params){
+    return new Promise((resolve, reject) => {
+       stockReserveListStockReserve(params).then(response => {
+       let {data} = response
+       resolve(data)
+       }).catch(error => {
+         reject(error)
+       })
+     }) 
 },
+
+stockMatchTradeAdd({commit},params){
+  return new Promise((resolve, reject) => {
+    stockMatchTradeAdd(params).then(response => {
+    let {data} = response
+    resolve(data)
+    }).catch(error => {
+      reject(error)
+    })
+  }) 
+}
+
 }
 
 

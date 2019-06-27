@@ -264,19 +264,18 @@ export default {
     methods:{
       refresh(){
         this.needdata.conditionOfTransmission = {
-           currPage: 1,
-           keyWord: "",
-           order: 1,
-           pageSize: 5,
-           reserveDaysBegin: '',
-           reserveDaysEnd: '',
-           reserveQuantityBegin: '',
-           reserveQuantityEnd: '',
-           reserveRateBegin: '',
-           reserveRateEnd: '',
-           reserveTypes: "",
-           reserveTypesList: 1,
-           sort: 1
+          currPage: 1,
+          keyWord: "",
+          order: 1,
+          pageSize: 5,
+          reserveDaysBegin:"1" ,
+          reserveDaysEnd: "111111111",
+          reserveQuantityBegin: "1",
+          reserveQuantityEnd:"111111111111" ,
+          reserveRateBegin: "1",
+          reserveRateEnd:"1111111111111111" ,
+          reserveTypes: "1,2",
+          sort: 1
         }
         this.getTableList()
       },
@@ -296,32 +295,13 @@ export default {
       },
     
       optionFn(value){
-         if(value == 'details'){
-           if(this.whitchActive == 'supply'){
-              this.detailsFn(this.seletedItem[0].supplyId)
-           }
-           else if(this.whitchActive == 'demand'){
-              this.detailsFn(this.seletedItem[0].demandId)
-           }
-          
-           return
+         if(value == 'determineMatch'){
+           this.$store.dispatch('quanyuanPairingManger/stockMatchTradeAdd',{reserveId:this.seletedItem[0].reserveId}).then(res => {
+                this.$message({message: '确定分配成功',type: 'success',duration: 3 * 1000})
+                this.refresh()
+           })
          }
-         if(value == 'delete'){
-          
-          return
-         }
-         if(value == 'change'){
-          this.changeFn(this.seletedItem[0])
-           return
-         }
-         if(value == 'cancel'){
-           
-           return
-         }
-         if(value == 'setTop'){
-           
-           return
-         }
+        
       },
       handleSelectionChange(value){
           this.seletedItem = value
@@ -330,18 +310,13 @@ export default {
             this.seletedItem = value
       },
       handleSizeChange(value){
-          if(this.whitchActive == 'supply'){
-           this.conditionOfTransmission.pageSize = value
-           return
-          }
-          if(this.whitchActive == 'demand'){
-             this.demandConditionOfTransmission.pageSize = value
-             return
-          }
+        this.needdata.conditionOfTransmission.pageSize = value
+        this.getTableList()
       },
       handleCurrentChange(value){
       this.needdata.conditionOfTransmission.currPage = value
-      },
+      this.getTableList()
+     },
       isDisableBtn(selected){
           if(selected.length == 1){
               for(let i = 0;i < this.btnstatus.length;++i){

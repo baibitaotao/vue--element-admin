@@ -7,3 +7,12 @@ export function stockReserveListStockReserve(data) {
       data
     })
   }
+
+
+export function stockMatchTradeAdd(data) {
+    return request({
+      url: `/stockMatchTrade/add?reserveId=${data.reserveId}`,
+      method: 'post',
+      data
+    })
+  }  
