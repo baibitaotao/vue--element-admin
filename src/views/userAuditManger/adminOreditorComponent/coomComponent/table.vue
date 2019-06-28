@@ -7,103 +7,75 @@
            :data="tableData"
            border
            @selection-change="handleSelectionChange"
-           style="width: 100%">
+           >
+           
             <el-table-column
               type="selection"
               width="55">
             </el-table-column>
-           <el-table-column
-             prop="supplyId"
-             label="券源供给编号"
-             width="110">
-           </el-table-column>
 
-            <el-table-column
-             prop="demandId"
-             label="券源供给编号"
-             width="110">
-           </el-table-column>
-
-           <el-table-column
+             <el-table-column
              prop="userId"
              label="用户编号"
              width="100">
            </el-table-column>
-
+            
            <el-table-column
-             prop="userOrCompanyName"
+             prop="userName"
              label="真实姓名/企业名称"
              width="150">
            </el-table-column>
-           
+            <el-table-column
+             prop="registerTypeName"
+             label="注册类型"
+             width="100">
+           </el-table-column>
            <el-table-column
-             prop="userManager"
-             label="所属客户经理"
-             width="110">
-           </el-table-column>
-
-            <el-table-column
-             prop="stockCode"
-             label="证券代码"
+             prop=""
+             label="用户类型/待确认"
              width="100">
            </el-table-column>
             <el-table-column
-             prop="stockCodeName"
-             label="证券名称"
-             width="100">
-           </el-table-column>
-            <el-table-column
-             prop="reserveDays"
-             label="出借天数"
-             width="100">
-           </el-table-column>
-            <el-table-column
-             prop="reserveQuantity"
-             label="出借数量"
-             width="100">
-           </el-table-column>
-            <el-table-column
-             prop="reserveRate"
-             label="出借利率"
-             width="100">
-           </el-table-column>
-
-            <el-table-column
-             prop="stockDemandUserId"
-             label="需求对象编号"
-             width="110">
-           </el-table-column>
-
-            <el-table-column
-             prop="stockDemandUserOrCompanyName"
-             label="需求对象/公司名称"
-             width="100">
-           </el-table-column>
-
-            <el-table-column
-             prop="stockDemandUserManager"
-             label="需求对象客户经理"
+             prop="roleNames"
+             label="证件类型"
              width="100">
            </el-table-column>
 
            <el-table-column
-             prop="stockSupplyUserId"
-             label="供给对象编号"
-             width="110">
-           </el-table-column>
-
-            <el-table-column
-             prop="stockSupplyUserOrCompanyName"
-             label="供给对象/公司名称"
+             prop="cardCode"
+             label="证件号"
              width="100">
            </el-table-column>
 
             <el-table-column
-             prop="stockSupplyUserManager"
-             label="供给对象客户经理"
+             prop="contact"
+             label="企业联系人"
              width="100">
            </el-table-column>
-           
+
+           <el-table-column
+             prop="mobilePhone"
+             label="手机号"
+             width="100">
+           </el-table-column>
+
+            <el-table-column
+             prop="orgName"
+             label="所属分支机构名称"
+             width="100">
+           </el-table-column>
+           <el-table-column
+             prop="isAccountName"
+             label="是否财通用户"
+             width="100">
+           </el-table-column>
+
+           <el-table-column
+             prop="account"
+             label="资金账号"
+             width="100">
+           </el-table-column>
+      
          </el-table>
 
        
@@ -120,47 +92,29 @@
                  :total="pagination.totalPage">
               </el-pagination>
           </div>
-
-        <div class="detail_dialog">
-          <el-dialog :title="isShowSupplyOrDemand?'已发布券源供给信息':'已发布券源需求信息'" :visible.sync="dialogFormVisible">
-            <h6 style="paddingBottom:20px;">基本信息</h6>
-             <el-row>
-                   <el-col :span="10" v-for="(item,key,index) in detailsData" :key="index">
-                     <div class="show_ditals" >
-                       <div>{{key|detailsText}}</div>
-                       <div>{{item}}</div>
-                      </div>
-                   </el-col>
-             </el-row>
-             <div slot="footer" class="dialog-footer">
-               <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-             </div>
-          </el-dialog>
-        </div> 
-
+          <user-approval-diolog ref = 'dialog' :seletedItem = 'seletedItem'></user-approval-diolog>
+          <detail-dialog ref = 'detailDialog' :seletedItem = 'seletedItem'></detail-dialog>
+          <assign-customer-manager-dialog ref = 'assignCustomerManager' :seletedItem = 'seletedItem'></assign-customer-manager-dialog>
     </div>
 </template>
 
 
 <script>
-
-
+import userApprovalDiolog from './userApprovalDialog'
+import detailDialog from './detailDialog'
+import assignCustomerManagerDialog from './assignCustomerManagerDialog'
 
 export default {
-    computed:{
-      isShowSupplyOrDemand(){
-        if(this.whoId == 'supply'){return true}
-        else if(this.whoId == 'demand'){return false}
-        },
+    components: {
+        userApprovalDiolog,
+        detailDialog,
+        assignCustomerManagerDialog
     },
     props:{
-      needdata:{
+      queryParams:{
         type:Object,
-        require:true
-      },
-      whoId:{
-        type:String,
-      },
+        required:true
+      }
     },
     watch: {
        seletedItem:{
@@ -171,83 +125,17 @@ export default {
        },
     },
     filters: {
-      whichStatus(value){
-        if(value == '01'){
-            return '待提交'
-        }
-         if(value == '02'){
-            return '待审核'
-        }
-         if(value == '03'){
-            return '待复核'
-        }
-         if(value == '04'){
-            return '复核通过'
-        }
-      },
-      whichCuoheStatus(value){
-         if(value == '01'){
-            return '待撮合'
-        }
-         if(value == '02'){
-            return '撮合中'
-        }
-         if(value == '03'){
-            return '部分撮合成功'
-        }
-         if(value == '04'){
-            return '全部撮合成功'
-        }
-      },
       showBtnText(value){
-        if(value == 'determineMatch'){
-         return '确定分配'
-        }
+        if(value == 'approval'){return '审核通过'}
+        if(value == 'assignCustomerManager'){return '分配客户经理'}
+        if(value == 'detail'){return '用户审核详情'}
+        if(value == 'userApproval'){return '用户审核'}
       },
-      detailsText(value){
-         switch (value) {
-           case 'demandId':
-              return '券源需求编号'
-            case 'supplyId':
-              return '券源供给编号'
-            case 'userId':
-              return '用户编号'
-             case 'enteName':
-                return "真实姓名/企业名称";
-             case 'customerManagerName':
-                return "所属客户经理";
-             case 'stockCode':
-                return"证券代码";
-            case 'stockName':
-                return "证券名称";
-            case 'lendDays':
-               return"出借天数";
-            case 'borrowDays':
-               return"借入天数";
-            case 'borrowRate':
-               return"借入利率";
-            case 'borrowableQuantity':
-               return"借入数量";         
-            case 'lendQuantity':
-                return "出借数量";
-            case 'lendRate':
-                return "出借利率";
-            case 'reserveExpireDate':
-                return "预约截止日期";
-            case 'fenzhijigou':
-                return "所属分支机构";
-            case 'publishTime':
-                return "发布时间";
-            case 'approveStatusName':
-                return "状态";
-            case 'remark':
-                return "备注";
-        }
-      }
+  
     },
     data () {
       return {
-        btnOption:['determineMatch'],
+        btnOption:['approval','userApproval','assignCustomerManager','detail'],
         btnstatus:[true,true,true,true,true],
         formLabelWidth:'120px',
         dialogFormVisible:false,
@@ -256,30 +144,24 @@ export default {
           currPage:1,
           totalPage:0,
         },
+        totalCount:0,
         seletedItem:[],
-        detailsData:{}      
+       
       }
     },
     methods:{
       refresh(){
-        this.needdata.conditionOfTransmission = {
-          currPage: 1,
-          keyWord: "",
-          order: 1,
-          pageSize: 5,
-          reserveDaysBegin:"1" ,
-          reserveDaysEnd: "111111111",
-          reserveQuantityBegin: "1",
-          reserveQuantityEnd:"111111111111" ,
-          reserveRateBegin: "1",
-          reserveRateEnd:"1111111111111111" ,
-          reserveTypes: "1,2",
-          sort: 1
-        }
-        this.getTableList()
+      this.queryParams.accountFlag =  1
+      this.queryParams.approveStatus = '02'
+      this.queryParams.createDtBegin = ''
+      this.queryParams.createDtEnd = ''
+      this.queryParams.currPage = 1
+      this.queryParams.keyWord = ''
+      this.queryParams.pageSize = 5
+      this.getTableList()
       },
       getTableList(){
-          this.$store.dispatch('quanyuanPairingManger/stockReserveListStockReserve',this.needdata.conditionOfTransmission).then(res => { 
+          this.$store.dispatch('userAuditManger/userApprovalList',this.queryParams).then(res => { 
               if(res.status == '0'){
                  this.tableData = res.data
                  this.pagination.totalPage = res.totalCount
@@ -294,11 +176,37 @@ export default {
       },
     
       optionFn(value){
-         if(value == 'determineMatch'){
-           this.$store.dispatch('quanyuanPairingManger/stockMatchTradeAdd',{reserveId:this.seletedItem[0].reserveId}).then(res => {
-                this.$message({message: '确定分配成功',type: 'success',duration: 3 * 1000})
-                this.refresh()
-           })
+         if(value == 'approval'){
+             this.$confirm('确认审核通过?', '提示', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+                }).then(() => {
+                  this.$store.dispatch('')
+                    // this.$store.dispatch('userAuditManger/').then(res => {})
+                    // this.$message({
+                    // type: 'success',
+                    // message: '成功!'
+                    //   });
+                    }).catch(() => {
+                this.$message({
+                   type: 'info',
+                   message: '已取消'
+              });          
+            });
+           return
+         }
+         if(value == 'userApproval'){
+           this.$refs.dialog.isShowDialog()
+           return
+         }
+          if(value == 'assignCustomerManager'){
+            this.$refs.assignCustomerManager.isShowDialog()
+           return
+         }
+          if(value == 'detail'){
+            this.$refs.detailDialog.isShowDialog() 
+           return
          }
         
       },
@@ -309,12 +217,12 @@ export default {
             this.seletedItem = value
       },
       handleSizeChange(value){
-        this.needdata.conditionOfTransmission.pageSize = value
+        this.queryParams.pageSize = value
         this.getTableList()
       },
       handleCurrentChange(value){
-      this.needdata.conditionOfTransmission.currPage = value
-      this.getTableList()
+        this.queryParams.currPage = value
+        this.getTableList()
      },
       isDisableBtn(selected){
           if(selected.length == 1){
@@ -327,8 +235,8 @@ export default {
             for(let i = 0;i < this.btnstatus.length;++i){
                 this.$set(this.btnstatus,i,false)
               }
-            this.$set(this.btnstatus,0,true)
-            this.$set(this.btnstatus,2,true)
+            this.$set(this.btnstatus,1,true)
+            this.$set(this.btnstatus,3,true)
             return
           }
           if(selected.length == 0){

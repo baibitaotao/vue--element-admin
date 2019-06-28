@@ -13,7 +13,7 @@ import { Loading } from 'element-ui';
 // baseURL: 'http://172.29.201.112:8080/smt-admin'于,
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
-  baseURL: 'http://172.29.201.161:8077/smt-admin',
+  baseURL: 'http://172.29.201.223:8077/smt-admin',
   // baseURL: process.env.VUE_APP_BASE_API,
   withCredentials: true, // 跨域请求时发送 cookies
   timeout: 5000 // request timeout

@@ -1,29 +1,51 @@
-// import { login,getUserPermissions,logout} from '@/api/user'
-import {Approval} from '@/api/userAuditManger'
-import { getToken, setToken, removeToken ,setName,getName} from '@/utils/auth'
-import router, { resetRouter } from '@/router'
+import {userApprovalList,userApprovalApproval,userApprovalDetail,assignCustomerManager} from '../../api/userAuditManger'
 
-const state = {
-  // token: '',
-}
 
-const mutations = {
-  // SET_TOKEN: (state, token) => {
-  //   state.token = token
-  // },
-
-}
-
+const state = {}
+const mutations = {}
 const actions = {
-  userApproval({commit},data){
+  userApprovalList({commit},params){
     return new Promise((resolve, reject) => {
-      Approval(data).then(res => {
-        resolve(res)
-      }).catch(error => {
-        reject(error)
-      })
-    })
-  }
+      userApprovalList(params).then(response => {
+       let {data} = response
+       resolve(data)
+       }).catch(error => {
+         reject(error)
+       })
+     }) 
+  },
+  userApprovalApproval({commit},params){
+    return new Promise((resolve, reject) => {
+      userApprovalApproval(params).then(response => {
+       let {data} = response
+       resolve(data)
+       }).catch(error => {
+         reject(error)
+       })
+     }) 
+  },
+  userApprovalDetail({commit},params){
+    return new Promise((resolve, reject) => {
+      userApprovalDetail(params).then(response => {
+       let {data} = response
+       resolve(data)
+       }).catch(error => {
+         reject(error)
+       })
+     }) 
+  },
+  assignCustomerManager({commit},params){
+    return new Promise((resolve, reject) => {
+      assignCustomerManager(params).then(response => {
+       let {data} = response
+       resolve(data)
+       }).catch(error => {
+         reject(error)
+       })
+     }) 
+  },
+
+
 }
 
 export default {

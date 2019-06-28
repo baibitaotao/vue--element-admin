@@ -1,9 +1,8 @@
 .userAduitManger{
-   .quanyuanMangerAdmin{
        .el-tabs__nav-wrap::after{
                width:160px;
        }
-   .coomComponent{
+    .coomComponent{
         .auditBtn{
             background-color:$main-color;
             color: #fff;
@@ -49,5 +48,5 @@
             }
         }
     }    
-   } 
+   
 }

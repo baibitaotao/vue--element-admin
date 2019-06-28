@@ -27,7 +27,6 @@ export default {
              "registerType": "01",
              "sort": 1
             }
-    this.$store.dispatch('userAuditManger/userApproval',data)     
     },
     computed:{
         ...mapGetters([

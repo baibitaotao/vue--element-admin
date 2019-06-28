@@ -233,7 +233,6 @@ export default {
                           reserveExpireDate:this.form.reserveExpireDate,
                         }
                       }
-                      console.log(payload)
                       this.$store.dispatch('quanyuangonjiManger/stockDemandUpdate',payload).then(res => {
                         if(res.status == '0'){
                             this.dialogFormVisible = false 

@@ -508,7 +508,6 @@ export default {
 
 
 <style lang="scss" scoped>
-
 .show_ditals{
   display: flex;
   border:1px solid #ccc;
@@ -525,8 +524,5 @@ export default {
     flex:1;
   }
 }
-
-
-
 </style>
 
