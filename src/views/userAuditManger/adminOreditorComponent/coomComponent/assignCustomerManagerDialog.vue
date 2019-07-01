@@ -36,6 +36,7 @@ export default {
         return {
               dialogVisible:false,
               data:[],
+
               checkedId:null,
               defaultProps: {
                 children: 'children',
@@ -45,7 +46,33 @@ export default {
     },
       methods: {
        confirm(){
-          console.log(this.checkedId)
+          if(this.checkedId){
+             let data = {
+                customerManager:this.checkedId,
+                rowVersion:this.seletedItem[0].rowVersion,
+                userId:this.seletedItem[0].userId
+             }
+               this.$store.dispatch('userAuditManger/assignCustomerManager',data).then(res => {
+                  if(res.status == '0'){
+                      this.$message({
+                        showClose: true,
+                        message: '分配' + res.msg,
+                        type: 'success'
+                     });
+                  this.isShowDialog()
+                   this.$emit('refresh')
+                  }
+               }).catch(err => {
+                  console.log(err)
+               })
+          }else{
+              this.$message({
+                   showClose: true,
+                   message: '请选择客户经理',
+                   type: 'warning'
+                  });  
+         }
+          
        },
        handleClick(data, checked, node){
           if(checked == true){
@@ -54,8 +81,6 @@ export default {
             }
           },
        nodeClick(data,checked,node){
-          console.log(data)
-         this.checkedId = data.id
          this.$refs.treeForm.setCheckedNodes([data]);
        },
        isShowDialog(){
@@ -63,7 +88,7 @@ export default {
           this.getlist()
         },
         getlist(){
-             this.$store.dispatch('userAuditManger/assignCustomerManager',{roleCode:'12'}).then(res => {
+             this.$store.dispatch('userAuditManger/selectOrgUserByRoleCode',{roleCode:'12'}).then(res => {
                 this.data = res.data.treeData
              })
          }

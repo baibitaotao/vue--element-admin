@@ -6,28 +6,32 @@
         <el-table 
            :data="tableData"
            border
-           @selection-change="handleSelectionChange"
-           >
-           
+           @selection-change="handleSelectionChange">
             <el-table-column
               type="selection"
               width="55">
             </el-table-column>
 
              <el-table-column
-             prop="userId"
-             label="用户编号"
+             prop="demandId"
+             label="券源需求编号"
              width="100">
            </el-table-column>
             
            <el-table-column
-             prop="userName"
-             label="真实姓名/企业名称"
+             prop="userId"
+             label="用户编号"
              width="150">
            </el-table-column>
+
             <el-table-column
-             prop="registerTypeName"
-             label="注册类型"
+             prop="enteName"
+             label="真实姓名/企业名称"
+             width="100">
+           </el-table-column>
+            <el-table-column
+             prop="customerManagerName"
+             label="客户经理"
              width="100">
            </el-table-column>
            <el-table-column
@@ -36,46 +40,47 @@
              width="100">
            </el-table-column>
             <el-table-column
-             prop="roleNames"
-             label="证件类型"
+             prop="stockCode"
+             label="证券代码"
              width="100">
            </el-table-column>
 
            <el-table-column
-             prop="cardCode"
-             label="证件号"
+             prop="stockName"
+             label="证券名称"
              width="100">
            </el-table-column>
 
             <el-table-column
-             prop="contact"
-             label="企业联系人"
+             prop="borrowDays"
+             label="借入天数"
              width="100">
            </el-table-column>
 
            <el-table-column
-             prop="mobilePhone"
-             label="手机号"
+             prop="borrowableQuantity"
+             label="借入数量"
              width="100">
            </el-table-column>
 
             <el-table-column
-             prop="orgName"
-             label="所属分支机构名称"
+             prop="borrowRate"
+             label="借入利率"
              width="100">
            </el-table-column>
-           <el-table-column
-             prop="isAccountName"
-             label="是否财通用户"
+
+             <el-table-column
+             prop="matchStatusName"
+             label="撮合状态"
              width="100">
            </el-table-column>
 
            <el-table-column
-             prop="account"
-             label="资金账号"
+             prop="approveStatusName"
+             label="审核状态"
              width="100">
            </el-table-column>
-      
+
          </el-table>
 
           <div style="marginBottom:30px;marginTop:20px;">
@@ -90,28 +95,24 @@
                  :total="pagination.totalPage">
               </el-pagination>
           </div>
-      <user-approval-diolog ref = 'dialog' :seletedItem = 'seletedItem' @refresh = 'refresh'></user-approval-diolog>
-      <detail-dialog ref = 'detailDialog' :seletedItem = 'seletedItem'></detail-dialog>
-      <assign-customer-manager-dialog ref = 'assignCustomerManager' :seletedItem = 'seletedItem' @refresh = 'refresh'></assign-customer-manager-dialog>
+         
     </div>
 </template>
 
 
 <script>
-import userApprovalDiolog from './userApprovalDialog'
-import detailDialog from './detailDialog'
-import assignCustomerManagerDialog from './assignCustomerManagerDialog'
+
 
 export default {
-    components: {
-        userApprovalDiolog,
-        detailDialog,
-        assignCustomerManagerDialog
-    },
     props:{
       queryParams:{
         type:Object,
-        required:true
+        required:true,
+        default:{},
+      },
+      roles:{
+        type:Array,
+        required:true,
       }
     },
     watch: {
@@ -149,17 +150,25 @@ export default {
     },
     methods:{
       refresh(){
-      this.queryParams.accountFlag =  1
-      this.queryParams.approveStatus = '02'
-      this.queryParams.createDtBegin = ''
-      this.queryParams.createDtEnd = ''
-      this.queryParams.currPage = 1
-      this.queryParams.keyWord = ''
-      this.queryParams.pageSize = 5
-      this.getTableList()
+        if(this.roles[0] == 'admin'){
+           this.queryParams.pageSize =  5
+           this.queryParams.currPage = 1
+           this.queryParams.keyWord = ''
+           this.queryParams.createDtBegin = ''
+           this.queryParams.createDtEnd = ''
+           this.queryParams.approveStatus = ''
+           this.queryParams.approveTimeBegin = ''
+           this.queryParams.approveTimeEnd = ''
+           this.getTableList()
+        }else if(this.roles[0] == 'manger'){
+            
+        }
+        
+
       },
       getTableList(){
-          this.$store.dispatch('userAuditManger/userApprovalList',this.queryParams).then(res => { 
+         if(this.roles[0] == 'admin'){
+             this.$store.dispatch('quanyuanAuditManger/stockDemandToReviewList',this.queryParams).then(res => { 
               if(res.status == '0'){
                  this.tableData = res.data
                  this.pagination.totalPage = res.totalCount
@@ -171,6 +180,10 @@ export default {
             }).catch((err) => {
             console.log(err)
           })
+         }else if(this.roles[0] == 'manger'){
+           console.log(this.roles)
+         }
+        
       },
     
       optionFn(value){
@@ -235,7 +248,6 @@ export default {
               }
             this.$set(this.btnstatus,1,true)
             this.$set(this.btnstatus,3,true)
-            this.$set(this.btnstatus,2,true)
             return
           }
           if(selected.length == 0){

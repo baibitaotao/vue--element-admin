@@ -27,7 +27,7 @@
          </transition>
           <el-divider><a style="color:#B40005" @click="conditionsOn">{{showCondition}}&nbsp;&nbsp;<i :class="showConditionIcon"></i></a></el-divider> 
          <div>
-            <quanyuan-audit-manger-table :queryParams='queryParams' ref="quanyuanAuditMangerTable" :roles='roles'></quanyuan-audit-manger-table>
+            <quanyuan-audit-manger-table :queryParams='queryParams' ref="quanyuanAuditMangerTable"></quanyuan-audit-manger-table>
          </div>  
 
 
@@ -39,8 +39,9 @@ import {mapGetters} from 'vuex'
 import linkTag from '../../../aacoment/linkTag/src/linkTag'
 import quanyuanAuditMangerTable from './table'
 
+
+
 export default {
- 
   components:{
     linkTag,
     quanyuanAuditMangerTable
@@ -50,18 +51,17 @@ export default {
          this.queryParams.approveStatus = val
       },
       value1(val,oldval){
-          if(val){
+       if(val){
             this.queryParams.createDtBegin = val[0]
             this.queryParams.createDtEnd = val[1]
           }else{
             this.queryParams.createDtBegin = ''
             this.queryParams.createDtEnd = ''
           }
-      
       }
   },  
   mounted () {
-        this.$refs.quanyuanAuditMangerTable.refresh()
+      this.$refs.quanyuanAuditMangerTable.refresh()
   },
   computed:{
       ...mapGetters([

@@ -15,19 +15,25 @@
             </el-table-column>
 
              <el-table-column
-             prop="userId"
-             label="用户编号"
+             prop="supplyId"
+             label="券源供给编号"
              width="100">
            </el-table-column>
             
            <el-table-column
-             prop="userName"
-             label="真实姓名/企业名称"
+             prop="userId"
+             label="用户编号"
              width="150">
            </el-table-column>
+
             <el-table-column
-             prop="registerTypeName"
-             label="注册类型"
+             prop="enteName"
+             label="真实姓名/企业名称"
+             width="100">
+           </el-table-column>
+            <el-table-column
+             prop="customerManagerName"
+             label="客户经理"
              width="100">
            </el-table-column>
            <el-table-column
@@ -36,47 +42,52 @@
              width="100">
            </el-table-column>
             <el-table-column
-             prop="roleNames"
-             label="证件类型"
+             prop="stockCode"
+             label="证券代码"
              width="100">
            </el-table-column>
 
            <el-table-column
-             prop="cardCode"
-             label="证件号"
+             prop="stockName"
+             label="证券名称"
              width="100">
            </el-table-column>
 
             <el-table-column
-             prop="contact"
-             label="企业联系人"
+             prop="lendDays"
+             label="借入天数"
              width="100">
            </el-table-column>
 
            <el-table-column
-             prop="mobilePhone"
-             label="手机号"
+             prop="lendQuantity"
+             label="借入数量"
              width="100">
            </el-table-column>
 
             <el-table-column
-             prop="orgName"
-             label="所属分支机构名称"
+             prop="lendRate"
+             label="借入利率"
              width="100">
            </el-table-column>
-           <el-table-column
-             prop="isAccountName"
-             label="是否财通用户"
+
+             <el-table-column
+             prop="matchStatusName"
+             label="撮合状态"
              width="100">
            </el-table-column>
 
            <el-table-column
-             prop="account"
-             label="资金账号"
+             prop="approveStatusName"
+             label="审核状态"
              width="100">
            </el-table-column>
-      
+
+
+
          </el-table>
+
+       
 
           <div style="marginBottom:30px;marginTop:20px;">
              <el-pagination
@@ -90,28 +101,23 @@
                  :total="pagination.totalPage">
               </el-pagination>
           </div>
-      <user-approval-diolog ref = 'dialog' :seletedItem = 'seletedItem' @refresh = 'refresh'></user-approval-diolog>
-      <detail-dialog ref = 'detailDialog' :seletedItem = 'seletedItem'></detail-dialog>
-      <assign-customer-manager-dialog ref = 'assignCustomerManager' :seletedItem = 'seletedItem' @refresh = 'refresh'></assign-customer-manager-dialog>
+         
     </div>
 </template>
 
 
 <script>
-import userApprovalDiolog from './userApprovalDialog'
-import detailDialog from './detailDialog'
-import assignCustomerManagerDialog from './assignCustomerManagerDialog'
+
 
 export default {
     components: {
-        userApprovalDiolog,
-        detailDialog,
-        assignCustomerManagerDialog
+      
     },
     props:{
       queryParams:{
         type:Object,
-        required:true
+        required:true,
+        default:{},
       }
     },
     watch: {
@@ -149,17 +155,18 @@ export default {
     },
     methods:{
       refresh(){
-      this.queryParams.accountFlag =  1
-      this.queryParams.approveStatus = '02'
-      this.queryParams.createDtBegin = ''
-      this.queryParams.createDtEnd = ''
+      this.queryParams.pageSize =  5
       this.queryParams.currPage = 1
       this.queryParams.keyWord = ''
-      this.queryParams.pageSize = 5
+      this.queryParams.createDtBegin = ''
+      this.queryParams.createDtEnd = ''
+      this.queryParams.approveStatus = ''
+      this.queryParams.approveTimeBegin = ''
+      this.queryParams.approveTimeEnd = ''
       this.getTableList()
       },
       getTableList(){
-          this.$store.dispatch('userAuditManger/userApprovalList',this.queryParams).then(res => { 
+          this.$store.dispatch('quanyuanAuditManger/stockSupplyToReviewList',this.queryParams).then(res => { 
               if(res.status == '0'){
                  this.tableData = res.data
                  this.pagination.totalPage = res.totalCount
@@ -235,7 +242,6 @@ export default {
               }
             this.$set(this.btnstatus,1,true)
             this.$set(this.btnstatus,3,true)
-            this.$set(this.btnstatus,2,true)
             return
           }
           if(selected.length == 0){

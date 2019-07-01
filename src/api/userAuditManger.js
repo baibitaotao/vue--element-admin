@@ -24,10 +24,18 @@ export function userApprovalList(data) {
     })
   } 
 
-  export function assignCustomerManager(params) {
+  export function selectOrgUserByRoleCode(params) {
     return request({
       url: `/orgUser/selectOrgUserByRoleCode`,
       method: 'get',
       params
     })
   } 
+
+  export function assignCustomerManager(data) {
+    return request({
+      url: `/userApproval/assignCustomerManager`,
+      method: 'put',
+      data
+    })
+  }

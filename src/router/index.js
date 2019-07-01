@@ -155,7 +155,7 @@ export const asyncRoutes1 = [
       path: 'index',
       component: 'quanyuangonjiManger',
       meta: {
-        title: '券源供给管理',
+        title: '券源管理',
         roles: ['admin','ronchu'] // or you can only set roles in sub nav
       }
     }]
@@ -172,14 +172,14 @@ export const asyncRoutes1 = [
        component: 'xuqiuAuditManger',
        meta: {
          title: '券源需求审核管理',
-         roles: ['admin','manger'] // or you can only set roles in sub nav
+         roles: ['admin'] // or you can only set roles in sub nav
        }
      },{
        path:'gonjiAuditManger',
        component:'gonjiAuditManger',
        meta:{
          title:'券源供给审核管理',
-         roles:['admin','manger']
+         roles:['manger']
        }
      }]
   },

@@ -87,8 +87,13 @@ export default {
     watch: {
         date:{
         handler: function (val, oldVal) {
-              this.conditionOfTransmission.publishTimeBegin = val[0]
-              this.conditionOfTransmission.publishTimeEnd = val[1]
+                if(val){
+                this.conditionOfTransmission.publishTimeBegin = val[0]
+                this.conditionOfTransmission.publishTimeEnd = val[1]
+              }else{
+                this.conditionOfTransmission.publishTimeBegin = ''
+                this.conditionOfTransmission.publishTimeEnd = ''
+              }
          },
          deep: true
         },

@@ -38,6 +38,8 @@
                       <el-radio-button label="融入方"></el-radio-button>
                       <el-radio-button label="融出方"></el-radio-button>
                     </el-radio-group>
+                 <!-- <link-tag parentId='1004' contextPath='http://172.29.201.223:8077/smt-admin' v-model="radio2"></link-tag> -->
+                    
                 </div>
 
                  <div class="status">
@@ -49,6 +51,8 @@
                      <el-radio-button label="待复核"></el-radio-button>
                      <el-radio-button label="复核通过"></el-radio-button>
                    </el-radio-group>
+                 <!-- <link-tag parentId='1040' contextPath='http://172.29.201.223:8077/smt-admin' v-model="radio3"></link-tag> -->
+
                  </div>
 
                    <div class="status">
@@ -79,13 +83,20 @@ import {mapGetters} from 'vuex'
 import gonjiTable from './gonjiTable'
 import { constants } from 'crypto';
 import gonjiDialog from './gonjiDialog'
+import linkTag from '../../../aacoment/linkTag/src/linkTag'
 
 export default {
     watch: {
         date:{
         handler: function (val, oldVal) {
-              this.demandConditionOfTransmission.publishTimeBegin = val[0]
-              this.demandConditionOfTransmission.publishTimeEnd = val[1]
+              if(val){
+                this.demandConditionOfTransmission.publishTimeBegin = val[0]
+                this.demandConditionOfTransmission.publishTimeEnd = val[1]
+              }else{
+                this.demandConditionOfTransmission.publishTimeBegin = ''
+                this.demandConditionOfTransmission.publishTimeEnd = ''
+              }
+              
          },
          deep: true
         },
@@ -127,6 +138,7 @@ export default {
     components:{
        gonjiTable,
        gonjiDialog,
+       linkTag,
     },
     props:{
         whitchActive:{

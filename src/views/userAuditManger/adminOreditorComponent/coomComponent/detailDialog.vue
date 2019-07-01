@@ -67,7 +67,6 @@ export default {
     },
     methods: {
        isShowDialog(){
-          this.dialogVisible =  !this.dialogVisible
           this.getDetail()
         }, 
         getDetail(){
@@ -83,7 +82,8 @@ export default {
                 this.detailsData.orgName = res.data.userApproval.orgName 
                 this.detailsData.roleNames = res.data.userApproval.roleNames 
                 this.detailsData.userName = res.data.userApproval.userName 
-                this.detailsData.userId = res.data.userApproval.userId     
+                this.detailsData.userId = res.data.userApproval.userId 
+                this.dialogVisible =  !this.dialogVisible    
             })
         }  
     }

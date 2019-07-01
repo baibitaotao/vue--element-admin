@@ -445,7 +445,7 @@
     }
 
     .tag-nav li.activeClass>span {
-        color: #b40005;
+        /* color: #b40005; */
     }
 
     .tag-nav li>span:first-child {

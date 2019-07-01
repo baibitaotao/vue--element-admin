@@ -1,5 +1,6 @@
 <template>
     <div class="coomComponent">
+    <h6 style="marginBottom:10px">用户审核管理</h6>
     <div style="width:410px">
          <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
             <el-button slot="append" icon="el-icon-search" @click="search"></el-button>
@@ -20,30 +21,11 @@
                 </div>
 
                 <div style="width:400px" class="userType">
-                    <span style="fontSize:12px;width: 100px;marginRight:29px;">注册类型</span>
-                    <el-radio-group v-model="radio2" size="mini">
-                      <el-radio-button label="全部" ></el-radio-button>
-                      <el-radio-button label="个人"></el-radio-button>
-                      <el-radio-button label="企业"></el-radio-button>
-                    </el-radio-group>
+                    <link-tag parentId='1001' contextPath='http://172.29.201.223:8077/smt-admin' v-model="radio2"></link-tag>
                 </div>
 
                  <div class="status">
-                    <span style="fontSize:12px;width: 100px;marginRight:30px;">用户类型</span>
-                    <el-radio-group v-model="radio3" size="mini">
-                     <el-radio-button label="全部" ></el-radio-button>
-                     <el-radio-button label="融入方"></el-radio-button>
-                     <el-radio-button label="融出方"></el-radio-button>
-                   </el-radio-group>
-                 </div>
-
-                 <div class="status">
-                    <span style="fontSize:12px;width: 100px;marginRight:30px;">审核状态</span>
-                    <el-radio-group v-model="radio4" size="mini">
-                     <el-radio-button label="全部" ></el-radio-button>
-                     <el-radio-button label="待审核"></el-radio-button>
-                     <el-radio-button label="已审核"></el-radio-button>
-                   </el-radio-group>
+                    <link-tag parentId='1000' contextPath='http://172.29.201.223:8077/smt-admin' v-model="radio4"></link-tag>
                  </div>
 
                  <div style="marginTop:10px">
@@ -60,6 +42,7 @@
 
 <script>
  import myTable from './coomComponent/table'
+ import linkTag from '../../aacoment/linkTag/src/linkTag'
 
 export default {
     mounted () {
@@ -78,6 +61,7 @@ export default {
     },
     components:{
        myTable,
+       linkTag
     },
     props:{
         whitchActive:String,

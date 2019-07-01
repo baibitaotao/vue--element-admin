@@ -48,6 +48,9 @@ import { type } from 'os';
       };
     },
     methods: {
+      valueSetnull(){
+        this.approveReason = null
+      },
       isShowDialog(){
           this.dialogVisible =  !this.dialogVisible
       },  
@@ -60,27 +63,48 @@ import { type } from 'os';
       },
       confirm(){
           if(this.radio2 == '1'){
-               this.$store.dispatch('userAuditManger/userApprovalDetail',this.seletedItem[0].userId).then(res => {
-                  let request  = {
+               let request  = {
                   approveReason:this.approveReason,
                   approveResult:'1',
-                  rowVersion:'',
+                  rowVersion:this.seletedItem[0].rowVersion,
                   userId:this.seletedItem[0].userId||''
                   }
-               this.$store.dispatch('userAuditManger/userApprovalApproval',request)
+               this.$store.dispatch('userAuditManger/userApprovalApproval',request).then(res => {
+                  if(res.status == 0){
+                      this.$message({
+                         message: '状态修改'+res.msg,
+                         type: 'success'
+                        });
+                     this.isShowDialog()
+                     this.$emit('refresh')
+                     this.valueSetnull()
+                  }
+               }).catch(err =>　{
+                 console.log(err)
                })
           }
           if(this.radio2 == '2'){
               if(this.approveReason){
-                  this.$store.dispatch('userAuditManger/userApprovalDetail',this.seletedItem[0].userId).then(res => {
-                       let request  = {
-                       approveReason:this.approveReason,
-                       approveResult:'2',
-                       rowVersion:'',
-                       userId:this.seletedItem[0].userId||''
-                      }
-                 this.$store.dispatch('userAuditManger/userApprovalApproval',request)    
-                 })
+                  let request  = {
+                  approveReason:this.approveReason,
+                  approveResult:'2',
+                  rowVersion:this.seletedItem[0].rowVersion,
+                  userId:this.seletedItem[0].userId||''
+                 }
+                 this.$store.dispatch('userAuditManger/userApprovalApproval',request).then(res => {
+                  if(res.status == 0){
+                      this.$message({
+                         message: '状态修改'+res.msg,
+                         type: 'success'
+                        });
+                     this.isShowDialog()
+                     this.$emit('refresh')
+                     this.valueSetnull()
+                  }
+               }).catch(err =>　{
+                 console.log(err)
+               })    
+              
               }else{
                    this.$message.error('请填写不通过理由');
               }

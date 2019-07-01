@@ -1,4 +1,4 @@
-import {userApprovalList,userApprovalApproval,userApprovalDetail,assignCustomerManager} from '../../api/userAuditManger'
+import {userApprovalList,userApprovalApproval,userApprovalDetail,selectOrgUserByRoleCode,assignCustomerManager} from '../../api/userAuditManger'
 
 
 const state = {}
@@ -34,9 +34,20 @@ const actions = {
        })
      }) 
   },
-  assignCustomerManager({commit},params){
+  selectOrgUserByRoleCode({commit},params){
     return new Promise((resolve, reject) => {
-      assignCustomerManager(params).then(response => {
+      selectOrgUserByRoleCode(params).then(response => {
+       let {data} = response
+       resolve(data)
+       }).catch(error => {
+         reject(error)
+       })
+     }) 
+  },
+
+ assignCustomerManager({commit},data){
+    return new Promise((resolve, reject) => {
+      assignCustomerManager(data).then(response => {
        let {data} = response
        resolve(data)
        }).catch(error => {
