@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="marginBottom:10px">
-          <el-button  type="danger" plain size="mini" :disabled = 'btnstatus[index]'  @click="optionFn(item)" v-for="(item,index) in btnOption" :key='index'>{{item|showBtnText}}</el-button>
+          <el-button type="danger" plain size="mini" :disabled = 'btnstatus[index]'  @click="optionFn(item)" v-for="(item,index) in btnOption" :key='index'>{{item|showBtnText}}</el-button>
         </div>
         <el-table 
            :data="tableData"
@@ -95,15 +95,23 @@
                  :total="pagination.totalPage">
               </el-pagination>
           </div>
-         
+     <review-diolog ref = 'reviewDialog' :seletedItem = 'seletedItem' @refresh = 'refresh' :isAdminOrManger='roles[0]'></review-diolog>
+     <detail-dialog ref = 'detailDialog' :seletedItem = 'seletedItem'></detail-dialog>
     </div>
 </template>
 
 
 <script>
+import reviewDiolog from './reviewDialog'
+import detailDialog from './detailDialog'
+import { constants } from 'crypto';
 
 
 export default {
+    components:{
+      reviewDiolog,
+      detailDialog
+    },
     props:{
       queryParams:{
         type:Object,
@@ -123,18 +131,26 @@ export default {
          deep: true
        },
     },
+    computed:{
+      btnOption(item){
+        if(this.roles[0] == 'admin'){
+          return ['review','cuiban','detail']
+        }else if(this.roles[0] == 'manger'){
+          return ['approval']
+        }
+      }
+    },
     filters: {
       showBtnText(value){
-        if(value == 'approval'){return '审核通过'}
-        if(value == 'assignCustomerManager'){return '分配客户经理'}
-        if(value == 'detail'){return '用户审核详情'}
-        if(value == 'userApproval'){return '用户审核'}
+        if(value == 'approval'){return '审核'}
+        if(value == 'review'){return '复核'}
+        if(value == 'detail'){return '详情'}
+        if(value == 'cuiban'){return '催办'}
       },
   
     },
     data () {
       return {
-        btnOption:['approval','userApproval','assignCustomerManager','detail'],
         btnstatus:[true,true,true,true,true],
         formLabelWidth:'120px',
         dialogFormVisible:false,
@@ -161,7 +177,13 @@ export default {
            this.queryParams.approveTimeEnd = ''
            this.getTableList()
         }else if(this.roles[0] == 'manger'){
-            
+           this.queryParams.pageSize =  5
+           this.queryParams.currPage = 1
+           this.queryParams.keyWord = ''
+           this.queryParams.createDtBegin = ''
+           this.queryParams.createDtEnd = ''
+           this.queryParams.approveStatus = ''
+           this.getTableList() 
         }
         
 
@@ -181,37 +203,31 @@ export default {
             console.log(err)
           })
          }else if(this.roles[0] == 'manger'){
-           console.log(this.roles)
+            this.$store.dispatch('quanyuanAuditManger/stockDemandToApproveList',this.queryParams).then(res => { 
+              if(res.status == '0'){
+                 this.tableData = res.data
+                 this.pagination.totalPage = res.totalCount
+                 this.pagination.currPage = res.currPage
+              }  
+              else{
+               this.$message({showClose: true,message: res.msg,type: 'error'});
+              }
+            }).catch((err) => {
+            console.log(err)
+          })
          }
         
       },
     
       optionFn(value){
          if(value == 'approval'){
-             this.$confirm('确认审核通过?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-                }).then(() => {
-                  this.$store.dispatch('')
-                    // this.$store.dispatch('userAuditManger/').then(res => {})
-                    // this.$message({
-                    // type: 'success',
-                    // message: '成功!'
-                    //   });
-                    }).catch(() => {
-                this.$message({
-                   type: 'info',
-                   message: '已取消'
-              });          
-            });
+           this.$refs.reviewDialog.isShowDialog()
+         }
+         if(value == 'review'){
+           this.$refs.reviewDialog.isShowDialog()
            return
          }
-         if(value == 'userApproval'){
-           this.$refs.dialog.isShowDialog()
-           return
-         }
-          if(value == 'assignCustomerManager'){
+          if(value == 'cuiban'){
             this.$refs.assignCustomerManager.isShowDialog()
            return
          }
@@ -248,6 +264,8 @@ export default {
               }
             this.$set(this.btnstatus,1,true)
             this.$set(this.btnstatus,3,true)
+            this.$set(this.btnstatus,2,true)
+            this.$set(this.btnstatus,0,true)
             return
           }
           if(selected.length == 0){

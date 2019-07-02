@@ -172,7 +172,7 @@ export const asyncRoutes1 = [
        component: 'xuqiuAuditManger',
        meta: {
          title: '券源需求审核管理',
-         roles: ['admin'] // or you can only set roles in sub nav
+         roles: ['manger'] // or you can only set roles in sub nav
        }
      },{
        path:'gonjiAuditManger',

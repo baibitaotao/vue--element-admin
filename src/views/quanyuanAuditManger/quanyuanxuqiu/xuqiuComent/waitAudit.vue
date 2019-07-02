@@ -69,25 +69,33 @@ export default {
       ]),
       isAdminOrManger(){
           if(this.roles[0] === 'admin'){
+            this.queryParams = {
+              pageSize:5,
+              currPage:1,
+              keyWord:'',
+              createDtBegin:'',
+              createDtEnd:'',
+              approveStatus:'',
+              approveTimeBegin:'',
+              approveTimeEnd:'' }
               return true
           }
           else if(this.roles[0] === 'manger'){
+              this.queryParams = {
+                pageSize:5,
+                currPage:1,
+                keyWord:'',
+                createDtBegin:'',
+                createDtEnd:'',
+                approveStatus:'',
+              }
               return false
           }
       }
   },
   data () {
     return {
-      queryParams:{
-         pageSize:5,
-         currPage:1,
-         keyWord:'',
-         createDtBegin:'',
-         createDtEnd:'',
-         approveStatus:'',
-         approveTimeBegin:'',
-         approveTimeEnd:'' 
-      },
+      queryParams:{},
       isShowCondition:true,
       showConditionIcon:'el-icon-arrow-up',
       tagedata:'',
