@@ -1,14 +1,12 @@
 <template>
     <div>
         <div style="marginBottom:10px">
-          <el-button  type="danger" plain size="mini" :disabled = 'btnstatus[index]'  @click="optionFn(item)" v-for="(item,index) in btnOption" :key='index'>{{item|showBtnText}}</el-button>
+          <el-button type="danger" plain size="mini" :disabled = 'btnstatus[index]'  @click="optionFn(item)" v-for="(item,index) in btnOption" :key='index'>{{item|showBtnText}}</el-button>
         </div>
         <el-table 
            :data="tableData"
            border
-           @selection-change="handleSelectionChange"
-           >
-           
+           @selection-change="handleSelectionChange">
             <el-table-column
               type="selection"
               width="55">
@@ -54,19 +52,19 @@
            </el-table-column>
 
             <el-table-column
-             prop="lendDays"
+             prop="borrowDays"
              label="借入天数"
              width="100">
            </el-table-column>
 
            <el-table-column
-             prop="lendQuantity"
+             prop="borrowableQuantity"
              label="借入数量"
              width="100">
            </el-table-column>
 
             <el-table-column
-             prop="lendRate"
+             prop="borrowRate"
              label="借入利率"
              width="100">
            </el-table-column>
@@ -83,11 +81,7 @@
              width="100">
            </el-table-column>
 
-
-
          </el-table>
-
-       
 
           <div style="marginBottom:30px;marginTop:20px;">
              <el-pagination
@@ -101,23 +95,32 @@
                  :total="pagination.totalPage">
               </el-pagination>
           </div>
-         
+     <review-diolog ref = 'reviewDialog' :seletedItem = 'seletedItem' @refresh = 'refresh' :isAdminOrManger='roles[0]'></review-diolog>
+     <detail-dialog ref = 'detailDialog' :seletedItem = 'seletedItem'></detail-dialog>
     </div>
 </template>
 
 
 <script>
+import reviewDiolog from './reviewDialog'
+import detailDialog from './detailDialog'
+import { constants } from 'crypto';
 
 
 export default {
-    components: {
-      
+    components:{
+      reviewDiolog,
+      detailDialog
     },
     props:{
       queryParams:{
         type:Object,
         required:true,
         default:{},
+      },
+      roles:{
+        type:Array,
+        required:true,
       }
     },
     watch: {
@@ -128,18 +131,26 @@ export default {
          deep: true
        },
     },
+    computed:{
+      btnOption(item){
+        if(this.roles[0] == 'admin'){
+          return ['review','cuiban','detail']
+        }else if(this.roles[0] == 'manger'){
+          return ['approval']
+        }
+      }
+    },
     filters: {
       showBtnText(value){
-        if(value == 'approval'){return '审核通过'}
-        if(value == 'assignCustomerManager'){return '分配客户经理'}
-        if(value == 'detail'){return '用户审核详情'}
-        if(value == 'userApproval'){return '用户审核'}
+        if(value == 'approval'){return '审核'}
+        if(value == 'review'){return '复核'}
+        if(value == 'detail'){return '详情'}
+        if(value == 'cuiban'){return '催办'}
       },
   
     },
     data () {
       return {
-        btnOption:['approval','userApproval','assignCustomerManager','detail'],
         btnstatus:[true,true,true,true,true],
         formLabelWidth:'120px',
         dialogFormVisible:false,
@@ -155,18 +166,30 @@ export default {
     },
     methods:{
       refresh(){
-      this.queryParams.pageSize =  5
-      this.queryParams.currPage = 1
-      this.queryParams.keyWord = ''
-      this.queryParams.createDtBegin = ''
-      this.queryParams.createDtEnd = ''
-      this.queryParams.approveStatus = ''
-      this.queryParams.approveTimeBegin = ''
-      this.queryParams.approveTimeEnd = ''
-      this.getTableList()
+        if(this.roles[0] == 'admin'){
+           this.queryParams.pageSize =  5
+           this.queryParams.currPage = 1
+           this.queryParams.keyWord = ''
+           this.queryParams.createDtBegin = ''
+           this.queryParams.createDtEnd = ''
+           this.queryParams.approveStatus = ''
+           this.queryParams.approveTimeBegin = ''
+           this.queryParams.approveTimeEnd = ''
+           this.getTableList()
+        }else if(this.roles[0] == 'manger'){
+           this.queryParams.pageSize =  5
+           this.queryParams.currPage = 1
+           this.queryParams.keyWord = ''
+           this.queryParams.createDtBegin = ''
+           this.queryParams.createDtEnd = ''
+           this.queryParams.approveStatus = ''
+           this.getTableList() 
+        }
+        
+
       },
       getTableList(){
-          this.$store.dispatch('quanyuanAuditManger/stockSupplyToReviewList',this.queryParams).then(res => { 
+             this.$store.dispatch(this.roles[0] == 'admin'?'quanyuanAuditManger/stockSupplyToReviewList':'quanyuanAuditManger/stockSupplyToApproveList',this.queryParams).then(res => { 
               if(res.status == '0'){
                  this.tableData = res.data
                  this.pagination.totalPage = res.totalCount
@@ -182,31 +205,33 @@ export default {
     
       optionFn(value){
          if(value == 'approval'){
-             this.$confirm('确认审核通过?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-                }).then(() => {
-                  this.$store.dispatch('')
-                    // this.$store.dispatch('userAuditManger/').then(res => {})
-                    // this.$message({
-                    // type: 'success',
-                    // message: '成功!'
-                    //   });
-                    }).catch(() => {
-                this.$message({
-                   type: 'info',
-                   message: '已取消'
-              });          
-            });
+           this.$refs.reviewDialog.isShowDialog()
+         }
+         if(value == 'review'){
+           this.$refs.reviewDialog.isShowDialog()
            return
          }
-         if(value == 'userApproval'){
-           this.$refs.dialog.isShowDialog()
-           return
-         }
-          if(value == 'assignCustomerManager'){
-            this.$refs.assignCustomerManager.isShowDialog()
+          if(value == 'cuiban'){
+             let data = [] 
+            this.seletedItem.forEach(item => {
+              let obj = {}
+              obj.customerManager = item.customerManager
+              obj.id =  item.supplyId
+              data.push(obj)
+            })
+            this.$store.dispatch('quanyuanAuditManger/stockSupplyRemindApprove',data).then(res => {
+                if(res.status == '0'){
+                     this.$message({
+                        message: '提醒'+res.msg,
+                        type: 'success'
+                    });
+                }else{
+                    this.$message({
+                        message: '提醒'+res.msg,
+                        type: 'error'
+                    });
+                }
+            })
            return
          }
           if(value == 'detail'){
@@ -240,8 +265,9 @@ export default {
             for(let i = 0;i < this.btnstatus.length;++i){
                 this.$set(this.btnstatus,i,false)
               }
-            this.$set(this.btnstatus,1,true)
             this.$set(this.btnstatus,3,true)
+            this.$set(this.btnstatus,2,true)
+            this.$set(this.btnstatus,0,true)
             return
           }
           if(selected.length == 0){
@@ -250,61 +276,7 @@ export default {
               }
           }
       }, 
-      detailsFn(value){
-          if(this.whitchActive == 'supply'){
-               this.$store.dispatch('quanyuangonjiManger/stockSupplyInfo',value).then(res => {
-               this.dialogFormVisible = true
-               this.detailsData.supplyId = res.data.supplyId
-               this.detailsData.userId = res.data.userId
-               this.detailsData.enteName = res.data.enteName
-               this.detailsData.customerManagerName = res.data.customerManagerName
-               this.detailsData.stockCode = res.data.stockCode
-               this.detailsData.stockName = res.data.stockName
-               this.detailsData.lendDays = res.data.lendDays
-               this.detailsData.lendQuantity = res.data.lendQuantity
-               this.detailsData.lendRate = res.data.lendRate
-               this.detailsData.reserveExpireDate = res.data.reserveExpireDate
-               this.detailsData.fenzhijigou = '我是分支机构'
-               this.detailsData.publishTime = res.data.publishTime
-               this.detailsData.approveStatusName = res.data.approveStatusName
-               this.detailsData.remark = res.data.remark
-                }).catch(err => {
-                console.log(err)
-          })
-          }
-          else if(this.whitchActive == 'demand'){
-               this.$store.dispatch('quanyuangonjiManger/stockDemandInfo',value).then(res => {
-               this.dialogFormVisible = true
-               this.detailsData.demandId = res.data.demandId
-               this.detailsData.userId = res.data.userId
-               this.detailsData.enteName = res.data.enteName
-               this.detailsData.customerManagerName = res.data.customerManagerName
-               this.detailsData.stockCode = res.data.stockCode
-               this.detailsData.stockName = res.data.stockName
-               this.detailsData.borrowDays = res.data.borrowDays
-               this.detailsData.borrowableQuantity = res.data.borrowableQuantity
-               this.detailsData.borrowRate = res.data.borrowRate
-               this.detailsData.reserveExpireDate = res.data.reserveExpireDate
-               this.detailsData.fenzhijigou = '我是分支机构'
-               this.detailsData.publishTime = res.data.publishTime
-               this.detailsData.approveStatusName = res.data.approveStatusName
-               this.detailsData.remark = res.data.remark
-                }).catch(err => {
-                console.log(err)
-          })
-          }
-         
-      },
       deleteFn(){},
-      changeFn(changeItem){
-        if(this.whitchActive == 'supply'){
-          this.$emit('showStockSupplyDialog',changeItem)
-        }
-        else if(this.whitchActive == 'demand'){
-          this.$emit('showStockSupplyDialog',changeItem)
-        }
-           
-      },
       cancelFn(){},
       setTopFn(){},        
       },

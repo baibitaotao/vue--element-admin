@@ -16,16 +16,14 @@ export default {
     },
     mounted () {
         let data = {
-             "accountFlag": 1,
+             "accountFlag": '',
              "approveStatus": "01",
-             "createDtBegin": "2019-05-10",
-             "createDtEnd": "2019-05-20",
+             "createDtBegin": "",
+             "createDtEnd": "",
              "currPage": 1,
              "keyWord": 17712678377,
-             "order": 1,
-             "pageSize": 10,
-             "registerType": "01",
-             "sort": 1
+             "pageSize": 5,
+             "registerType": "",
             }
     },
     computed:{

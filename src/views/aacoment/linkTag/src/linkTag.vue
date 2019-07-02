@@ -1,5 +1,5 @@
 <template>
-    <div ref="tag" class="link-tag-box" :style="{marginTop:cmarginTop+'px'}">
+    <div ref="tag" class="link-tag-box">
         <input ref="input" type="hidden" :value="value" @input="updateValue($event.target.value)">
         <div class="all">
             <span class="spa" :class="{allActiveClass:isActive}" @click="allTags">不限</span>
@@ -33,11 +33,11 @@
         name: 'GuluLinkTag',
         props: {
             value: [String, Number],
-            contextPath: {
-                // 请求地址
-                type: String,
-                default: '/ei-web'
-            },
+            // contextPath: {
+            //     // 请求地址
+            //     type: String,
+            //     default: '/ei-web'
+            // },
             parentId: {
                 // 项目id
                 type: String,
@@ -64,6 +64,7 @@
         },
         data() {
             return {
+                contextPath:'http://172.29.201.223:8077/smt-admin',
                 isActive: true,
                 isActiveH: false,
                 ismoreShow: false,

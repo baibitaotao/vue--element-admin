@@ -18,8 +18,9 @@
                      end-placeholder="结束日期">
                  </el-date-picker>
                 </div>
-                 <link-tag parentId='1004' contextPath='http://172.29.201.223:8077/smt-admin' v-model="tagedata"></link-tag>
-                 
+                 <div style="marginTop:10px;">
+                 <link-tag parentId='1004' v-model="tagedata"></link-tag>
+                 </div>
                 <div style="marginTop:10px">
                     <el-button type="danger" plain size="mini" @click="query">查询</el-button>
                 </div>   

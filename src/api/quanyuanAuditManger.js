@@ -40,3 +40,45 @@ export function stockDemandToApproveList(params) {
       params
     })
   }
+
+  export function stockSupplyReview(data,id) {
+    return request({
+      url: `/stockSupply/review/${id}`,
+      method: 'put',
+      data
+    })
+  }
+
+  export function stockSupplyToApproveList(params) {
+    return request({
+      url: `/stockSupply/toApproveList`,
+      method: 'get',
+      params
+    })
+  }
+
+  export function stockDemandRemindApprove(data) {
+    return request({
+      url: `/stockDemand/remindApprove`,
+      method: 'put',
+      data
+    })
+  }
+
+  export function stockSupplyApprove(data,id) {
+    return request({
+      url: `/stockSupply/approve/${id}`,
+      method: 'put',
+      data
+    })
+  } 
+
+  export function stockSupplyRemindApprove(data) {
+    return request({
+      url: `/stockSupply/remindApprove`,
+      method: 'put',
+      data
+    })
+  }
+
+  

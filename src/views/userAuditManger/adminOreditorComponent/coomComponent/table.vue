@@ -149,8 +149,8 @@ export default {
     },
     methods:{
       refresh(){
-      this.queryParams.accountFlag =  1
-      this.queryParams.approveStatus = '02'
+      this.queryParams.accountFlag =  ''
+      this.queryParams.approveStatus = ''
       this.queryParams.createDtBegin = ''
       this.queryParams.createDtEnd = ''
       this.queryParams.currPage = 1

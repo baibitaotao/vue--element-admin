@@ -19,13 +19,17 @@
                      end-placeholder="结束日期">
                  </el-date-picker>
                 </div>
-
-                <div style="width:400px" class="userType">
-                    <link-tag parentId='1001' contextPath='http://172.29.201.223:8077/smt-admin' v-model="radio2"></link-tag>
+                <div style="width:400px;display:flex;fontSize:12px;" class="userType">
+                    <div style="marginRight:10px;width:100px;textAlign:right"><span >资金账号验证结果</span></div>
+                    <link-tag parentId='1003'  v-model="radio2"></link-tag>
                 </div>
-
-                 <div class="status">
-                    <link-tag parentId='1000' contextPath='http://172.29.201.223:8077/smt-admin' v-model="radio4"></link-tag>
+                <div style="width:400px;display:flex;fontSize:12px;" class="userType">
+                     <div style="marginRight:10px;width:100px;textAlign:right"><span >注册类型</span></div>
+                    <link-tag parentId='1001' v-model="radio3"></link-tag>
+                </div>
+                 <div style="display:flex;fontSize:12px;" class="userType">
+                     <div style="marginRight:10px;width:100px;textAlign:right"><span >审核状态</span></div>
+                    <link-tag parentId='1000' v-model="radio4"></link-tag>
                  </div>
 
                  <div style="marginTop:10px">
@@ -49,14 +53,23 @@ export default {
         this.$refs.table.refresh() 
     },
     watch:{
-        radio2(){
-                
+        value1(val,oldval){
+         if(val){
+            this.queryParams.createDtBegin = val[0]
+            this.queryParams.createDtEnd = val[1]
+          }else{
+            this.queryParams.createDtBegin = ''
+            this.queryParams.createDtEnd = ''
+          }
         },
-        radio3(){
-
+        radio2(val,oldval){
+            this.queryParams.accountFlag = val
         },
-        radio4(){
-
+        radio3(val,oldval){
+            this.queryParams.registerType = val
+        },
+        radio4(val,oldval){
+            this.queryParams.approveStatus = val
         }
     },
     components:{
@@ -68,8 +81,7 @@ export default {
     }, 
     methods:{
         query(){
-            this.input3 = ''
-            console.log(this.queryParams)
+            this.$refs.table.getTableList()
         },
         search(){
             this.queryParams.keyWord = this.input3
@@ -91,22 +103,23 @@ export default {
     data () {
         return {
             queryParams:{
-                accountFlag: 1,
-                approveStatus: "02",
+                accountFlag: '',
+                approveStatus: "",
                 createDtBegin: "",
                 createDtEnd: "",
                 currPage: 1,
                 keyWord: '',
+                registerType:'',
                 pageSize: 5
             },
             input3:'',
             value1:'',
             value:'',
-            radio2:'全部',
+            radio2:'',
             registerType:'',
-            radio3:'全部',
             accountFlag:1,
-            radio4:"全部",
+            radio3:'',
+            radio4:'',
             approveStatus:'02',
             showConditionIcon:'el-icon-arrow-up',
             showCondition:'条件收起',

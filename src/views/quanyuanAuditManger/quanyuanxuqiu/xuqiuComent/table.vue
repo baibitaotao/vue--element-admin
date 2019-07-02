@@ -189,8 +189,7 @@ export default {
 
       },
       getTableList(){
-         if(this.roles[0] == 'admin'){
-             this.$store.dispatch('quanyuanAuditManger/stockDemandToReviewList',this.queryParams).then(res => { 
+             this.$store.dispatch(this.roles[0] == 'admin'?'quanyuanAuditManger/stockDemandToReviewList':'quanyuanAuditManger/stockDemandToApproveList',this.queryParams).then(res => { 
               if(res.status == '0'){
                  this.tableData = res.data
                  this.pagination.totalPage = res.totalCount
@@ -202,21 +201,6 @@ export default {
             }).catch((err) => {
             console.log(err)
           })
-         }else if(this.roles[0] == 'manger'){
-            this.$store.dispatch('quanyuanAuditManger/stockDemandToApproveList',this.queryParams).then(res => { 
-              if(res.status == '0'){
-                 this.tableData = res.data
-                 this.pagination.totalPage = res.totalCount
-                 this.pagination.currPage = res.currPage
-              }  
-              else{
-               this.$message({showClose: true,message: res.msg,type: 'error'});
-              }
-            }).catch((err) => {
-            console.log(err)
-          })
-         }
-        
       },
     
       optionFn(value){
@@ -228,7 +212,26 @@ export default {
            return
          }
           if(value == 'cuiban'){
-            this.$refs.assignCustomerManager.isShowDialog()
+            let data = [] 
+            this.seletedItem.forEach(item => {
+              let obj = {}
+              obj.customerManager = item.customerManager
+              obj.id =  item.demandId
+              data.push(obj)
+            })
+            this.$store.dispatch('quanyuanAuditManger/stockDemandRemindApprove',data).then(res => {
+                if(res.status == '0'){
+                     this.$message({
+                        message: '提醒'+res.msg,
+                        type: 'success'
+                    });
+                }else{
+                    this.$message({
+                        message: '提醒'+res.msg,
+                        type: 'error'
+                    });
+                }
+            })
            return
          }
           if(value == 'detail'){
@@ -262,7 +265,6 @@ export default {
             for(let i = 0;i < this.btnstatus.length;++i){
                 this.$set(this.btnstatus,i,false)
               }
-            this.$set(this.btnstatus,1,true)
             this.$set(this.btnstatus,3,true)
             this.$set(this.btnstatus,2,true)
             this.$set(this.btnstatus,0,true)
@@ -274,61 +276,7 @@ export default {
               }
           }
       }, 
-      detailsFn(value){
-          if(this.whitchActive == 'supply'){
-               this.$store.dispatch('quanyuangonjiManger/stockSupplyInfo',value).then(res => {
-               this.dialogFormVisible = true
-               this.detailsData.supplyId = res.data.supplyId
-               this.detailsData.userId = res.data.userId
-               this.detailsData.enteName = res.data.enteName
-               this.detailsData.customerManagerName = res.data.customerManagerName
-               this.detailsData.stockCode = res.data.stockCode
-               this.detailsData.stockName = res.data.stockName
-               this.detailsData.lendDays = res.data.lendDays
-               this.detailsData.lendQuantity = res.data.lendQuantity
-               this.detailsData.lendRate = res.data.lendRate
-               this.detailsData.reserveExpireDate = res.data.reserveExpireDate
-               this.detailsData.fenzhijigou = '我是分支机构'
-               this.detailsData.publishTime = res.data.publishTime
-               this.detailsData.approveStatusName = res.data.approveStatusName
-               this.detailsData.remark = res.data.remark
-                }).catch(err => {
-                console.log(err)
-          })
-          }
-          else if(this.whitchActive == 'demand'){
-               this.$store.dispatch('quanyuangonjiManger/stockDemandInfo',value).then(res => {
-               this.dialogFormVisible = true
-               this.detailsData.demandId = res.data.demandId
-               this.detailsData.userId = res.data.userId
-               this.detailsData.enteName = res.data.enteName
-               this.detailsData.customerManagerName = res.data.customerManagerName
-               this.detailsData.stockCode = res.data.stockCode
-               this.detailsData.stockName = res.data.stockName
-               this.detailsData.borrowDays = res.data.borrowDays
-               this.detailsData.borrowableQuantity = res.data.borrowableQuantity
-               this.detailsData.borrowRate = res.data.borrowRate
-               this.detailsData.reserveExpireDate = res.data.reserveExpireDate
-               this.detailsData.fenzhijigou = '我是分支机构'
-               this.detailsData.publishTime = res.data.publishTime
-               this.detailsData.approveStatusName = res.data.approveStatusName
-               this.detailsData.remark = res.data.remark
-                }).catch(err => {
-                console.log(err)
-          })
-          }
-         
-      },
       deleteFn(){},
-      changeFn(changeItem){
-        if(this.whitchActive == 'supply'){
-          this.$emit('showStockSupplyDialog',changeItem)
-        }
-        else if(this.whitchActive == 'demand'){
-          this.$emit('showStockSupplyDialog',changeItem)
-        }
-           
-      },
       cancelFn(){},
       setTopFn(){},        
       },

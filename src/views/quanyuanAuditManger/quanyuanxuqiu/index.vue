@@ -11,10 +11,6 @@ import waitAudit from './xuqiuComent/waitAudit'
 
 
 export default {
-    data () {
-        return {
-        }
-    },
     components:{
         waitAudit,
     },

@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-dialog
-            title="业务管理员复核"
+            :title="isAdminOrManger == 'admin'?'业务管理员复核':'客户经理审核'"
             :visible.sync="dialogVisible"
             :before-close="handleClose">
              <div>
@@ -89,7 +89,7 @@ import { type } from 'os';
                   approveResult:'1',
                   userId:this.seletedItem[0].userId||''
                   }
-               this.$store.dispatch(this.isAdminOrManger == 'admin' ?'quanyuanAuditManger/stockDemandReview':'quanyuanAuditManger/stockDemandApprove',request).then(res => {
+               this.$store.dispatch(this.isAdminOrManger == 'admin' ?'quanyuanAuditManger/stockSupplyReview':'quanyuanAuditManger/stockSupplyApprove',request).then(res => {
                   if(res.status == 0){
                       this.$message({
                          message: '状态修改'+res.msg,
@@ -110,7 +110,7 @@ import { type } from 'os';
                   approveResult:'2',
                   userId:this.seletedItem[0].userId||''
                  }
-                 this.$store.dispatch(this.isAdminOrManger == 'admin' ?'quanyuanAuditManger/stockDemandReview':'quanyuanAuditManger/stockDemandApprove',request).then(res => {
+                 this.$store.dispatch(this.isAdminOrManger == 'admin' ?'quanyuanAuditManger/stockSupplyReview':'quanyuanAuditManger/stockSupplyApprove',request).then(res => {
                   if(res.status == 0){
                       this.$message({
                          message: '状态修改'+res.msg,

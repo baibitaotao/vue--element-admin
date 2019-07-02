@@ -18,7 +18,10 @@
                      end-placeholder="结束日期">
                  </el-date-picker>
                 </div>
-                 <link-tag parentId='1004' contextPath='http://172.29.201.223:8077/smt-admin' v-model="tagedata"></link-tag>
+                
+                <div style="marginTop:10px;">
+                 <link-tag parentId='1004' v-model="tagedata"></link-tag>
+                </div>
                  
                 <div style="marginTop:10px">
                     <el-button type="danger" plain size="mini" @click="query">查询</el-button>
@@ -27,7 +30,7 @@
          </transition>
           <el-divider><a style="color:#B40005" @click="conditionsOn">{{showCondition}}&nbsp;&nbsp;<i :class="showConditionIcon"></i></a></el-divider> 
          <div>
-            <quanyuan-audit-manger-table :queryParams='queryParams' ref="quanyuanAuditMangerTable"></quanyuan-audit-manger-table>
+            <quanyuan-audit-manger-table :queryParams='queryParams' ref="quanyuanAuditMangerTable" :roles='roles'></quanyuan-audit-manger-table>
          </div>  
 
 
@@ -39,9 +42,8 @@ import {mapGetters} from 'vuex'
 import linkTag from '../../../aacoment/linkTag/src/linkTag'
 import quanyuanAuditMangerTable from './table'
 
-
-
 export default {
+ 
   components:{
     linkTag,
     quanyuanAuditMangerTable
@@ -51,17 +53,18 @@ export default {
          this.queryParams.approveStatus = val
       },
       value1(val,oldval){
-       if(val){
+          if(val){
             this.queryParams.createDtBegin = val[0]
             this.queryParams.createDtEnd = val[1]
           }else{
             this.queryParams.createDtBegin = ''
             this.queryParams.createDtEnd = ''
           }
+      
       }
   },  
   mounted () {
-      this.$refs.quanyuanAuditMangerTable.refresh()
+        this.$refs.quanyuanAuditMangerTable.refresh()
   },
   computed:{
       ...mapGetters([
@@ -69,25 +72,33 @@ export default {
       ]),
       isAdminOrManger(){
           if(this.roles[0] === 'admin'){
+            this.queryParams = {
+              pageSize:5,
+              currPage:1,
+              keyWord:'',
+              createDtBegin:'',
+              createDtEnd:'',
+              approveStatus:'',
+              approveTimeBegin:'',
+              approveTimeEnd:'' }
               return true
           }
           else if(this.roles[0] === 'manger'){
+              this.queryParams = {
+                pageSize:5,
+                currPage:1,
+                keyWord:'',
+                createDtBegin:'',
+                createDtEnd:'',
+                approveStatus:'',
+              }
               return false
           }
       }
   },
   data () {
     return {
-      queryParams:{
-         pageSize:5,
-         currPage:1,
-         keyWord:'',
-         createDtBegin:'',
-         createDtEnd:'',
-         approveStatus:'',
-         approveTimeBegin:'',
-         approveTimeEnd:'' 
-      },
+      queryParams:{},
       isShowCondition:true,
       showConditionIcon:'el-icon-arrow-up',
       tagedata:'',

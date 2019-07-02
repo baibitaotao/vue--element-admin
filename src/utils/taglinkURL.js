@@ -1,0 +1,1 @@
+export default 'http://172.29.201.112:8077/smt-admin'
