@@ -64,7 +64,7 @@
         },
         data() {
             return {
-                contextPath:'http://172.29.201.223:8077/smt-admin',
+                contextPath:'http://172.29.201.112:8077/smt-admin',
                 isActive: true,
                 isActiveH: false,
                 ismoreShow: false,

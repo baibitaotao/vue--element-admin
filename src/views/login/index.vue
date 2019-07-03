@@ -147,16 +147,26 @@ export default {
         this.$refs.password.focus()
       })
     },
+    storageRouter(data){
+      return new Promise(resolve => {
+      localStorage.setItem('asyncRoutes1',data)
+      resolve()
+    })
+    },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
           let loginIfo = this.loginForm
           this.$store.dispatch('user/login', this.loginForm).then((res) => {
-              this.$router.push({ path: this.redirect || '/' })
-              this.loading = false
-              this.$store.dispatch('user/getUserPermissions',this.token).then(res => {
-              })
+               this.$store.dispatch('user/appFuncPermissionGetUserPermissions').then(res => {
+               this.storageRouter(JSON.stringify(res.data.funcPermissions)).then(() => {
+                    this.$router.push({ path: this.redirect} || '/')
+                    this.loading = false
+                //  console.log(JSON.parse(localStorage.getItem('asyncRoutes1')))
+               
+               })
+               })
             
             })
             .catch(() => {

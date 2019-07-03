@@ -17,6 +17,8 @@
                <el-radio-button label="供给"></el-radio-button>
                <el-radio-button label="需求"></el-radio-button>
              </el-radio-group>
+            <!-- <link-tag v-model="radio2" parentId='1004'></link-tag> -->
+
              <el-button type="danger" plain size="mini" style="transform:translate(10px,-3px)" @click="queryTableData">查询</el-button>
          </div>
         <div>
@@ -29,23 +31,15 @@
 <script>
  import chujie from '../../../aacoment/chujie'
  import pairingTable from './table/table'
- 
+ import linkTag from '../../../aacoment/linkTag/src/linkTag'
 
 export default {
+   comments:{},
    mounted () {
      this.$refs.pairingTable.refresh()
     } ,
    watch: {
      radio2(val,oldVal){
-         if(val == '全部'){
-            return this.needdata.conditionOfTransmission.reserveTypes = '1,2'   
-         }
-           if(val == '供给'){
-            return this.needdata.conditionOfTransmission.reserveTypes = '1'
-         }
-           if(val == '需求'){
-            return this.needdata.conditionOfTransmission.reserveTypes = '2'
-         }
 
      }  
    }, 

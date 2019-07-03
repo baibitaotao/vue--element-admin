@@ -16,3 +16,13 @@ export function stockMatchTradeAdd(data) {
       data
     })
   }  
+  
+  export function stockReserveListMatchStockSupply(data) {
+    return request({
+      url: `/stockReserve/listMatchStockSupply`,
+      method: 'post',
+      data
+    })
+  } 
+
+  

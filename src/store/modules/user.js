@@ -1,4 +1,4 @@
-import { login,getUserPermissions,logout} from '@/api/user'
+import { login,getUserPermissions,logout,appFuncPermissionGetUserPermissions} from '@/api/user'
 import { getUserId, setUserId, removeUSER_ID ,setName,getName} from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
@@ -45,15 +45,14 @@ const actions = {
     })
   },
 
-
-  getUserPermissions({commit},token){
+appFuncPermissionGetUserPermissions(){
     return new Promise((resolve,reject) => {
-      getUserPermissions({token:token}).then(res => {
+      appFuncPermissionGetUserPermissions().then(res => {
       resolve(res.data)
       }).catch(err => {
         reject(error)
       })
-    })
+    })       
   },
 
   setRoles({commit},role){

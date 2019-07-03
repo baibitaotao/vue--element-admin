@@ -1,8 +1,9 @@
 /* eslint-disable no-unused-vars */
 import { asyncRoutes, constantRoutes, routerMap, asyncRoutes1 } from '@/router'
-import { serverRouterMap, getRoles } from '@/api/role'
+import {appFuncPermissionGetUserPermissions} from '@/api/user'
+// import { serverRouterMap, getRoles } from '@/api/role'
 
-import { ayscRouterMap } from '@/api/router'
+// import { ayscRouterMap } from '@/api/router'
 
 const _import = require('../../router/_import_' + process.env.NODE_ENV) // 获取组件的方法
 import Layout from '@/layout' // Layout 是架构组件，不在后台返回，在文件里单独引入
@@ -37,6 +38,19 @@ function filterAsyncRouter(asyncRouterMap) { // 遍历后台传来的路由字�
 
   return accessedRouters
 }
+
+// 处理路由数据
+function filter(data){
+    data.forEach(element => {
+      element.children.forEach(item => {
+        delete item.children
+        delete item.alwaysShow
+        })
+      })
+    return  data
+}
+
+
 
 /**
  * Use meta.role to determine if the current user has permission
@@ -89,14 +103,12 @@ const mutations = {
 const actions = {
   generateRoutes({ commit }) {
     return new Promise(resolve => {
-      let accessedRoutes
-      setTimeout(() => {
-        const serverRouterMap = asyncRoutes1
-        const asyncRouterMap = generateAsyncRouter(routerMap, serverRouterMap)
-        accessedRoutes = asyncRouterMap || []
-        commit('SET_ROUTES', asyncRouterMap)
-        resolve(asyncRouterMap)
-      }, 1000)
+        const serverRouterMap = []
+        let accessedRoutes
+          const asyncRouterMap = generateAsyncRouter(routerMap, filter(JSON.parse(localStorage.getItem('asyncRoutes1'))))
+          accessedRoutes = asyncRouterMap || []
+          commit('SET_ROUTES', asyncRouterMap)
+          resolve(asyncRouterMap)
     })
   }
 

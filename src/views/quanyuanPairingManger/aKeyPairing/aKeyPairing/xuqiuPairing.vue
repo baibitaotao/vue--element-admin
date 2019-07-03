@@ -2,7 +2,7 @@
     <div class="xuqiuPairing">
         <div style="width:410px">
          <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
-            <el-button slot="append" icon="el-icon-search"></el-button>
+            <el-button slot="append" icon="el-icon-search" style=""></el-button>
          </el-input>
         </div>
         <div>
@@ -17,7 +17,7 @@
             </el-radio-group>
         </div>
         <div>
-            <pairing-table></pairing-table>
+            <xuqiu-table :queryParams='queryParams'></xuqiu-table>
         </div>
 
     </div>
@@ -25,18 +25,20 @@
 
 <script>
  import chujie from '../../../aacoment/chujie'
- import pairingTable from './table/table'
+ import xuqiuTable from './table/xuqiutable'
  
 
 export default {
     data () {
         return {
-            input3:''      
+            input3:'',
+            radio:'',
+            queryParams:{},           
         }
     },
     components:{
       chujie,
-      pairingTable 
+      xuqiuTable 
     }
 }
 </script>

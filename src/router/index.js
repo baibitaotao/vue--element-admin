@@ -27,23 +27,35 @@ export const routerMap = {
   userManger:_import('systemManger/userManger'),
 
   quanyuangonjiManger:_import('quanyuangonjiManger/index'),
-  jichushezhi:_import('jichushezhi/index'),
+  // jichushezhi:_import('jichushezhi/index'),
   adminManger:_import('gangweiguanli/adminManger'),
   mangerManger:_import('gangweiguanli/mangerManger'),
-  bannerguanli:_import('bannerguanli/index'),
+  // bannerguanli:_import('bannerguanli/index'),
   accountManagerManagement:_import('accountManagerManagement/index'),
   gonjiAuditManger:_import('quanyuanAuditManger/quanyuangonji/index'),
   xuqiuAuditManger:_import('quanyuanAuditManger/quanyuanxuqiu/index'),
   appointmentPairing:_import('quanyuanPairingManger/appointmentPairing/index'),
   aKeyPairing:_import('quanyuanPairingManger/aKeyPairing/index'),
-  systemLog:_import('systemLog/index'),
-  quanyuanDelQuery:_import('reportManger/quanyuanDealQuery'),
-  quanyuanGonjiQuery:_import('reportManger/quanyuanGonjiQuery'),
-  quanyuanXuqiuQuery:_import('reportManger/quanyuanXuqiuQuery'),
-  ronruQuery:_import('reportManger/ronruQuery'),
-  ronchuQuery:_import('reportManger/ronchuQuery'),
-  quanyuanAppointmentQuery:_import('reportManger/quanyuanAppointmentQuery'),
-  mangerQuery:_import('reportManger/mangerQuery'),
+  MyStockSupply:_import('leftSideList/myStockmanger/myStockSupply/index'),
+  MyStockReserve:_import('leftSideList/myStockmanger/MyStockReserve/index'),
+  MyStockDelLog:_import('leftSideList/myStockmanger/MyStockDelLog/index'),
+  BanerManger:_import('leftSideList/systemSet/BanerManger/index'),
+  basicalSet:_import('leftSideList/systemSet/basicalSet/index'),
+  baobiao:_import('leftSideList/baobiaoManger/baobiao/index'),
+  functionMeanueManger:_import('leftSideList/systemManger/functionMeanueManger/index'),
+  roleManger:_import('leftSideList/systemManger/roleManger/index'),
+  roleRelationshipManger:_import('leftSideList/systemManger/roleRelationshipManger/index'),
+  userManger:_import('leftSideList/systemManger/userManger/index'),
+  loginLog:_import('leftSideList/systemLog/loginLog/index'),
+  operationLog:_import('leftSideList/systemLog/operationLog/index'),
+  // systemLog:_import('systemLog/index'),
+  // quanyuanDelQuery:_import('reportManger/quanyuanDealQuery'),
+  // quanyuanGonjiQuery:_import('reportManger/quanyuanGonjiQuery'),
+  // quanyuanXuqiuQuery:_import('reportManger/quanyuanXuqiuQuery'),
+  // ronruQuery:_import('reportManger/ronruQuery'),
+  // ronchuQuery:_import('reportManger/ronchuQuery'),
+  // quanyuanAppointmentQuery:_import('reportManger/quanyuanAppointmentQuery'),
+  // mangerQuery:_import('reportManger/mangerQuery'),
 }
 
 
@@ -127,8 +139,7 @@ export const asyncRoutes1 = [
   {
     path: '/userAuditManger',
     component: 'Layout',
-    alwaysShow: false, // will always show the root menu
-    redirect:'/userAuditMange/index',
+    alwaysShow: true, // will always show the root menu
     meta: {
       title: '用户审核管理',
       icon: 'lock',
@@ -172,14 +183,14 @@ export const asyncRoutes1 = [
        component: 'xuqiuAuditManger',
        meta: {
          title: '券源需求审核管理',
-         roles: ['admin'] // or you can only set roles in sub nav
+         roles: ['manger'] // or you can only set roles in sub nav
        }
      },{
        path:'gonjiAuditManger',
        component:'gonjiAuditManger',
        meta:{
          title:'券源供给审核管理',
-         roles:['admin']
+         roles:['manger']
        }
      }]
   },
@@ -218,7 +229,6 @@ export const asyncRoutes1 = [
     meta: {
       title: '券源交易管理',
       icon: 'lock',
-           // you can set roles in root nav
     },
     children: [
     {
@@ -227,177 +237,38 @@ export const asyncRoutes1 = [
       meta: {
         title: '券源交易管理',
         roles: ['admin']
-      // if do not set roles, means: this page does not require permission
       }
     }]
     },
+
     {
-      path: '/jichushezhi',
+      path: '/baobiaoManger',
       component: 'Layout',
-      redirect: '/jichushezhi/index',
       alwaysShow: true, // will always show the root menu
       meta: {
-        title: '基础设置',
-        icon: 'lock',  
-        },
-      children: [{
-        path: 'index',
-        component: 'jichushezhi',
-        meta: {
-          title: '基础设置',
-          }
-        }]
+        title: '券源交易管理',
+        icon: 'lock',
+      },
+      children: [
+      {
+        path: 'BanerManger',
+        component: 'BanerManger',
+        meta: {title: '券源交易管理'}
       },
       {
-        path: '/gangweiguanli',
-        component: 'Layout',
-        redirect: '/gangweiguanli/adminManger',
-        alwaysShow: true, // will always show the root menu
-        meta: {
-          title: '岗位管理',
-          icon: 'lock',  
-          },
-        children: [{
-          path: 'adminManger',
-          component: 'adminManger',
-          meta: {
-            title: '业务管理员管理',
-            roles: ['admin','manger']
-            }
-          },{
-            path: 'mangerManger',
-            component: 'mangerManger',
-            meta: {
-              title: '客户经理管理',
-              roles: ['admin','manger']
-              }
-            }]
-        },{
-        path: '/bannerguanli',
-        component: 'Layout',
-        redirect: '/bannerguanli/index',
-        alwaysShow: true, // will always show the root menu
-        meta: {
-          title: 'banner图管理',
-          icon: 'lock',  
-          },
-        children: [{
-          path: 'index',
-          component: 'bannerguanli',
-          meta: {
-            title: 'banner图管理',
-            }
-          }]
+        path: 'basicalSet',
+        component: 'basicalSet',
+        meta: {title: '券源交易管理'}
+      },
+      {
+        path: 'MyStockDelLog',
+        component: 'MyStockDelLog',
+        meta: {title: '券源交易管理'}
+      }
+    ]
+      },
 
-        },{
-          path:'/accountManagerManagement',
-          component:'Layout',
-          redirect:'/accountManagerManagement/index',
-          alwaysShow:true,
-          meta: {
-            title: '系统日志',
-            icon: 'lock',  
-            },
-            children:[{
-              path:'index',
-              component:'systemLog',
-              meta:{
-                title:'系统日志',
-                roles: ['admin','superAdmin']
-              }
-            }]
-        },
-        {
-          path:'/reportManger',
-          component:'Layout',
-          redirect:'/reportManger/quanyuanDelQuery',
-          alwaysShow:true,
-          meta: {
-            title: '报表管理',
-            icon: 'lock',  
-            },
-            children:[{
-              path:'quanyuanDelQuery',
-              component:'quanyuanDelQuery',
-              meta:{
-                title:'券源成交查询统计',
-                roles: ['admin','superAdmin']
-              }
-            },{
-              path:'quanyuanGonjiQuery',
-              component:'quanyuanGonjiQuery',
-              meta:{
-                title:'券源供给查询统计',
-                roles: ['admin','superAdmin']
-              }
-            },{
-              path:'quanyuanXuqiuQuery',
-              component:'quanyuanXuqiuQuery',
-              meta:{
-                title:'券源需求查询统计',
-                roles: ['admin','superAdmin']
-              }
-            },{
-              path:'ronchuQuery',
-              component:'ronchuQuery',
-              meta:{
-                title:'融出方查询统计',
-                roles: ['admin','superAdmin']
-              }
-            },{
-              path:'ronruQuery',
-              component:'ronruQuery',
-              meta:{
-                title:'融入方查询统计',
-                roles: ['admin','superAdmin']
-              }
-            },{
-              path:'quanyuanAppointmentQuery',
-              component:'quanyuanAppointmentQuery',
-              meta:{
-                title:'券源预约查询统计',
-                roles: ['admin','superAdmin']
-              }
-            },{
-              path:'mangerQuery',
-              component:'mangerQuery',
-              meta:{
-                title:'券源预约查询统计',
-                roles: ['admin','superAdmin']
-              }
-            }]
-        },{
-          path:'/systemManger',
-          component:'Layout',
-          redirect:'/systemManger/permissionsManger',
-          alwaysShow:true,
-          meta: {
-            title: '系统管理',
-            icon: 'lock',  
-            },
-            children:[{
-              path:'permissionsManger',
-              component:'permissionsManger',
-              meta:{
-                title:'权限管理',
-                roles: ['admin','superAdmin']
-              }
-            },{
-              path:'rolesManger',
-              component:'rolesManger',
-              meta:{
-                title:'角色管理',
-                roles: ['admin','superAdmin']
-              }
-            },{
-              path:'userManger',
-              component:'userManger',
-              meta:{
-                title:'用户管理',
-                roles: ['admin','superAdmin']
-              }
-            }]
-        },
+
 
   { path: '*', redirect: '/404', hidden: true }
 ]

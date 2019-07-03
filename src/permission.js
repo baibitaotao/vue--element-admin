@@ -27,15 +27,15 @@ router.beforeEach(async(to, from, next) => {
     } else {
               // determine whether the user has obtained his permission roles through getInfo
               //  const hasRoles = store.getters.roles && store.getters.roles.length > 0
-              next()
-              if(to.meta.roles){
-                store.dispatch('user/setRoles', to.meta.roles)
-              }else{
-                console.log('检查拦截器角色')
-              }
-              const accessRoutes = await store.dispatch('permission/generateRoutes')
-              router.addRoutes(accessRoutes)
-              NProgress.done()
+          next()
+          if(to.meta.roles){
+            store.dispatch('user/setRoles', to.meta.roles)
+          }else{
+            console.log('检查拦截器角色')
+          }
+          const accessRoutes = await store.dispatch('permission/generateRoutes')
+          router.addRoutes(accessRoutes)
+          NProgress.done()
     }
   } else {
     /* has no token*/

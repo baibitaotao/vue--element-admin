@@ -8,13 +8,12 @@ export function login(data) {
   })
 }
 
-export function getUserPermissions(token){
+export function appFuncPermissionGetUserPermissions() {
   return request({
-    url: '/appFuncPermission/getUserPermissions',
+    url: `/appFuncPermission/getUserPermissions`,
     method: 'post',
-    token
   })
-}
+} 
 
 
 export function getInfo(token) {

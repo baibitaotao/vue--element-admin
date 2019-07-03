@@ -1,4 +1,4 @@
-import {stockReserveListStockReserve,stockMatchTradeAdd} from '../../api/quanyuanPairingManger'
+import {stockReserveListStockReserve,stockMatchTradeAdd,stockReserveListMatchStockSupply} from '../../api/quanyuanPairingManger'
 
 
 
@@ -26,7 +26,19 @@ stockMatchTradeAdd({commit},params){
       reject(error)
     })
   }) 
+},
+
+stockReserveListMatchStockSupply({commit},params){
+  return new Promise((resolve, reject) => {
+    stockReserveListMatchStockSupply(params).then(response => {
+    let {data} = response
+    resolve(data)
+    }).catch(error => {
+      reject(error)
+    })
+  }) 
 }
+
 
 }
 

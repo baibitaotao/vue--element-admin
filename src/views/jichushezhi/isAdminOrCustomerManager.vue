@@ -1,5 +1,6 @@
 <template>
     <div>
+       <el-button type="danger" v-for="(item,index) in arr1" :key="index">{{item}}</el-button>
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm"  class="demo-ruleForm">
           <el-form-item label="券源需求最低期望借入天数值" prop="a">
             <el-input v-model="ruleForm.a"></el-input>
@@ -27,8 +28,9 @@
        
         </el-form>  
    
-        <div><el-button type="danger">保存</el-button></div>
-
+        <div><el-button type="danger" >保存</el-button></div>
+        <el-button>abc</el-button>
+        <el-button ></el-button>
     </div>
 </template>
 
@@ -37,6 +39,8 @@
   export default {
     data() {
       return {
+        arr:[1,2,3,4,5,6],
+        arr1:[45,4,56,56],
         ruleForm: {
           a: '',
           b: '',
