@@ -1,7 +1,10 @@
 <template>
     <div>
         <div style="marginBottom:10px">
-          <el-button  type="danger" plain size="mini" :disabled = 'btnstatus[index]'  @click="optionFn(item)" v-for="(item,index) in btnOption" :key='index'>{{item|showBtnText}}</el-button>
+            <el-button :disabled="btnstatus.assignedAccountManager" @click="assignedAccountManager"  type="danger" plain size="mini" v-if = 'btnShow.assignedAccountManager'>{{buttons[0].name}}</el-button>
+            <el-button :disabled="btnstatus.audit" @click="audit"  type="danger" plain size="mini" v-if = 'btnShow.audit'>{{buttons[1].name}}</el-button>
+            <el-button :disabled="btnstatus.look" @click="look"  type="danger" plain size="mini" v-if = 'btnShow.look'>{{buttons[2].name}}</el-button>
+            
         </div>
         <el-table 
            :data="tableData"
@@ -75,6 +78,12 @@
              label="资金账号"
              width="100">
            </el-table-column>
+
+           <el-table-column
+             prop="approveStatusName"
+             label="审核状态"
+             width="100">
+           </el-table-column>
       
          </el-table>
 
@@ -102,7 +111,17 @@ import userApprovalDiolog from './userApprovalDialog'
 import detailDialog from './detailDialog'
 import assignCustomerManagerDialog from './assignCustomerManagerDialog'
 
+import {mapGetters} from 'vuex'
+
 export default {
+  mounted () {
+    this.isShowButton()
+  },
+    computed:{
+       ...mapGetters([
+            'buttons'
+        ]),
+    },
     components: {
         userApprovalDiolog,
         detailDialog,
@@ -122,19 +141,18 @@ export default {
          deep: true
        },
     },
-    filters: {
-      showBtnText(value){
-        if(value == 'approval'){return '审核通过'}
-        if(value == 'assignCustomerManager'){return '分配客户经理'}
-        if(value == 'detail'){return '用户审核详情'}
-        if(value == 'userApproval'){return '用户审核'}
-      },
-  
-    },
     data () {
       return {
-        btnOption:['approval','userApproval','assignCustomerManager','detail'],
-        btnstatus:[true,true,true,true,true],
+        btnShow:{
+          assignedAccountManager:false,
+          audit:false,
+          look:false
+        },
+        btnstatus:{
+          assignedAccountManager:true,
+          audit:true,
+          look:true
+        },
         formLabelWidth:'120px',
         dialogFormVisible:false,
         tableData:[],
@@ -172,41 +190,30 @@ export default {
             console.log(err)
           })
       },
-    
-      optionFn(value){
-         if(value == 'approval'){
-             this.$confirm('确认审核通过?', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
-                type: 'warning'
-                }).then(() => {
-                  this.$store.dispatch('')
-                    // this.$store.dispatch('userAuditManger/').then(res => {})
-                    // this.$message({
-                    // type: 'success',
-                    // message: '成功!'
-                    //   });
-                    }).catch(() => {
-                this.$message({
-                   type: 'info',
-                   message: '已取消'
-              });          
-            });
-           return
-         }
-         if(value == 'userApproval'){
-           this.$refs.dialog.isShowDialog()
-           return
-         }
-          if(value == 'assignCustomerManager'){
-            this.$refs.assignCustomerManager.isShowDialog()
-           return
-         }
-          if(value == 'detail'){
-            this.$refs.detailDialog.isShowDialog() 
-           return
-         }
-        
+
+      isShowButton(){
+          this.buttons.forEach(element => {
+              if(element.code === '10003010101'){
+                  this.btnShow.assignedAccountManager = true
+              }
+              if(element.code === '10003010102'){
+                  this.btnShow.audit = true
+              }
+               if(element.code === '10003010103'){
+                  this.btnShow.look = true
+              }
+
+          });
+
+      },
+      assignedAccountManager(){
+         this.$refs.assignCustomerManager.isShowDialog()
+      },
+      audit(){
+          this.$refs.dialog.isShowDialog()
+      },
+      look(){
+         this.$refs.detailDialog.isShowDialog() 
       },
       handleSelectionChange(value){
           this.seletedItem = value
@@ -222,85 +229,18 @@ export default {
         this.queryParams.currPage = value
         this.getTableList()
      },
-      isDisableBtn(selected){
-          if(selected.length == 1){
-              for(let i = 0;i < this.btnstatus.length;++i){
-                this.$set(this.btnstatus,i,false)
-              }
-              return
-          }
-          if(selected.length > 1){
-            for(let i = 0;i < this.btnstatus.length;++i){
-                this.$set(this.btnstatus,i,false)
-              }
-            this.$set(this.btnstatus,1,true)
-            this.$set(this.btnstatus,3,true)
-            this.$set(this.btnstatus,2,true)
-            return
-          }
-          if(selected.length == 0){
-              for(let i = 0;i < this.btnstatus.length;++i){
-                this.$set(this.btnstatus,i,true)
-              }
-          }
-      }, 
-      detailsFn(value){
-          if(this.whitchActive == 'supply'){
-               this.$store.dispatch('quanyuangonjiManger/stockSupplyInfo',value).then(res => {
-               this.dialogFormVisible = true
-               this.detailsData.supplyId = res.data.supplyId
-               this.detailsData.userId = res.data.userId
-               this.detailsData.enteName = res.data.enteName
-               this.detailsData.customerManagerName = res.data.customerManagerName
-               this.detailsData.stockCode = res.data.stockCode
-               this.detailsData.stockName = res.data.stockName
-               this.detailsData.lendDays = res.data.lendDays
-               this.detailsData.lendQuantity = res.data.lendQuantity
-               this.detailsData.lendRate = res.data.lendRate
-               this.detailsData.reserveExpireDate = res.data.reserveExpireDate
-               this.detailsData.fenzhijigou = '我是分支机构'
-               this.detailsData.publishTime = res.data.publishTime
-               this.detailsData.approveStatusName = res.data.approveStatusName
-               this.detailsData.remark = res.data.remark
-                }).catch(err => {
-                console.log(err)
-          })
-          }
-          else if(this.whitchActive == 'demand'){
-               this.$store.dispatch('quanyuangonjiManger/stockDemandInfo',value).then(res => {
-               this.dialogFormVisible = true
-               this.detailsData.demandId = res.data.demandId
-               this.detailsData.userId = res.data.userId
-               this.detailsData.enteName = res.data.enteName
-               this.detailsData.customerManagerName = res.data.customerManagerName
-               this.detailsData.stockCode = res.data.stockCode
-               this.detailsData.stockName = res.data.stockName
-               this.detailsData.borrowDays = res.data.borrowDays
-               this.detailsData.borrowableQuantity = res.data.borrowableQuantity
-               this.detailsData.borrowRate = res.data.borrowRate
-               this.detailsData.reserveExpireDate = res.data.reserveExpireDate
-               this.detailsData.fenzhijigou = '我是分支机构'
-               this.detailsData.publishTime = res.data.publishTime
-               this.detailsData.approveStatusName = res.data.approveStatusName
-               this.detailsData.remark = res.data.remark
-                }).catch(err => {
-                console.log(err)
-          })
-          }
-         
-      },
-      deleteFn(){},
-      changeFn(changeItem){
-        if(this.whitchActive == 'supply'){
-          this.$emit('showStockSupplyDialog',changeItem)
+     isDisableBtn(val,oldVal){
+        if(val.length == 1){
+            this.btnstatus.assignedAccountManager = false
+            this.btnstatus.audit = false
+            this.btnstatus.look = false
+        }else{
+            this.btnstatus.assignedAccountManager = true
+            this.btnstatus.audit = true
+            this.btnstatus.look = true
         }
-        else if(this.whitchActive == 'demand'){
-          this.$emit('showStockSupplyDialog',changeItem)
-        }
-           
-      },
-      cancelFn(){},
-      setTopFn(){},        
+     }
+ 
       },
 }
 </script>

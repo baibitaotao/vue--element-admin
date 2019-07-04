@@ -1,18 +1,17 @@
 <template>
     <div class="userAduitManger">
-        <componet :is = 'isShowAdminOrEditor'></componet>
+        <user-aduit-manger-componet></user-aduit-manger-componet>
     </div>
 </template>
 
 
 <script>
-import {mapGetters} from 'vuex'
-import admin from './adminOreditorComponent/admin'
-import editor from './adminOreditorComponent/editor'
+
+import userAduitMangerComponet from './adminOreditorComponent/userAduitMangerComponet'
+
 export default {
     components:{
-       admin,
-       editor 
+       userAduitMangerComponet
     },
     mounted () {
         let data = {
@@ -26,20 +25,6 @@ export default {
              "registerType": "",
             }
     },
-    computed:{
-        ...mapGetters([
-            'roles'
-        ]),
-        isShowAdminOrEditor(){
-            if(this.roles[0]){
-                return 'admin'
-            }
-            else {
-                return 'admin'
-            }
-        }   
-    },
-  
 }
 </script>
 

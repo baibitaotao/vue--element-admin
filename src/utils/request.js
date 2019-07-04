@@ -1,6 +1,5 @@
 import axios from 'axios'
 
-
 import {
   MessageBox,
   Message
@@ -13,7 +12,7 @@ import { Loading } from 'element-ui';
 // baseURL: 'http://172.29.201.112:8080/smt-admin'于,
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
-  baseURL: 'http://172.29.201.112:8077/smt-admin',
+  baseURL: 'http://172.29.201.223:8077/smt-admin',
   // baseURL: process.env.VUE_APP_BASE_API,
   withCredentials: true, // 跨域请求时发送 cookies
   timeout: 5000 // request timeout
@@ -27,13 +26,13 @@ service.interceptors.request.use(
   config => {
     // Do something before request is sent
     if (store.getters.USER_ID) {
-      // loadingInstance = Loading.service({
-      //   fullscreen: true,
-      //   lock:true,
-      //   text: 'Loading',
-      //   spinner: 'el-icon-loading',
-      //   background: 'rgba(0, 0, 0, 0.7)'
-      // });
+      loadingInstance = Loading.service({
+        fullscreen: true,
+        lock:true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
     }
     return config
   },
@@ -45,6 +44,7 @@ service.interceptors.request.use(
 )
 
 service.interceptors.response.use(res => {
+  loadingInstance.close()
   if(res.status !== 200){
     console.log(res)
     Message({

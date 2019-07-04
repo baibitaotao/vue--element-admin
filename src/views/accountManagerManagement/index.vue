@@ -1,7 +1,6 @@
 <template>
     <div>
         客户经理管理
-
     </div>
 </template>
 
@@ -11,7 +10,7 @@
 
 export default {
     mounted () {
-        this.$store.dispatch('user/setRoles',this.setRoles())
+        // this.$store.dispatch('user/setRoles',this.setRoles())
     },
     methods: {
         setRoles(){

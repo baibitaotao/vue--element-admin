@@ -29,7 +29,7 @@ router.beforeEach(async(to, from, next) => {
               //  const hasRoles = store.getters.roles && store.getters.roles.length > 0
           next()
           if(to.meta.roles){
-            store.dispatch('user/setRoles', to.meta.roles)
+            store.dispatch('user/setButtons', to.meta.buttons)
           }else{
             console.log('检查拦截器角色')
           }

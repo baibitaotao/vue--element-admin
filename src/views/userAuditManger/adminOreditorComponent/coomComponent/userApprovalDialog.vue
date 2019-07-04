@@ -52,7 +52,15 @@ import { type } from 'os';
         this.approveReason = null
       },
       isShowDialog(){
+       if(this.seletedItem[0].approveStatus == '03'){
           this.dialogVisible =  !this.dialogVisible
+          return
+        }
+        this.$message({
+          message: '券源状态不为待审核',
+          type: 'warning'
+        });
+          
       },  
       handleClose(done) {
         this.$confirm('确认关闭？')

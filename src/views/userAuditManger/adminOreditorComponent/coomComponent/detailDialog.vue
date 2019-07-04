@@ -3,13 +3,38 @@
             title="详情页"
             :visible.sync="dialogVisible">
             <el-row>
-                   <el-col :span="10" v-for="(item,key,index) in detailsData" :key="index">
+                   <el-col :span="10" v-for="(item,key,index) in detailsData" :key="index" style="width:50%">
                      <div class="show_ditals" >
                        <div>{{key|detailsText}}</div>
                        <div>{{item}}</div>
                       </div>
                    </el-col>
-             </el-row>   
+             </el-row>  
+             <el-divider>审核信息</el-divider>
+             <el-row>
+                   <el-table
+                      :data="tableData"
+                      border
+                      style="width: 100%">
+                      <el-table-column
+                        prop="approveReason"
+                        label="审核理由">
+                      </el-table-column>
+                      <el-table-column
+                        prop="approveResultName"
+                        label="审核结果">
+                      </el-table-column>
+                      <el-table-column
+                        prop="approveTime"
+                        label="审核时间">
+                      </el-table-column>
+                       <el-table-column
+                        prop="approveUserName"
+                        label="审核人">
+                      </el-table-column>
+                    </el-table>
+             </el-row>
+
             <div slot="footer" class="dialog-footer">
                <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
             </div>
@@ -26,8 +51,12 @@ export default {
     filters: {
        detailsText(value){
          switch (value) {
+           case 'account':
+              return '资金账号'
+           case 'isAccountName':
+               return"资金账户类型的用户";   
            case 'accountFlagName':
-              return '是否财通用户'
+              return '资金账号验证标记'
             case 'approveStatusName':
               return '审核状态'
             case 'userId':
@@ -42,7 +71,8 @@ export default {
                 return "登录名";
             case 'mobilePhone':
                return"电话号";
-
+            case 'registerTypeName':
+               return"注册类型"; 
             case 'nickName':
                return"昵称";
             case 'orgName':
@@ -63,6 +93,7 @@ export default {
         return {
             dialogVisible:false,
             detailsData:{},
+            tableData:[]
         }
     },
     methods: {
@@ -71,15 +102,19 @@ export default {
         }, 
         getDetail(){
             this.$store.dispatch('userAuditManger/userApprovalDetail',this.seletedItem[0].userId).then(res => {
+                this.tableData = res.data.userApproveRecordList
+                this.detailsData.account = res.data.userApproval.account
                 this.detailsData.accountFlagName = res.data.userApproval.accountFlagName
                 this.detailsData.approveStatusName = res.data.userApproval.approveStatusName
                 this.detailsData.cardTypeName = res.data.userApproval.cardTypeName
                 this.detailsData.cardCode = res.data.userApproval.cardCode
                 this.detailsData.customerManagerName = res.data.userApproval.customerManagerName
+                this.detailsData.isAccountName = res.data.userApproval.isAccountName
                 this.detailsData.loginName = res.data.userApproval.loginName
                 this.detailsData.mobilePhone = res.data.userApproval.mobilePhone
                 this.detailsData.nickName = res.data.userApproval.nickName
                 this.detailsData.orgName = res.data.userApproval.orgName 
+                this.detailsData.registerTypeName = res.data.userApproval.registerTypeName
                 this.detailsData.roleNames = res.data.userApproval.roleNames 
                 this.detailsData.userName = res.data.userApproval.userName 
                 this.detailsData.userId = res.data.userApproval.userId 

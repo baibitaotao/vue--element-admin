@@ -2,7 +2,6 @@
          <el-dialog
             title="分配客户经理"
             :visible.sync="dialogVisible">
-
              <div>
              <el-tree
                :data="data"
@@ -84,12 +83,20 @@ export default {
          this.$refs.treeForm.setCheckedNodes([data]);
        },
        isShowDialog(){
-          this.dialogVisible =  !this.dialogVisible
-          this.getlist()
+          if(this.seletedItem[0].approveStatus == '02'){
+              this.getlist()
+               return
+          }
+         this.$message({
+          message: '券源状态不为待分配',
+          type: 'warning'
+        });  
+
         },
         getlist(){
              this.$store.dispatch('userAuditManger/selectOrgUserByRoleCode',{roleCode:'12'}).then(res => {
                 this.data = res.data.treeData
+                this.dialogVisible =  !this.dialogVisible
              })
          }
 

@@ -23,8 +23,11 @@ const mutations = {
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
   },
-  SET_ROLES: (state, roles) => {
-    state.roles = roles
+  SET_ROLES:(state, roles) => {
+    state.role  = role 
+  },
+  SET_BUTTONS: (state, buttons) => {
+    state.buttons = buttons
   }
 }
 
@@ -55,9 +58,9 @@ appFuncPermissionGetUserPermissions(){
     })       
   },
 
-  setRoles({commit},role){
+  setButtons({commit},buttons){
     return new Promise((resolve,reject) => {
-      commit('SET_ROLES',role)
+      commit('SET_BUTTONS',buttons)
       resolve()
     })
   },
