@@ -64,7 +64,7 @@
         },
         data() {
             return {
-                contextPath:'http://172.29.201.223:8077/smt-admin',
+                contextPath:'/smt-admin',
                 isActive: true,
                 isActiveH: false,
                 ismoreShow: false,
@@ -304,158 +304,157 @@
     }
 </script>
 
-<style>
+
+<style scoped>
     .col-type {
-        float: left;
-        min-width: 48px;
-        vertical-align: middle;
-        text-align: left;
-        font-size: 12px;
-        color: #5a626d;
-        letter-spacing: 0;
-        font-weight: 600;
-        line-height: 24px;
-        white-space: nowrap;
-    }
+    float: left;
+    min-width: 48px;
+    vertical-align: middle;
+    text-align: left;
+    font-size: 12px;
+    color: #5a626d;
+    letter-spacing: 0;
+    font-weight: 600;
+    line-height: 24px;
+    white-space: nowrap;
+}
 
-    .link-tag-box {
-        display: flex;
-    }
+.link-tag-box {
+    display: flex;
+}
 
-    .link-tag-box .spa {
-        padding: 0 10px;
-        line-height: 24px;
-        position: relative;
-        overflow: hidden;
-        border-radius: 2px;
-        display: inline-block;
-    }
+.link-tag-box .spa {
+    padding: 0 10px;
+    line-height: 24px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    display: inline-block;
+}
 
-    .link-tag-box .all {
-        float: left;
-        font-size: 13px;
-        color: #222c38;
-        cursor: pointer;
-        width: 48px;
-        height: 24px;
-        line-height: 24px;
-        margin-bottom: 4px;
-        margin-right: 5px;
-        overflow: hidden;
-    }
+.link-tag-box .all {
+    float: left;
+    font-size: 13px;
+    color: #222c38;
+    cursor: pointer;
+    width: 48px;
+    height: 24px;
+    line-height: 24px;
+    margin-bottom: 4px;
+    margin-right: 5px;
+    overflow: hidden;
+}
 
-    .allActiveClass {
-        color: #b40005;
-    }
+.allActiveClass {
+    background-color: #b40005;
+    color: #fff !important;
+}
 
-    .tag-nav {
-        float: left;
-        overflow: hidden;
-        position: relative;
-        height: 24px;
-        padding-right: 30px;
-        margin: 0;
-    }
+.tag-nav {
+    float: left;
+    overflow: hidden;
+    position: relative;
+    height: 24px;
+    padding-right: 30px;
+    margin: 0;
+}
 
-    .activeHeight {
-        height:auto !important;
-    }
+.activeHeight {
+  height:auto !important;
+}
 
-    .ul-contaier {
-        position: relative;
-    }
+.ul-contaier {
+    position: relative;
+}
 
-    /* 更多-收起 */
+/* 更多-收起 */
 
-    .filter-more {
-        position: absolute;
-        top: 1px;
-        right: -82px;
-        width: auto;
-        height: 24px;
-        line-height: 24px;
-        padding-right: 15px;
-        color: #43647f;
-        cursor: pointer;
-    }
+.filter-more {
+    position: absolute;
+    top: 1px;
+    right: -82px;
+    width: auto;
+    height: 24px;
+    line-height: 24px;
+    padding-right: 15px;
+    color: #43647f;
+    cursor: pointer;
+}
 
-    .col-handle {
-        position: absolute;
-        right: 0;
-        top: 2px;
-        line-height: 24px;
-    }
+.col-handle {
+    position: absolute;
+    right: 0;
+    top: 2px;
+    line-height: 24px;
+}
 
-    .col-handle .open-btn {
-        display: block;
-        width: 20px;
-        height: 20px;
-    }
+.col-handle .open-btn {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
 
-    .col-handle .open-btn {
-        vertical-align: middle;
-        font-size: 20px;
-        color: #ccc;
-        transition: transform 0.4s;
-    }
+.col-handle .open-btn {
+    vertical-align: middle;
+    font-size: 20px;
+    color: #ccc;
+    transition: transform 0.4s;
+}
 
-    /*展开*/
+/*展开*/
 
-    .col-handle .open-btn.open {
-        transform: rotate(180deg);
-    }
+.col-handle .open-btn.open {
+    transform: rotate(180deg);
+}
 
-    .icon-open-select {
-        background: url(./images/top.png) no-repeat;
-        background-position: center;
-    }
+.icon-open-select {
+    background: url(./images/top.png) no-repeat;
+    background-position: center;
+}
 
-    /* 更多-收起 end */
+/* 更多-收起 end */
 
-    .tag-nav li {
-        list-style-type: none;
-        float: left;
-        font-size: 13px;
-        color: #222c38;
-        cursor: pointer;
-        /* width: 90px; */
-        height: 24px;
-        line-height: 24px;
-        margin-bottom: 4px;
-        margin-right: 5px;
-        overflow: hidden;
-        cursor: pointer;
-    }
+.tag-nav li {
+    list-style-type: none;
+    float: left;
+    font-size: 13px;
+    color: #222c38;
+    cursor: pointer;
+    /* width: 90px; */
+    height: 24px;
+    line-height: 24px;
+    margin-bottom: 4px;
+    margin-right: 5px;
+    overflow: hidden;
+    cursor: pointer;
+}
 
-    .tag-nav li span:hover {
-        background-color: #eff2f5;
-    }
+.tag-nav li span:hover {
+  background-color: #eff2f5;
+  color: #fff;
+}
 
-    .tag-nav li:not(.activeClass) span:hover {
-        /* background-color: #fac073; */
-    }
+.tag-nav li:not(.activeClass) span:hover {
+  background-color: #fac073;
+}
 
-    /* .link-tag-box .all:hover {
-      background-color: #fac073;
-      color: #fff;
-    } */
+.link-tag-box .all .spa:not(.allActiveClass):hover {
+  background-color: #fac073;
+  color: #fff;
+}
 
-    .link-tag-box .all .spa:not(.allActiveClass):hover {
-        /* background-color: #fac073;
-        color: #fff; */
-    }
+.tag-nav li.activeClass>span {
+    color: #fff;
+    background-color: #b40005;;
+}
 
-    .tag-nav li.activeClass>span {
-        /* color: #b40005; */
-    }
-
-    .tag-nav li>span:first-child {
-        padding: 0 10px;
-        line-height: 24px;
-        position: relative;
-        overflow: hidden;
-        border-radius: 2px;
-        display: inline-block;
-    }
+.tag-nav li>span:first-child {
+    padding: 0 10px;
+    line-height: 24px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+    display: inline-block;
+}
 
 </style>

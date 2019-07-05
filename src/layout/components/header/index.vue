@@ -21,11 +21,9 @@ export default {
   },
   methods: {
     loginOutFn(){
-      this.$store.dispatch('user/logout').then(() =>{
-         location.reload() 
-        //  this.$router.push('/login')
+          this.$store.dispatch('user/logout').then(() =>{
+          this.$router.push(`/login?redirect=${this.$route.fullPath}`)
       })  
-      // this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }
 }

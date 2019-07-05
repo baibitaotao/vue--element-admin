@@ -1,6 +1,5 @@
 /* eslint-disable no-unused-vars */
 import { asyncRoutes, constantRoutes, routerMap, asyncRoutes1 } from '@/router'
-import {appFuncPermissionGetUserPermissions} from '@/api/user'
 // import { serverRouterMap, getRoles } from '@/api/role'
 
 // import { ayscRouterMap } from '@/api/router'
@@ -103,32 +102,13 @@ const mutations = {
 const actions = {
   generateRoutes({ commit }) {
     return new Promise(resolve => {
-        const serverRouterMap = []
         let accessedRoutes
-          const asyncRouterMap = generateAsyncRouter(routerMap, filter(JSON.parse(localStorage.getItem('asyncRoutes1'))))
-          accessedRoutes = asyncRouterMap || []
+          const serverRouterMap = filter(JSON.parse(localStorage.getItem('asyncRoutes1')))
+          const asyncRouterMap = generateAsyncRouter(routerMap,serverRouterMap)
           commit('SET_ROUTES', asyncRouterMap)
           resolve(asyncRouterMap)
     })
-  }
-
-
-  // generateRoutes({ commit }, roles) {
-  //   return new Promise(resolve => {
-  //     let accessedRoutes
-  //     setTimeout(() => {
-  //       const serverRouterMap = asyncRoutes1
-  //       const asyncRouterMap = generateAsyncRouter(routerMap, serverRouterMap)
-  //       if (roles.indexOf('admin') >= 0) {
-  //         accessedRoutes = asyncRouterMap || []
-  //       } else {
-  //         accessedRoutes = filterAsyncRoutes(asyncRouterMap, roles)
-  //       }
-  //       commit('SET_ROUTES', asyncRouterMap)
-  //       resolve(asyncRouterMap)
-  //     }, 1000)
-  //   })
-  // }
+  },
 }
 
 export default {

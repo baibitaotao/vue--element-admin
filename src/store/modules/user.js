@@ -7,7 +7,8 @@ const state = {
   name: getName(),
   avatar: '',
   introduction: '',
-  roles: []
+  roles: [],
+  buttons:[]
 }
 
 const mutations = {

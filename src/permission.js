@@ -19,25 +19,41 @@ router.beforeEach(async(to, from, next) => {
   document.title = getPageTitle(to.meta.title)
   // determine whether the user has logged in
  const userId = getUserId()
+ 
   if (userId) {
+    
     if (to.path === '/login') {
       // if is logged in, redirect to the home page
       next()
       NProgress.done()
+      return
     } else {
               // determine whether the user has obtained his permission roles through getInfo
               //  const hasRoles = store.getters.roles && store.getters.roles.length > 0
-          next()
-          if(to.meta.roles){
-            store.dispatch('user/setButtons', to.meta.buttons)
-          }else{
-            console.log('检查拦截器角色')
-          }
-          const accessRoutes = await store.dispatch('permission/generateRoutes')
-          router.addRoutes(accessRoutes)
-          NProgress.done()
+          // console.log(to.path)
+          // next()    
+          // const accessRoutes = await store.dispatch('permission/generateRoutes')
+          // store.dispatch('user/setButtons', to.meta.buttons)
+          // router.addRoutes(accessRoutes)
+          // NProgress.done()
+          // next()
+          // const buttons = await store.dispatch('user/setButtons', to.meta.buttons)
+            
+          if (to.meta.buttons) { // 判断当前用户是否已拉取完user_info信息 
+              console.log('正常走')
+              await store.dispatch('user/setButtons', to.meta.buttons)  
+              next()
+              return
+            }{
+              store.dispatch('permission/generateRoutes').then((res) => { // 根据roles权限生成可访问的路由表 
+                console.log('添加路由走')
+                router.addRoutes(res) // 动态添加可访问路由表 
+                next({ ...to, replace: true}) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record 
+                }) 
+            }
     }
-  } else {
+  } 
+  else {
     /* has no token*/
     if (whiteList.indexOf(to.path) !== -1) {
       // in the free login whitelist, go directly
@@ -55,7 +71,7 @@ router.afterEach(() => {
   NProgress.done()
 })
 
-// 这个方法暂时没有用到
+// // 这个方法暂时没有用到
 function filterAsyncRouter(asyncRouterMap) { // 遍历后台传来的路由字符串，转换为组件对象
   const accessedRouters = asyncRouterMap.filter(route => {
     if (route.component) {

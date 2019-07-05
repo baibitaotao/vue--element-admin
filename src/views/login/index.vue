@@ -59,7 +59,7 @@
   </div>
 </template>
 
-<script>``
+<script>
 import { validUsername } from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
 import {mapGetters} from 'vuex'
@@ -89,7 +89,7 @@ export default {
     }
     return {
       loginForm: {
-        loginName: 'chenl',
+        loginName: 'admin',
         password: '888888'
       },
       loginRules: {
@@ -160,12 +160,10 @@ export default {
           let loginIfo = this.loginForm
           this.$store.dispatch('user/login', this.loginForm).then((res) => {
                this.$store.dispatch('user/appFuncPermissionGetUserPermissions').then(res => {
-               this.storageRouter(JSON.stringify(res.data.funcPermissions)).then(() => {
-                    this.$router.push({ path: this.redirect} || '/')
-                    this.loading = false
-                //  console.log(JSON.parse(localStorage.getItem('asyncRoutes1')))
-               
-               })
+                  localStorage.setItem('asyncRoutes1',JSON.stringify(res.data.funcPermissions))  
+               }).then(res => {
+                 this.$router.push({path: this.redirect} || '/')
+                 this.loading = false
                })
             
             })

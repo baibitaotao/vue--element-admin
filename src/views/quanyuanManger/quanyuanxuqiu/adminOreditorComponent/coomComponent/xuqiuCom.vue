@@ -83,7 +83,7 @@ import {mapGetters} from 'vuex'
 import gonjiTable from './gonjiTable'
 import { constants } from 'crypto';
 import gonjiDialog from './gonjiDialog'
-import linkTag from '../../../aacoment/linkTag/src/linkTag'
+import linkTag from '../../../../aacoment/linkTag/src/linkTag'
 
 export default {
     watch: {

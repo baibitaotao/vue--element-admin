@@ -8,32 +8,31 @@ import store from '@/store'
 import { Loading } from 'element-ui';
 
 // create an axios instance
-// baseURL: 'http://172.29.201.86:8077/smt-admin',陈
-// baseURL: 'http://172.29.201.112:8080/smt-admin'于,
+// baseURL: 'http://172.29.201.223:8077/smt-admin',
 const service = axios.create({
   // baseURL: process.env.VUE_APP_BASE_API, // api 的 base_url
-  baseURL: 'http://172.29.201.223:8077/smt-admin',
+  baseURL: '/smt-admin',
   // baseURL: process.env.VUE_APP_BASE_API,
   withCredentials: true, // 跨域请求时发送 cookies
   timeout: 5000 // request timeout
 })
 
 
-
 // request interceptor
 var loadingInstance 
 service.interceptors.request.use(
+  
   config => {
     // Do something before request is sent
-    if (store.getters.USER_ID) {
-      loadingInstance = Loading.service({
-        fullscreen: true,
-        lock:true,
-        text: 'Loading',
-        spinner: 'el-icon-loading',
-        background: 'rgba(0, 0, 0, 0.7)'
-      });
-    }
+    // if (store.getters.USER_ID) {
+    //   loadingInstance = Loading.service({
+    //     fullscreen: true,
+    //     lock:true,
+    //     text: 'Loading',
+    //     spinner: 'el-icon-loading',
+    //     background: 'rgba(0, 0, 0, 0.7)'
+    //   });
+    // }
     return config
   },
   error => {
@@ -44,7 +43,9 @@ service.interceptors.request.use(
 )
 
 service.interceptors.response.use(res => {
-  loadingInstance.close()
+  // if (store.getters.USER_ID) {
+  //     loadingInstance.close()
+  // }
   if(res.status !== 200){
     console.log(res)
     Message({
@@ -61,8 +62,7 @@ service.interceptors.response.use(res => {
            duration: 3 * 1000
          })
       }
-
-      return res
+    return res
 })
 
 

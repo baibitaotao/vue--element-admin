@@ -26,7 +26,8 @@ export const routerMap = {
   rolesManger:_import('systemManger/rolesManger'),
   userManger:_import('systemManger/userManger'),
 
-  quanyuangonjiManger:_import('quanyuangonjiManger/index'),
+  quanyuangonjiManger:_import('quanyuanManger/quanyuangonji/index'),
+  quanyuanxuqiuManger:_import('quanyuanManger/quanyuanxuqiu/index'),
   // jichushezhi:_import('jichushezhi/index'),
   adminManger:_import('gangweiguanli/adminManger'),
   mangerManger:_import('gangweiguanli/mangerManger'),
@@ -125,7 +126,7 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/userAuditManger/index',
+    redirect: '/userAuditManger/userAuditManger',
     hidden: true,
   },
 

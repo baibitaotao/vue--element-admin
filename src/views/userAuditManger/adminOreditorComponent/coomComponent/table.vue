@@ -1,10 +1,10 @@
 <template>
     <div>
         <div style="marginBottom:10px">
-            <el-button :disabled="btnstatus.assignedAccountManager" @click="assignedAccountManager"  type="danger" plain size="mini" v-if = 'btnShow.assignedAccountManager'>{{buttons[0].name}}</el-button>
-            <el-button :disabled="btnstatus.audit" @click="audit"  type="danger" plain size="mini" v-if = 'btnShow.audit'>{{buttons[1].name}}</el-button>
-            <el-button :disabled="btnstatus.look" @click="look"  type="danger" plain size="mini" v-if = 'btnShow.look'>{{buttons[2].name}}</el-button>
-            
+            <el-button :disabled="btnstatus.assignedAccountManager" @click="assignedAccountManager"  type="danger" plain size="mini" v-if = 'btnShow.assignedAccountManager'>{{comBtn[0].name}}</el-button>
+            <el-button :disabled="btnstatus.audit" @click="audit"  type="danger" plain size="mini" v-if = 'btnShow.audit'>{{comBtn[1].name}}</el-button>
+            <el-button :disabled="btnstatus.look" @click="look"  type="danger" plain size="mini" v-if = 'btnShow.look'>{{comBtn[2].name}}</el-button>
+            <el-button :disabled="btnstatus.Tip" @click="tip"  type="danger" plain size="mini" v-if = 'btnShow.Tip'>{{comBtn[3].name}}</el-button>
         </div>
         <el-table 
            :data="tableData"
@@ -116,6 +116,7 @@ import {mapGetters} from 'vuex'
 export default {
   mounted () {
     this.isShowButton()
+    this.setNewArr()
   },
     computed:{
        ...mapGetters([
@@ -146,13 +147,16 @@ export default {
         btnShow:{
           assignedAccountManager:false,
           audit:false,
-          look:false
+          look:false,
+          Tip:false
         },
         btnstatus:{
           assignedAccountManager:true,
           audit:true,
-          look:true
+          look:true,
+          Tip:true
         },
+        comBtn:[],
         formLabelWidth:'120px',
         dialogFormVisible:false,
         tableData:[],
@@ -160,9 +164,7 @@ export default {
           currPage:1,
           totalPage:0,
         },
-        totalCount:0,
         seletedItem:[],
-       
       }
     },
     methods:{
@@ -202,6 +204,9 @@ export default {
                if(element.code === '10003010103'){
                   this.btnShow.look = true
               }
+               if(element.code === '10003010104'){
+                  this.btnShow.Tip = true
+              }
 
           });
 
@@ -215,6 +220,7 @@ export default {
       look(){
          this.$refs.detailDialog.isShowDialog() 
       },
+      tip(){},
       handleSelectionChange(value){
           this.seletedItem = value
       },
@@ -234,12 +240,18 @@ export default {
             this.btnstatus.assignedAccountManager = false
             this.btnstatus.audit = false
             this.btnstatus.look = false
+            this.btnstatus.Tip = false
         }else{
             this.btnstatus.assignedAccountManager = true
             this.btnstatus.audit = true
-            this.btnstatus.look = true
+            this.btnstatus.Tip = true
         }
-     }
+     },
+      setNewArr(){
+        this.buttons.forEach(element => {
+            this.comBtn.push(element)
+        });
+      },
  
       },
 }
