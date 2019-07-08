@@ -30,3 +30,10 @@ export function bannerUpdate(data) {
     data
   })
 }
+
+export function bannerDelete(data) {
+  return request({
+    url: `/banner/delete/${data}`,
+    method: 'DELETE',
+  })
+}

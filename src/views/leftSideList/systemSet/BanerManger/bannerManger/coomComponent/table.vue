@@ -76,6 +76,7 @@ import addDialog from './addDialog'
 import modify from './modify'
 
 import {mapGetters} from 'vuex'
+import { constants } from 'crypto';
 
 export default {
   mounted () {
@@ -157,6 +158,34 @@ export default {
           this.$refs.detailDialog.isShowDialog(this.seletedItem[0])    
           return
         }
+        if(val.code == "10003080204"){
+          this.$confirm('是否确定删除此条信息', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+             }).then(() => {
+               let ids = []
+               this.seletedItem.forEach(element => {
+                 ids.push(element.bannerId)
+               })
+               this.$store.dispatch('banngerManger/bannerDelete',ids.join(',')).then(res => {
+                  this.refresh()
+                  this.$message({
+                    type: 'success',
+                    message: '删除成功!'
+                  });
+
+               })
+
+              
+            }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '已取消删除'
+              });          
+            });
+          return
+        }
 
 
       },
@@ -179,7 +208,12 @@ export default {
            for(let i = 0;i < this.btnstatus.length;++i){
                this.$set(this.btnstatus,i,false)
              }
-        }else{
+        }else if(val.length >= 2){
+            this.$set(this.btnstatus,1,true)
+            this.$set(this.btnstatus,2,true)
+            this.$set(this.btnstatus,3,false)
+        }
+        else{
             this.$set(this.btnstatus,1,true)
             this.$set(this.btnstatus,2,true)
             this.$set(this.btnstatus,3,true)

@@ -1,4 +1,4 @@
-import {bannerList,bannerAdd,bannerDetail,bannerUpdate} from '@/api/banngerManger'
+import {bannerList,bannerAdd,bannerDetail,bannerUpdate,bannerDelete} from '@/api/banngerManger'
 
 
 const state = {}
@@ -44,6 +44,16 @@ const actions = {
         reject(error)
         })
         })
+      },
+      bannerDelete({commit},data){
+        return new Promise((resolve,reject) => {
+          bannerDelete(data).then(res => {
+          resolve(res.data)
+          }).catch(err => {
+          reject(error)
+          })
+          })
+
       }
 
 
