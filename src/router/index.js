@@ -31,7 +31,6 @@ export const routerMap = {
   // jichushezhi:_import('jichushezhi/index'),
   adminManger:_import('gangweiguanli/adminManger'),
   mangerManger:_import('gangweiguanli/mangerManger'),
-  // bannerguanli:_import('bannerguanli/index'),
   accountManagerManagement:_import('accountManagerManagement/index'),
   gonjiAuditManger:_import('quanyuanAuditManger/quanyuangonji/index'),
   xuqiuAuditManger:_import('quanyuanAuditManger/quanyuanxuqiu/index'),
