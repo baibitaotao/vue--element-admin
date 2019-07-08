@@ -64,7 +64,7 @@
       <detail-dialog ref = 'detailDialog' :seletedItem = 'seletedItem'></detail-dialog>
 
       <add-dialog ref = 'addDialog'  @refresh = 'refresh'></add-dialog>
-      <modify ref = 'modifyDialog' :seletedItem = 'seletedItem'></modify>
+      <modify ref = 'modifyDialog' :seletedItem = 'seletedItem' @refresh = 'refresh'></modify>
     </div>
 </template>
 

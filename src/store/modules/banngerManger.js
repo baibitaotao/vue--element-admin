@@ -1,4 +1,4 @@
-import {bannerList,bannerAdd,bannerDetail} from '@/api/banngerManger'
+import {bannerList,bannerAdd,bannerDetail,bannerUpdate} from '@/api/banngerManger'
 
 
 const state = {}
@@ -29,6 +29,16 @@ const actions = {
     bannerDetail({commit},data){
       return new Promise((resolve,reject) => {
         bannerDetail(data).then(res => {
+        resolve(res.data)
+        }).catch(err => {
+        reject(error)
+        })
+        })
+      },
+      
+      bannerUpdate({commit},data){
+      return new Promise((resolve,reject) => {
+        bannerUpdate(data).then(res => {
         resolve(res.data)
         }).catch(err => {
         reject(error)

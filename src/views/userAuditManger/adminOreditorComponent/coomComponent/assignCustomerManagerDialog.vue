@@ -94,7 +94,7 @@ export default {
 
         },
         getlist(){
-             this.$store.dispatch('userAuditManger/selectOrgUserByRoleCode',{roleCode:'12'}).then(res => {
+             this.$store.dispatch('userAuditManger/selectOrgUserByRoleCode',{roleCode:'customerManager'}).then(res => {
                 this.data = res.data.treeData
                 this.dialogVisible =  !this.dialogVisible
              })

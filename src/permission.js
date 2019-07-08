@@ -38,18 +38,18 @@ router.beforeEach(async(to, from, next) => {
           // NProgress.done()
           // next()
           // const buttons = await store.dispatch('user/setButtons', to.meta.buttons)
-            
           if (to.meta.buttons) { // 判断当前用户是否已拉取完user_info信息 
               console.log('正常走')
               await store.dispatch('user/setButtons', to.meta.buttons)  
               next()
               return
             }{
-              store.dispatch('permission/generateRoutes').then((res) => { // 根据roles权限生成可访问的路由表 
+                store.dispatch('permission/generateRoutes').then((res) => { // 根据roles权限生成可访问的路由表 
                 console.log('添加路由走')
                 router.addRoutes(res) // 动态添加可访问路由表 
-                next({ ...to, replace: true}) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record 
-                }) 
+                next({ ...to, replace: true})
+                return // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record 
+                })
             }
     }
   } 

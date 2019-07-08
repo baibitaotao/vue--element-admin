@@ -22,3 +22,11 @@ export function bannerDetail(params) {
     method: 'get',
   })
 }
+
+export function bannerUpdate(data) {
+  return request({
+    url: `/banner/update`,
+    method: 'put',
+    data
+  })
+}

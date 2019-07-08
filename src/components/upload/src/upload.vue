@@ -36,6 +36,7 @@
 
 <script>
     import axios from 'axios'
+import { constants } from 'crypto';
     export default {
         name:'GuluUpload',
         model: {
@@ -99,7 +100,7 @@
         },
         watch: {
             value(val) {
-                // this.getFileData()
+                this.getFileData()
             }
         },
         created() {
@@ -125,7 +126,8 @@
                 })
                     .then(function (response) {
                         if (response.data.status === '0') {
-
+                             that.$emit('getFileList', response.data.data.fileList)
+                             console.log(response.data.data.fileList)
                             if (response.data.data.fileList) {
                                 that.$nextTick(function () {
                                     that.fileList = response.data.data.fileList;
@@ -140,7 +142,9 @@
                     })
             },
             //上传文件之前的钩子
-            beforeUpload(file) {},
+            beforeUpload(file) {
+                console.log(this.value)
+            },
             handleChange(file, fileList) {//文件状态改变时的钩子
                 var testmsg = file.name.substring(file.name.lastIndexOf('.') + 1)
                 const extension = testmsg === 'rp'
@@ -183,6 +187,7 @@
                     fieldToken = arr[1]
                 }
                 this.updatePath = this.contextPath + 'attachmentController/upload?fieldToken=' + fieldToken;
+                
                 this.$emit('update-value', fieldToken)
                 this.$emit('getFileList',response.data.fileList)
             },

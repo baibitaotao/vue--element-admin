@@ -1,7 +1,7 @@
 <template>
     <div class="banngerManger">
          <el-dialog title="修改banner图片" :visible.sync="dialogFormVisible">
-               <el-form :model="form" ref="form">
+               <el-form :model="form" ref="form" :rules="rules">
                     <el-form-item label="banner标题" prop="title" :label-width="formLabelWidth">
                       <el-input v-model="form.title" autocomplete="off"></el-input>
                     </el-form-item>
@@ -68,15 +68,20 @@ export default {
                 status:'',
                 fileList:[]
               },
+              rules: {
+                title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
+                url: [{required: true, message: '请输入地址', trigger: 'blur' }],
+                summary: [{required: true, message: '请输入摘要', trigger: 'change' }],
+                status: [{ required: true, message: '请确认是否预约', trigger: 'change' }],
+                fileList:[{required: true, message: '请上传图片', trigger: 'change' }]    
+            },
         }
     },
     methods: {
-      getFileList(val){
-      },
       showDialog(item){
         this.dialogFormVisible = true
         this.pictureId = this.seletedItem[0].pictureId + ''
-        this.assignmentValue(item)
+        this.assignmentValue(this.seletedItem[0])
       },    
       assignmentValue(item){
         this.form.title = item.title
@@ -87,33 +92,29 @@ export default {
       dialogCancel(){
         this.dialogFormVisible = false
       },
-      beforeRemove(file, fileList){
-         return this.$confirm(`确定移除 ${ file.name }？`);
-      },
-      handleExceed(files, fileList) {
-        this.$message.warning(`只能选择一个文件上传`);
-      },
-      success(response,file, fileList) {
-        this.form.fileList = response.data.fileList
+      getFileList(val){
+        this.form.fileList = val
+        console.log(val)
       },
       dialogConfirm(){
-        // console.log(this.)
-        // let data = {}
-        //     data.pictureUrl = this.form.fileList[0].url
-        //     data.pictureId = this.form.fileList[0].uid
-        //     data.status = this.form.status
-        //     data.summary = this.form.summary
-        //     data.title = this.form.title
-        //     data.url = this.form.url
-        //     this.$store.dispatch('banngerManger/bannerAdd',data).then(res => {
-        //       if(res.status == '0'){
-        //          this.dialogFormVisible = false 
-        //          this.$message({ message: res.msg,type: 'success'});
-        //          this.$refs.form.resetFields();  
-        //          }
-        //     }).catch(res =>　{
-        //         console.log(res)
-        //      })
+        let data = {}
+            data.bannerId = this.seletedItem[0].bannerId
+            data.pictureUrl = this.form.fileList[0].url || ''
+            data.pictureId = this.pictureId
+            data.status = this.form.status
+            data.summary = this.form.summary
+            data.title = this.form.title
+            data.url = this.form.url
+            this.$store.dispatch('banngerManger/bannerUpdate',data).then(res => {
+              if(res.status == '0'){
+                 this.dialogFormVisible = false 
+                 this.$message({ message: res.msg,type: 'success'});
+                 console.log('刷新')
+                 this.$emit('refresh')  
+                 }
+            }).catch(res =>　{
+                console.log(res)
+             })
       }  
     }
 }

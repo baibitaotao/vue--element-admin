@@ -14,14 +14,17 @@
                    </el-col>
              </el-row>
 
-            <div style="marginTop:20px">
+            <div style="marginTop:20px" v-show = false>
               <span class="title">审核信息 <i class="leftRed"></i></span>
                <el-timeline :reverse="reverse">
                    <el-timeline-item
                      v-for="(activity, index) in activities"
                      :key="index"
                      :timestamp="activity.timestamp">
-                     {{activity.content}}
+                      <el-card>
+
+                      </el-card>
+
                    </el-timeline-item>
                 </el-timeline>
               </div>
@@ -74,18 +77,7 @@ export default {
             detailsData:{},
             tableData:[],
             reverse: true,
-            activities: [{
-              content: '活动按期开始',
-              timestamp: '2018-04-15'
-             }, 
-             {
-            content: '通过审核',
-            timestamp: '2018-04-13'
-            }, 
-            {
-             content: '创建成功',
-             timestamp: '2018-04-11'
-        }]
+            activities: []
         }
     },
     methods: {
@@ -94,7 +86,6 @@ export default {
         }, 
         getDetail(){
             this.$store.dispatch('banngerManger/bannerDetail',this.seletedItem[0].bannerId).then(res => {
-                console.log(res)
                 this.detailsData.bannerId = res.data.bannerId
                 this.detailsData.content = res.data.content
                 this.detailsData.pictureId = res.data.pictureId
