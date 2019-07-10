@@ -2,7 +2,7 @@
     <div>
         <el-tabs v-model="activeName" @tab-click="handleClick">
              <el-tab-pane label="券源供给配对" name="gonji">
-                 <gonji-pairing ref = 'gonjiPairing' :deviationData = 'deviationData'></gonji-pairing>
+                 <gonji-pairing ref = 'gonjiPairing'></gonji-pairing>
              </el-tab-pane>
              <el-tab-pane label="券源需求配对" name="xuqiu">
                  <xuqiu-pairing></xuqiu-pairing>

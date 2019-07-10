@@ -1,23 +1,38 @@
 <template>
     <div class="xuqiuPairing">
-        <div style="width:410px">
-         <el-input placeholder="请输入内容" v-model="input3" class="input-with-select">
-            <el-button slot="append" icon="el-icon-search" style=""></el-button>
-         </el-input>
+            <div class="piancha" style="display:flex;position:relative" >
+           <div class="deviationRate">
+           <div>
+               <span>交易天数偏差率(%)</span>
+               <el-input
+                   size="mini"
+                   style="width:auto;"
+                   placeholder="请输入交易天数偏差率"
+                   v-model="deviationData.daysValue">
+               </el-input>
+           </div>
+           <div>
+               <span>交易数量偏差率(%)</span>
+               <el-input
+                   style="width:auto;"
+                   size="mini"
+                   placeholder="请输入交易数量偏差率"
+                   v-model="deviationData.quantityValue">
+               </el-input></div>
+           <div>
+               <span>交易利率偏差率(%)</span>
+               <el-input
+                   size="mini"
+                   style="width:auto;"
+                   placeholder="请输入交易利率偏差率"
+                   v-model="deviationData.rateValue">
+               </el-input>
+            </div>
+            </div>
+            <el-button style="position:absolute;top:10px;right:80px" type="danger" size="mini" @click="pairing">一键配对</el-button>
         </div>
         <div>
-            <chujie></chujie>
-        </div>
-         <div> 
-            <span style="fontSize:12px;marginRight:30px">类型</span>
-            <el-radio-group v-model="radio">
-                <el-radio :label="3">全部</el-radio>
-                <el-radio :label="6">待配对</el-radio>
-                <el-radio :label="9">已配对</el-radio>
-            </el-radio-group>
-        </div>
-        <div>
-            <xuqiu-table :queryParams='queryParams'></xuqiu-table>
+            <xuqiu-table :queryParams='queryParams' ref = 'xuqiuTable'></xuqiu-table>
         </div>
 
     </div>
@@ -31,15 +46,56 @@
 export default {
     data () {
         return {
+            deviationData:{
+                daysValue:"",
+                quantityValue:'',
+                rateValue:''
+            },
             input3:'',
             radio:'',
-            queryParams:{},           
+            queryParams:{
+                 currPage: 1,
+                 daysValue: '',
+                 pageSize: 5,
+                 quantityValue: '',
+                 rateValue: '',
+            },           
         }
     },
     components:{
       chujie,
       xuqiuTable 
+    },
+    methods: {
+         pairing(){
+                if(this.deviationData.daysValue !== '' || this.deviationData.quantityValue !== '' ||  this.deviationData.rateValue !== ''){
+                    this.queryParams.daysValue = this.deviationData.daysValue
+                    this.queryParams.quantityValue = this.deviationData.quantityValue
+                    this.queryParams.rateValue = this.deviationData.rateValue    
+                    this.$refs.xuqiuTable.getTableList()
+                }else{
+                     this.$message({
+                         showClose: true,
+                         message: '偏差值至少输入一个',
+                         type: 'warning'
+                        });
+                }
+        }
+
     }
 }
 </script>
 
+<style lang="scss" scoped>
+
+    .deviationRate{
+    display: flex;
+    margin-right: 10px;
+    font-size: 14px;
+    padding: 10px 0;
+    >div{
+        margin-right: 15px;
+    }
+    }
+
+</style>

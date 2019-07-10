@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="marginBottom:10px">
-          <el-button type="danger" plain size="mini" :disabled = 'btnstatus[index]'  @click="optionFn(item)" v-for="(item,index) in btnOption" :key='index'>{{item|showBtnText}}</el-button>
+          <el-button type="danger" plain size="mini" :disabled = 'btnstatus[index]'  @click="optionFn(item)" v-for="(item,index) in comBtn" :key='index'>{{item.name}}</el-button>
         </div>
         <el-table 
            :data="tableData"
@@ -13,30 +13,38 @@
             </el-table-column>
 
              <el-table-column
-             prop="demandId"
-             label="券源需求编号"
-             width="100">
-           </el-table-column>
-            
-           <el-table-column
              prop="userId"
-             label="用户编号"
-             width="150">
+             label="用户id"
+             width="100">
            </el-table-column>
 
             <el-table-column
-             prop="enteName"
-             label="真实姓名/企业名称"
+             prop="supplyId"
+             label="供给编号"
+             width="150">
+           </el-table-column>
+
+             <el-table-column
+             prop="demandId"
+             label="需求编号"
+             width="100">
+           </el-table-column>
+            
+          
+
+            <el-table-column
+             prop="stockSupplyUserOrCompanyName"
+             label="用户或企业名称"
              width="100">
            </el-table-column>
             <el-table-column
-             prop="customerManagerName"
+             prop="stockSupplyUserManager"
              label="客户经理"
              width="100">
            </el-table-column>
            <el-table-column
-             prop=""
-             label="用户类型/待确认"
+             prop="stockName"
+             label="券源名"
              width="100">
            </el-table-column>
             <el-table-column
@@ -46,38 +54,44 @@
            </el-table-column>
 
            <el-table-column
-             prop="stockName"
-             label="证券名称"
+             prop="rateValue"
+             label="偏差利率值"
              width="100">
            </el-table-column>
 
             <el-table-column
-             prop="borrowDays"
-             label="借入天数"
+             prop="quantityValue"
+             label="偏差数量值"
              width="100">
            </el-table-column>
 
            <el-table-column
-             prop="borrowableQuantity"
-             label="借入数量"
+             prop="lendRate"
+             label="借出利率"
              width="100">
            </el-table-column>
 
             <el-table-column
-             prop="borrowRate"
-             label="借入利率"
+             prop="lendDays"
+             label="借出天数"
              width="100">
            </el-table-column>
 
              <el-table-column
-             prop="matchStatusName"
-             label="撮合状态"
+             prop="lendAbleQuantity"
+             label="借出数量"
              width="100">
            </el-table-column>
 
            <el-table-column
-             prop="approveStatusName"
-             label="审核状态"
+             prop="daysValue"
+             label="偏差天数值"
+             width="100">
+           </el-table-column>
+
+           <el-table-column
+             prop="statusName"
+             label="券源状态"
              width="100">
            </el-table-column>
 
@@ -95,22 +109,23 @@
                  :total="pagination.totalPage">
               </el-pagination>
           </div>
-     <!-- <review-diolog ref = 'reviewDialog' :seletedItem = 'seletedItem' @refresh = 'refresh' :isAdminOrManger='roles[0]'></review-diolog>
-     <detail-dialog ref = 'detailDialog' :seletedItem = 'seletedItem'></detail-dialog> -->
+          <manual-matching-dialog ref = 'manualMatchingDialog' :tableSeletedItem = 'seletedItem' @refresh = 'refresh' activeName = 'gonji'></manual-matching-dialog>
+     
     </div>
 </template>
 
 
 <script>
-// import reviewDiolog from './reviewDialog'
-// import detailDialog from './detailDialog'
-import { constants } from 'crypto';
-
+import {mapGetters} from 'vuex'
+import manualMatchingDialog from '../dialog/manualMatchingDialog'
 
 export default {
+    
+    mounted () {
+      this.setNewArr()
+    },
     components:{
-      // reviewDiolog,
-      // detailDialog
+      manualMatchingDialog
     },
     props:{
       queryParams:{
@@ -118,6 +133,11 @@ export default {
         required:true,
         default:{},
       },
+    },
+     computed:{
+       ...mapGetters([
+            'buttons'
+        ]),
     },
     watch: {
        seletedItem:{
@@ -135,8 +155,9 @@ export default {
     },
     data () {
       return {
+        comBtn:[],
         btnOption:['confirmDistribution','distribution'],
-        btnstatus:[true,true],
+        btnstatus:[true,true,true,true],
         formLabelWidth:'120px',
         dialogFormVisible:false,
         tableData:[],
@@ -150,18 +171,7 @@ export default {
     },
     methods:{
       refresh(){
-           this.queryParams.pageSize =  5
-           this.queryParams.currPage = 1
-           this.queryParams.keyWord = ''
-           this.queryParams.daysValue = ''
-           this.queryParams.quantityValue = ''
-           this.queryParams.rateValue = ''
-           this.queryParams.reserveDaysBegin = ''
-           this.queryParams.reserveDaysEnd = ''
-           this.queryParams.reserveQuantityBegin = ''
-           this.queryParams.reserveQuantityEnd = ''
-           this.queryParams.reserveRateBegin = ''
-           this.queryParams.reserveRateEnd = ''
+            console.log('触发')
            this.getTableList()
       },
       getTableList(){
@@ -180,40 +190,55 @@ export default {
       },
     
       optionFn(value){
-         if(value == 'approval'){
-           this.$refs.reviewDialog.isShowDialog()
-         }
-         if(value == 'review'){
-           this.$refs.reviewDialog.isShowDialog()
-           return
-         }
-          if(value == 'cuiban'){
-            let data = [] 
-            this.seletedItem.forEach(item => {
-              let obj = {}
-              obj.customerManager = item.customerManager
-              obj.id =  item.demandId
-              data.push(obj)
-            })
-            this.$store.dispatch('quanyuanPairingManger/stockReserveListMatchStockSupply',data).then(res => {
-                if(res.status == '0'){
-                     this.$message({
-                        message: '提醒'+res.msg,
-                        type: 'success'
+         if(value.code == '10003040201'){
+            if(this.seletedItem[0].statusName !== '已配对'){
+                   this.$message({
+                   message: '状态为已分配 不能进行操作',
+                   type: 'warning'
                     });
-                }else{
+               return
+            }
+           this.$confirm('确定进行分配操作?', '提示', {
+               confirmButtonText: '确定',
+               cancelButtonText: '取消',
+               type: 'warning'
+                }).then(() => {
+                 let data =  {}
+                 data.supplyId = this.seletedItem[0].supplyId
+                 data.demandId = this.seletedItem[0].demandId
+                 data.stockType = 'StockSupply'
+
+                this.$store.dispatch('quanyuanPairingManger/stockMatchTradeAddMatch',data).then(res => {
+                  if(res.status == '0'){
+                        this.getTableList()
+                        this.$message({
+                        type: 'success',
+                        message: '添加成功!'
+                      });
+                  }else{
                     this.$message({
-                        message: '提醒'+res.msg,
-                        type: 'error'
-                    });
-                }
-            })
+                        type: 'success',
+                        message: res.msg + '错误!'
+                      });
+                  }
+                })    
+                
+              }).catch(() => {
+              this.$message({
+                type: 'info',
+                message: '已取消删除'
+              });          
+           });
+            return
+         }
+         if(value.code == "10003040202"){
+           this.$refs.manualMatchingDialog.isShowDialog()
            return
          }
-          if(value == 'detail'){
-            this.$refs.detailDialog.isShowDialog() 
-           return
-         }
+        //   if(value == 'detail'){
+        //     this.$refs.detailDialog.isShowDialog() 
+        //    return
+        //  }
         
       },
       handleSelectionChange(value){
@@ -243,6 +268,7 @@ export default {
               }
             this.$set(this.btnstatus,3,true)
             this.$set(this.btnstatus,2,true)
+            this.$set(this.btnstatus,1,true)
             this.$set(this.btnstatus,0,true)
             return
           }
@@ -251,11 +277,13 @@ export default {
                 this.$set(this.btnstatus,i,true)
               }
           }
-      }, 
-      deleteFn(){},
-      cancelFn(){},
-      setTopFn(){},        
       },
+      setNewArr(){
+        this.buttons.forEach(element => {
+        this.comBtn.push(element)
+        });
+      } 
+      }
 }
 </script>
 

@@ -94,7 +94,6 @@ export default {
       },
       getFileList(val){
         this.form.fileList = val
-        console.log(val)
       },
       dialogConfirm(){
         let data = {}
@@ -109,7 +108,6 @@ export default {
               if(res.status == '0'){
                  this.dialogFormVisible = false 
                  this.$message({ message: res.msg,type: 'success'});
-                 console.log('刷新')
                  this.$emit('refresh')  
                  }
             }).catch(res =>　{

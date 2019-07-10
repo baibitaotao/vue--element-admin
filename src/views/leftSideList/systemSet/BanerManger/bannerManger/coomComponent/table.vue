@@ -149,7 +149,6 @@ export default {
           this.$refs.addDialog.showDialog()  
           return
         }
-        console.log(val)
         if(val.code == "10003080202"){
           this.$refs.modifyDialog.showDialog(this.seletedItem[0])    
           return

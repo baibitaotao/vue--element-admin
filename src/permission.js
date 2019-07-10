@@ -19,6 +19,7 @@ router.beforeEach(async(to, from, next) => {
   document.title = getPageTitle(to.meta.title)
   // determine whether the user has logged in
  const userId = getUserId()
+
  
   if (userId) {
     
@@ -38,17 +39,24 @@ router.beforeEach(async(to, from, next) => {
           // NProgress.done()
           // next()
           // const buttons = await store.dispatch('user/setButtons', to.meta.buttons)
-          if (to.meta.buttons) { // 判断当前用户是否已拉取完user_info信息 
+          // console.log(to)
+          if (to.meta.title) { // 判断当前用户是否已拉取完user_info信息 
               console.log('正常走')
               await store.dispatch('user/setButtons', to.meta.buttons)  
               next()
               return
             }{
                 store.dispatch('permission/generateRoutes').then((res) => { // 根据roles权限生成可访问的路由表 
-                console.log('添加路由走')
                 router.addRoutes(res) // 动态添加可访问路由表 
+                console.log('添加路由')
+                if(res.length == 0){
+                    this.$message.error('左侧菜单为空');
+                    next(`/login?redirect=${to.path}`)
+                    NProgress.done()
+                    return
+                }
                 next({ ...to, replace: true})
-                return // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record 
+                return
                 })
             }
     }
@@ -64,6 +72,9 @@ router.beforeEach(async(to, from, next) => {
       NProgress.done()
     }
   }
+
+
+
 })
 
 router.afterEach(() => {

@@ -1,7 +1,7 @@
 <template>
     <div>
         <div style="marginBottom:10px">
-          <el-button  type="danger" plain size="mini" :disabled = 'btnstatus[index]'  @click="optionFn(item)" v-for="(item,index) in btnOption" :key='index'>{{item|showBtnText}}</el-button>
+          <el-button  type="danger" plain size="mini" :disabled = 'btnstatus[index]'  @click="optionFn(item.code)" v-for="(item,index) in comBtn" :key='index'>{{item.name}}</el-button>
         </div>
         <el-table 
            :data="tableData"
@@ -122,7 +122,7 @@
           </div>
 
         <div class="detail_dialog">
-          <el-dialog :title="isShowSupplyOrDemand?'已发布券源供给信息':'已发布券源需求信息'" :visible.sync="dialogFormVisible">
+          <el-dialog title='已发布券源供给信息' :visible.sync="dialogFormVisible">
             <h6 style="paddingBottom:20px;">基本信息</h6>
              <el-row>
                    <el-col :span="10" v-for="(item,key,index) in detailsData" :key="index">
@@ -143,24 +143,23 @@
 
 
 <script>
-
+import {mapGetters} from 'vuex'
 
 
 export default {
+    mounted () {
+      this.setNewArr()
+    },
     computed:{
-      isShowSupplyOrDemand(){
-        if(this.whoId == 'supply'){return true}
-        else if(this.whoId == 'demand'){return false}
-        },
+         ...mapGetters([
+            'buttons'
+        ]),
     },
     props:{
       needdata:{
         type:Object,
         require:true
-      },
-      whoId:{
-        type:String,
-      },
+      }
     },
     watch: {
        seletedItem:{
@@ -247,6 +246,7 @@ export default {
     },
     data () {
       return {
+        comBtn:[],
         btnOption:['determineMatch'],
         btnstatus:[true,true,true,true,true],
         formLabelWidth:'120px',
@@ -265,16 +265,14 @@ export default {
         this.needdata.conditionOfTransmission = {
           currPage: 1,
           keyWord: "",
-          order: 1,
           pageSize: 5,
-          reserveDaysBegin:"1" ,
-          reserveDaysEnd: "111111111",
-          reserveQuantityBegin: "1",
-          reserveQuantityEnd:"111111111111" ,
-          reserveRateBegin: "1",
-          reserveRateEnd:"1111111111111111" ,
-          reserveTypes: "1,2",
-          sort: 1
+          reserveDaysBegin:"" ,
+          reserveDaysEnd: "",
+          reserveQuantityBegin: "",
+          reserveQuantityEnd:"" ,
+          reserveRateBegin: "",
+          reserveRateEnd:"" ,
+          reserveTypes: "",
         }
         this.getTableList()
       },
@@ -294,7 +292,7 @@ export default {
       },
     
       optionFn(value){
-         if(value == 'determineMatch'){
+         if(value == '10003040101'){
            this.$store.dispatch('quanyuanPairingManger/stockMatchTradeAdd',{reserveId:this.seletedItem[0].reserveId}).then(res => {
                 this.$message({message: '确定分配成功',type: 'success',duration: 3 * 1000})
                 this.refresh()
@@ -390,10 +388,12 @@ export default {
         else if(this.whitchActive == 'demand'){
           this.$emit('showStockSupplyDialog',changeItem)
         }
-           
       },
-      cancelFn(){},
-      setTopFn(){},        
+       setNewArr(){
+        this.buttons.forEach(element => {
+            this.comBtn.push(element)
+        });
+      }
       },
 }
 </script>

@@ -17,9 +17,9 @@
                <el-radio-button label="供给"></el-radio-button>
                <el-radio-button label="需求"></el-radio-button>
              </el-radio-group>
-            <!-- <link-tag v-model="radio2" parentId='1004'></link-tag> -->
 
              <el-button type="danger" plain size="mini" style="transform:translate(10px,-3px)" @click="queryTableData">查询</el-button>
+
          </div>
         <div>
             <pairing-table :needdata = 'needdata' ref = 'pairingTable' :whoId='whoId'></pairing-table>
@@ -52,7 +52,6 @@ export default {
                 conditionOfTransmission:{
                     currPage: 1,
                     keyWord: "",
-                    order: 1,
                     pageSize: 5,
                     reserveDaysBegin: '',
                     reserveDaysEnd: '',
@@ -60,8 +59,7 @@ export default {
                     reserveQuantityEnd: '',
                     reserveRateBegin: '',
                     reserveRateEnd: '',
-                    reserveTypes: '1',
-                    sort: 1
+                    reserveTypes: '',
                 }, 
             },
         }
@@ -80,12 +78,12 @@ export default {
           this.$refs.pairingTable.getTableList()
       },
       queryTableData(){
-          this.needdata.conditionOfTransmission.reserveDaysBegin = this.$refs.chjie.queryData.reserveDaysBegin
-          this.needdata.conditionOfTransmission.reserveDaysEnd = this.$refs.chjie.queryData.reserveDaysEnd
-          this.needdata.conditionOfTransmission.reserveQuantityBegin = this.$refs.chjie.queryData.reserveQuantityBegin
-          this.needdata.conditionOfTransmission.reserveQuantityEnd = this.$refs.chjie.queryData.reserveQuantityEnd
-          this.needdata.conditionOfTransmission.reserveRateBegin = this.$refs.chjie.queryData.reserveRateBegin
-          this.needdata.conditionOfTransmission.reserveRateEnd = this.$refs.chjie.queryData.reserveRateEnd
+          this.needdata.conditionOfTransmission.reserveDaysBegin = this.$refs.chjie.queryData.DaysBegin || ''
+          this.needdata.conditionOfTransmission.reserveDaysEnd = this.$refs.chjie.queryData.DaysEnd || ''
+          this.needdata.conditionOfTransmission.reserveQuantityBegin = this.$refs.chjie.queryData.QuantityBegin || ''
+          this.needdata.conditionOfTransmission.reserveQuantityEnd = this.$refs.chjie.queryData.QuantityEnd || ''
+          this.needdata.conditionOfTransmission.reserveRateBegin = this.$refs.chjie.queryData.RateBegin || ''
+          this.needdata.conditionOfTransmission.reserveRateEnd = this.$refs.chjie.queryData.RateEnd || ''
           this.$refs.pairingTable.getTableList() 
       }
     }
